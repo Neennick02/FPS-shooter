@@ -171,14 +171,14 @@ public class Enemy : MonoBehaviour
         //
     }
 
-    void StandAndAttack()
+    public virtual void StandAndAttack()
     {
         agent.destination = transform.position;
         RotateToPlayer();
         Attack();
     }
 
-    void RotateToPlayer()
+    public void RotateToPlayer()
     {
         Vector3 lookDirection = new Vector3(playerPos.position.x, 2, playerPos.position.z);
         Vector3 direction = lookDirection - transform.position;

@@ -10,28 +10,28 @@ public class RangedEnemy : Enemy
     {
         float distance = Vector3.Distance(transform.position, playerPos.position);
 
-        // Run away if health is low
+        // Ren weg als health laag is
         if (health.GetHealth() < health.maxHealth / 4)
         {
             currentState = States.runAway;
             return;
         }
 
-        // Stand and shoot if close and visible
+        // Blijft staan en valt aan
         if (distance < InRangeDistance && PlayerIsVisable())
         {
             currentState = States.standAndAttack;
             return;
         }
 
-        // Follow player if within spotting distance and visible, and currently patrolling
+        // Volgt speler
         if (distance <= SpottingDistance && PlayerIsVisable() && currentState == States.patrolling)
         {
             currentState = States.followPlayer;
             return;
         }
 
-        // Go back to patrolling if too far or no longer visible
+        // Loop patrolling route
         if ((distance > SpottingDistance || !PlayerIsVisable()) &&
            (currentState == States.followPlayer || currentState == States.standAndAttack))
         {
@@ -49,7 +49,7 @@ public class RangedEnemy : Enemy
             attackTimer = 0f;
         }
     }
-    IEnumerator ShootWithDelay()
+    protected IEnumerator ShootWithDelay()
     {
         float randomDelay = Random.Range(attackDelay - 0.3f, attackDelay + 0.3f);
         yield return new WaitForSeconds(randomDelay);

@@ -42,7 +42,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    void Die()
+    public virtual void Die()
     {
         if (gameObject.CompareTag("Player"))
         {
