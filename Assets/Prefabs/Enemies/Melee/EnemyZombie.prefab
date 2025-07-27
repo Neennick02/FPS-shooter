@@ -126,6 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6263498649709061747}
+  - component: {fileID: 5004483943784793724}
   m_Layer: 0
   m_Name: Parent
   m_TagString: Untagged
@@ -150,6 +151,21 @@ Transform:
   - {fileID: 8875365194585570750}
   m_Father: {fileID: 4458805741349426240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5004483943784793724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760844008444141669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f66ce47507bbd4d84a586476aa57f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 6052829708018133515}
+  health: 0
+  maxHealth: 100
 --- !u!1 &5125900120189350191
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +328,6 @@ GameObject:
   - component: {fileID: 3866823944688650610}
   - component: {fileID: 2635267829259006815}
   - component: {fileID: 1914546939725902773}
-  - component: {fileID: 4967417608987533745}
   m_Layer: 0
   m_Name: Head
   m_TagString: Enemy
@@ -409,21 +424,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4967417608987533745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6570150623823270036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f66ce47507bbd4d84a586476aa57f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 6052829708018133515}
-  health: 0
-  maxHealth: 100
 --- !u!1 &7277204358200805876
 GameObject:
   m_ObjectHideFlags: 0
