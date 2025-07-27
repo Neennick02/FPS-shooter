@@ -6,6 +6,10 @@ public class Recoil_Sway_ADS : MonoBehaviour
     [SerializeField] float swayAmount = .02f;
     [SerializeField] float swaySmooth = 6f;
 
+    // Internal sway offsets
+    private Vector3 swayOffset;
+    private Quaternion swayRotation;
+
     [Header("Recoil config")]
     [SerializeField] float recoilKickBack = .1f;
     [SerializeField] float recoilUp = 2f;
@@ -29,11 +33,11 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
     private void Start()
     {
-        currentPosition = transform.localPosition;
-        currentRotation = transform.localRotation;
+        currentPosition = Vector3.zero;
+        currentRotation = Quaternion.identity;
 
-        startPos = hip_Pos.localPosition;
-        startRotation = hip_Pos.localRotation;
+        //startPos = hip_Pos.localPosition;
+        //startRotation = hip_Pos.localRotation;
 
         normalFOV = playerCam.fieldOfView;
 
@@ -52,8 +56,9 @@ public class Recoil_Sway_ADS : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
 
         //target pos based on mouse pos
-        Vector3 swayOffset = new Vector3(-mouseX, -mouseY, 0) * swayAmount;
-
+        swayOffset = new Vector3(-mouseX, -mouseY, 0) * swayAmount;
+        swayRotation = Quaternion.Euler(-mouseY * swayAmount * 30f, mouseX * swayAmount * 30f, 0f);
+        
         //smooth move position & rotation
         transform.localPosition = Vector3.Lerp(transform.localPosition, startPos + swayOffset + currentPosition, Time.deltaTime * swaySmooth);
         transform.localRotation = Quaternion.Slerp(transform.localRotation, startRotation * currentRotation, Time.deltaTime * recoilReturnSpeed);
@@ -90,16 +95,16 @@ public class Recoil_Sway_ADS : MonoBehaviour
         //move between hipPos and ADSpos
         if (isAiming)
         {
-            startPos = Vector3.Lerp(startPos, ADS_pos.localPosition, Time.deltaTime * aimSpeed);
-            startRotation = Quaternion.Lerp(startRotation, ADS_pos.localRotation, Time.deltaTime * aimSpeed);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, ADS_pos.localPosition, Time.deltaTime * aimSpeed);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, ADS_pos.localRotation, Time.deltaTime * aimSpeed);
 
             //change FOV
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, zoomFOV, Time.deltaTime * aimSpeed);
         }
         else //move back
         {
-            startPos = Vector3.Lerp(startPos, hip_Pos.localPosition, Time.deltaTime * aimSpeed);
-            startRotation = Quaternion.Lerp(startRotation, hip_Pos.localRotation, Time.deltaTime * aimSpeed);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, hip_Pos.localPosition, Time.deltaTime * aimSpeed);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, hip_Pos.localRotation, Time.deltaTime * aimSpeed);
 
             //change FOV
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * aimSpeed);
