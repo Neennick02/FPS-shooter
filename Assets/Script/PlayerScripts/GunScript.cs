@@ -8,6 +8,7 @@ public class GunScript : MonoBehaviour
     [SerializeField] Camera playerCam;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject impactEffect;
+    [SerializeField] Recoil_Sway_ADS recoilScript;
 
     [SerializeField] float fireInterval = .5f;
     void Start()
@@ -31,6 +32,8 @@ public class GunScript : MonoBehaviour
         {
             muzzleFlash.Play();
         }
+
+        recoilScript.ApplyRecoil();
 
         RaycastHit hit;
         //send raycast
