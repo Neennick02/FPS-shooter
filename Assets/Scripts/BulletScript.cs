@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    Rigidbody rb;
+    /*Rigidbody rb;
     [SerializeField] float speed = 50f;
     public int damageAmount = 10;
     void Start()
@@ -33,5 +33,18 @@ public class BulletScript : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Transform hitTransform = collision.transform;
+
+        if (hitTransform.CompareTag("Player"))
+        {
+            Debug.Log("Player hit");
+            hitTransform.GetComponent<Health>().TakeDamage(10);
+
+        }
+        Destroy(gameObject);
     }
 }

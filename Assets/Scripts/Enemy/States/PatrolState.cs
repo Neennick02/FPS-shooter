@@ -5,7 +5,7 @@ public class PatrolState : BaseState
 
     public int waypointIndex;
     public float waitTimer;
-    [SerializeField] float waitDuration = 1;
+    
     public override void Enter()
     {
         
@@ -30,7 +30,7 @@ public class PatrolState : BaseState
         if(enemy.Agent.remainingDistance < 0.2f)
         {
             waitTimer += Time.deltaTime;
-            if(waitTimer > waitDuration)
+            if(waitTimer > enemy.waitDuration)
             {
                 if (waypointIndex < enemy.path.waypoints.Count - 1)
                 {
