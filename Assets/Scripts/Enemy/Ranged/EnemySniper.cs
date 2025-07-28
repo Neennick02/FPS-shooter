@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemySniper : RangedEnemy
 {
-    public override void ChangeState()
+   /* public override void ChangeState()
     {
         float distance = Vector3.Distance(transform.position, playerPos.position);
 
@@ -29,5 +29,5 @@ public class EnemySniper : RangedEnemy
             RotateToPlayer();
             Attack();
         }
-    }
+    }*/
 }

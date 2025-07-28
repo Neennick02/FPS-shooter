@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
-    public override void ChangeState()
+   /* public override void ChangeState()
     {
         float distance = Vector3.Distance(transform.position, playerPos.position);
 
@@ -51,9 +51,9 @@ public class MeleeEnemy : Enemy
 
             if(health != null)
             {
-                playerHealth.Sethealth(damageAmount);
+                playerHealth.Heal(damageAmount);
             }
             attackTimer = 0;
         }
-    }
+    }*/
 }

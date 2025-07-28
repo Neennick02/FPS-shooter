@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Processors;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Movement")]
+    /*[Header("Movement")]
     [SerializeField] float rotationSpeed = 3;
     [SerializeField] float movementSpeed = 3;
 
@@ -34,6 +34,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected States currentState;
     protected Transform playerPos;
 
+
+
+
+
+    //s 
+
+
+
+
+
+
+
+/*
     protected enum States
     {
         patrolling,
@@ -203,6 +216,67 @@ public class Enemy : MonoBehaviour
                 return true;
         }
 
+        return false;
+    } */
+
+
+
+    NavMeshAgent agent;
+    StateMachine stateMachine;
+    public NavMeshAgent Agent { get => agent; }
+    //debug
+    [SerializeField] string currentState;
+    public EnemyPath path;
+    GameObject player;
+    public float spottingDistance;
+    public float FOV = 85;
+    public float eyeHeight;
+    private void Start()
+    {
+        stateMachine = GetComponent<StateMachine>();
+        agent = GetComponent<NavMeshAgent>();
+        stateMachine.Initialise();
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void Update()
+    {
+        CanSeePlayer();
+        currentState = stateMachine.activeState.ToString();
+    }
+
+    public bool CanSeePlayer()
+    {
+        if(player != null)
+        {
+            //is player close enough
+            if(Vector3.Distance(transform.position, player.transform.position) < spottingDistance)
+            {
+                Vector3 targetDir = player.transform.position - transform.position - (Vector3.up * eyeHeight);
+                float angleToPlayer = Vector3.Angle(targetDir, transform.forward);
+                targetDir.Normalize();
+
+                Debug.DrawLine(
+                           transform.position + (Vector3.up * eyeHeight),
+                           transform.position + (Vector3.up * eyeHeight) + targetDir * spottingDistance,
+                           Color.red);
+
+                //checkt if player is in FOV
+                if (angleToPlayer >= -FOV && angleToPlayer <= FOV)
+                {
+                    Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDir);
+                    RaycastHit hitInfo = new RaycastHit();
+                    if(Physics.Raycast(ray, out hitInfo, spottingDistance))
+                    {
+                        //checkt if object is player 
+                        if(hitInfo.transform.gameObject == player)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 }

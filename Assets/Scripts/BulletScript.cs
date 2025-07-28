@@ -23,7 +23,7 @@ public class BulletScript : MonoBehaviour
             Health otherHealh = other.GetComponent<Health>();
             if(otherHealh != null)
             {
-                otherHealh.Sethealth(damageAmount);
+                otherHealh.TakeDamage(damageAmount);
             }
             Destroy(gameObject);
         }

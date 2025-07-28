@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RangedEnemy : Enemy
 {
-    [SerializeField] GameObject bulletPrefab;
+  /*  [SerializeField] GameObject bulletPrefab;
     [SerializeField] protected Transform firePos;
     [SerializeField] protected float attackDelay = .5f;
     public override void ChangeState()
@@ -56,5 +56,5 @@ public class RangedEnemy : Enemy
 
         GameObject prefab = Instantiate(bulletPrefab, firePos.position, firePos.rotation);
         prefab.GetComponent<BulletScript>().damageAmount = damageAmount;
-    }
+    }*/
 }

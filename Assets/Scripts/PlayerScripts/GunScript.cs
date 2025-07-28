@@ -44,7 +44,7 @@ public class GunScript : MonoBehaviour
 
             if(targetHealth != null)
             {
-                targetHealth.Sethealth(damage);
+                targetHealth.TakeDamage(damage);
             }
 
             //add impactEffect
