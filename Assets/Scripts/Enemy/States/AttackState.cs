@@ -39,6 +39,7 @@ public class AttackState : BaseState
             if(losePlayerTimer > 3)
             {
                 //change to search state
+                
                 stateMachine.ChangeState(new SearchState());
             }
         }

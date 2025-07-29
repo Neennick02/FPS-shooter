@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class GunScript : MonoBehaviour
 {
+    public bool fullAutoEnabled;
+
     [SerializeField] int damage = 10;
     [SerializeField] float range = 100f;
-    [SerializeField] float fireRate = 10f;
+
+
+    [SerializeField] float fireRate = .2f;
+    float fullAutoTimer = 0;
+
     [SerializeField] Camera playerCam;
-    [SerializeField] ParticleSystem muzzleFlash;
-    [SerializeField] GameObject impactEffect;
     [SerializeField] Recoil_Sway_ADS recoilScript;
 
-    [SerializeField] float fireInterval = .5f;
+    [SerializeField] ParticleSystem muzzleFlash;
+    [SerializeField] GameObject impactEffect;
+
+    [SerializeField] InputManager inputManager;
+
     void Start()
     {
         
@@ -18,12 +26,26 @@ public class GunScript : MonoBehaviour
 
     void Update()
     {
-        //fire bullet
-        if (Input.GetMouseButtonDown(0) && Time.time >= fireInterval)
+        //full auto
+        if (fullAutoEnabled)
         {
-            fireInterval = Time.time + 1f / fireRate;
-            Shoot();
+            fullAutoTimer += Time.deltaTime;
+
+            if(inputManager.onFoot.Shoot.IsPressed() && fullAutoTimer > fireRate)
+            {
+                Shoot();
+                fullAutoTimer = 0f;
+            }
         }
+        else
+        {
+            if (inputManager.onFoot.Shoot.triggered && Time.time >= fireRate)
+            {
+                
+                Shoot();
+            }
+        }
+        
     }
 
     void Shoot()
@@ -32,8 +54,7 @@ public class GunScript : MonoBehaviour
         {
             muzzleFlash.Play();
         }
-
-        recoilScript.ApplyRecoil();
+        recoilScript.RecoilFire();
 
         RaycastHit hit;
         //send raycast

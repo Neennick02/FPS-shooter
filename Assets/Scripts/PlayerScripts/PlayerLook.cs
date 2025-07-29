@@ -4,22 +4,39 @@ public class PlayerLook : MonoBehaviour
 {
     public Camera cam;
     float xRotation = 0f;
-
+    float yRotation = 0f;
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
+
+    float recoilX = -2;
+    float recoilY = 2;
+    [SerializeField] float recoilReturnSpeed = 8;
     public void ProcessLook(Vector2 input)
     {
         float mouseX = input.x;
         float mouseY = input.y;
 
-        //calculate camera rotation
-        xRotation -= (mouseY * Time.deltaTime) *ySensitivity;
+        // Apply vertical rotation (pitch) with recoil
+        xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
+        xRotation += recoilX; // Add recoil pitch
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
-        //apply to camera transform
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        // Apply horizontal rotation (yaw) with recoil
+        yRotation += (mouseX * Time.deltaTime) * xSensitivity;
+        yRotation += recoilY;
 
-        //rotate to look left/right
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
+        // Apply rotations
+        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        transform.rotation = Quaternion.Euler(0, yRotation, 0);
+
+        // Smoothly reset recoil over time
+        recoilX = Mathf.Lerp(recoilX, 0, Time.deltaTime * recoilReturnSpeed);
+        recoilY = Mathf.Lerp(recoilY, 0, Time.deltaTime * recoilReturnSpeed);
+    }
+
+    public void AddCamRecoil(float up, float side)
+    {
+        recoilX += up;
+        recoilY += side;
     }
 }

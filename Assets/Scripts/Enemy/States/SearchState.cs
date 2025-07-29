@@ -25,7 +25,7 @@ public class SearchState : BaseState
             searchTimer += Time.deltaTime;
             moveTimer += Time.deltaTime;
 
-            if (moveTimer > Random.Range(3, 5))
+            if (moveTimer > Random.Range(1, 3))
             {
                 //walk around to find player
                 enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 10));

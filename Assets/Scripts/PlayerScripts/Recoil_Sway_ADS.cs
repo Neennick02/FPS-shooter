@@ -13,14 +13,14 @@ public class Recoil_Sway_ADS : MonoBehaviour
     [Header("Recoil config")]
     [SerializeField] float recoilKickBack = .1f;
     [SerializeField] float recoilUp = 2f;
+    [SerializeField] float recoilSide = 2f;
     [SerializeField] float recoilReturnSpeed = 6f;
 
-    Vector3 startPos;
-    Quaternion startRotation;
     Vector3 currentPosition;
     Quaternion currentRotation;
 
     [Header("ADS config")]
+    public bool isAiming = false;
     [SerializeField] Transform ADS_pos;
     [SerializeField] Transform hip_Pos;
     [SerializeField] float aimSpeed = 8f;
@@ -29,56 +29,32 @@ public class Recoil_Sway_ADS : MonoBehaviour
     [SerializeField] float zoomFOV = 40f;
     float normalFOV;
 
-    bool isAiming = false;
+    Vector3 basePos;
+    Quaternion baseRot;
+
+    [SerializeField] PlayerLook playerLookScript;
+
 
     private void Start()
     {
         currentPosition = Vector3.zero;
         currentRotation = Quaternion.identity;
 
-        //startPos = hip_Pos.localPosition;
-        //startRotation = hip_Pos.localRotation;
+        basePos = transform.position;
+        baseRot = transform.rotation;
 
         normalFOV = playerCam.fieldOfView;
-
     }
 
     private void Update()
     {
-        HandleSway();
         HandleRecoil();
         ChangeGrip();
     }
 
-    void HandleSway()
+    private void LateUpdate()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        //target pos based on mouse pos
-        swayOffset = new Vector3(-mouseX, -mouseY, 0) * swayAmount;
-        swayRotation = Quaternion.Euler(-mouseY * swayAmount * 30f, mouseX * swayAmount * 30f, 0f);
-        
-        //smooth move position & rotation
-        transform.localPosition = Vector3.Lerp(transform.localPosition, startPos + swayOffset + currentPosition, Time.deltaTime * swaySmooth);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, startRotation * currentRotation, Time.deltaTime * recoilReturnSpeed);
-    }
-
-    void HandleRecoil()
-    {
-        // Slowly reset recoil position and rotation
-        currentPosition = Vector3.Lerp(currentPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
-        currentRotation = Quaternion.Slerp(currentRotation, Quaternion.identity, Time.deltaTime * recoilReturnSpeed);
-    }
-
-    //gets called when player shoots
-    public void ApplyRecoil()
-    {
-        //gun recoil
-        currentPosition -= new Vector3(0, 0, recoilKickBack);
-        currentRotation *= Quaternion.Euler(-recoilUp, 0, 0);
-
-        //cam recoil
+        HandleSway();
     }
 
     void ChangeGrip()
@@ -95,19 +71,56 @@ public class Recoil_Sway_ADS : MonoBehaviour
         //move between hipPos and ADSpos
         if (isAiming)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, ADS_pos.localPosition, Time.deltaTime * aimSpeed);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, ADS_pos.localRotation, Time.deltaTime * aimSpeed);
+            basePos = Vector3.Lerp(basePos, ADS_pos.localPosition, Time.deltaTime * aimSpeed);
+            baseRot = Quaternion.Lerp(baseRot, ADS_pos.localRotation, Time.deltaTime * aimSpeed);
 
             //change FOV
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, zoomFOV, Time.deltaTime * aimSpeed);
         }
         else //move back
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, hip_Pos.localPosition, Time.deltaTime * aimSpeed);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, hip_Pos.localRotation, Time.deltaTime * aimSpeed);
+            basePos = Vector3.Lerp(basePos, hip_Pos.localPosition, Time.deltaTime * aimSpeed);
+            baseRot = Quaternion.Lerp(baseRot, hip_Pos.localRotation, Time.deltaTime * aimSpeed);
 
             //change FOV
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * aimSpeed);
         }
+    }
+
+
+    void HandleRecoil()
+    {
+        // Slowly reset recoil position and rotation
+        currentPosition = Vector3.Lerp(currentPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
+        currentRotation = Quaternion.Slerp(currentRotation, Quaternion.identity, Time.deltaTime * recoilReturnSpeed);
+    }
+
+    void HandleSway()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        //target pos based on mouse pos
+        swayOffset = new Vector3(-mouseX, -mouseY, 0) * swayAmount;
+        swayRotation = Quaternion.Euler(-mouseY * swayAmount * 30f, mouseX * swayAmount * 30f, 0f);
+
+        //combine sway + base + recoil
+        Vector3 finalPos = basePos + swayOffset + currentPosition;
+        Quaternion finalRot = baseRot * swayRotation * currentRotation;
+
+        //smooth move position & rotation
+        transform.localPosition = Vector3.Lerp(transform.localPosition, finalPos, Time.deltaTime * swaySmooth);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, finalRot, Time.deltaTime * recoilReturnSpeed);
+    }
+
+
+    public void RecoilFire()
+    {
+        //gun recoil
+        currentPosition -= new Vector3(0, 0, recoilKickBack);
+        currentRotation *= Quaternion.Euler(-recoilUp, 0, 0);
+
+        //camera recoil
+        playerLookScript.AddCamRecoil(Random.Range(recoilUp, recoilUp - 1) /3, Random.Range(-recoilSide, recoilSide));
     }
 }
