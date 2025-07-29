@@ -33,8 +33,7 @@ public class Recoil_Sway_ADS : MonoBehaviour
     Quaternion baseRot;
 
     [SerializeField] PlayerLook playerLookScript;
-
-
+    public InputManager input;
     private void Start()
     {
         currentPosition = Vector3.zero;
@@ -59,7 +58,7 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
     void ChangeGrip()
     {
-        if (Input.GetButton("Fire2"))
+        if (input.onFoot.Aim.IsPressed())
         {
             isAiming = true;
         }
