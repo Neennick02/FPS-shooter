@@ -27,7 +27,7 @@ public class AttackState : BaseState
 
             if (moveTimer > Random.Range(3, 6))
             {
-                enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
+                enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 2));
                 moveTimer = 0;
             }
             //store player position
@@ -63,6 +63,9 @@ public class AttackState : BaseState
 
         //add force to bullet
         bullet.GetComponent<Rigidbody>().linearVelocity = Quaternion.AngleAxis(Random.Range(-enemy.shootingAccuracy, enemy.shootingAccuracy), Vector3.up) * shootDir * enemy.bulletSpeed;
+
+        //control bulletDamage
+        bullet.GetComponent<BulletScript>().SetDamage(enemy.damageAmount);
         shotTimer = 0;
     }
 }

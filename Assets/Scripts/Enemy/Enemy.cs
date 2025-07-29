@@ -236,6 +236,7 @@ public class Enemy : MonoBehaviour
     public float waitDuration = 1;
 
     [Header("Weapon Values")]
+    public int damageAmount;
     public Transform barrel;
     [Range(0.1f, 10f)] public float fireRate;
     public float bulletSpeed = 30;

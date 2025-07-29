@@ -33,18 +33,25 @@ public class Shotgun : GunScript
             Vector3 dir = playerCam.transform.forward;
             dir = AddSpread(dir);
 
+            Ray ray = new Ray(playerCam.transform.position, dir);
             //fire pallets
-            if (Physics.Raycast(playerCam.transform.position, dir, out RaycastHit hit, range))
+            if (Physics.Raycast(ray, out RaycastHit hit, range))
             {
                 //damage target
                 Health targetHealth = hit.transform.gameObject.GetComponent<Health>();
+                Rigidbody targetRigidbody = hit.rigidbody;
                 if(targetHealth != null)
                 {
                     targetHealth.TakeDamage(damage);
                 }
 
+                if (targetRigidbody != null)
+                {
+                    targetRigidbody.AddForceAtPosition(ray.direction * force, hit.point, ForceMode.Impulse);
+                }
+
                 //impact effect
-                if(impactEffect != null)
+                if (impactEffect != null)
                 {
                     GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(impactGo, 2);

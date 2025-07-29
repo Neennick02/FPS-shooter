@@ -4,18 +4,19 @@ public abstract class GunScript : MonoBehaviour
 {
     [Header("Shooting config")]
     [SerializeField] protected int damage = 10;
+    [SerializeField] protected float force = 50;
     [SerializeField] protected float range = 100f;
     [SerializeField] protected float fireRate = .2f;
     float fullAutoTimer = 0;
     [SerializeField] protected float recoilUp, recoilSide;
 
     [Header("Ammo config")]
-    public bool fullAutoEnabled;
+    [SerializeField] protected bool fullAutoEnabled;
     public bool isReloading;
-    public int ammoInChamber;
-    public int maxMagSize;
-    public int magAmout;
-    public float reloadTime;
+    [SerializeField] protected int ammoInChamber;
+    [SerializeField] protected int maxMagSize= 10;
+    [SerializeField] protected int magAmount = 5;
+    [SerializeField] protected float reloadTime;
     float timer = 0;
 
     [Header("Effects config")]
@@ -79,15 +80,22 @@ public abstract class GunScript : MonoBehaviour
         recoilScript.RecoilFire(recoilUp ,recoilSide);
 
         RaycastHit hit;
+        Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
         //send raycast
-        if(Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range))
+        if(Physics.Raycast(ray, out hit, range))
         {
             //find target health
             Health targetHealth = hit.transform.GetComponent<Health>();
+            Rigidbody targetRigidbody = hit.transform.GetComponent<Rigidbody>();
 
             if(targetHealth != null)
             {
                 targetHealth.TakeDamage(damage);
+            }
+
+            if(targetRigidbody != null)
+            {
+                targetRigidbody.AddForceAtPosition(ray.direction * force, hit.point, ForceMode.Impulse);
             }
 
             //add impactEffect
@@ -103,12 +111,12 @@ public abstract class GunScript : MonoBehaviour
     protected void Reload()
     {
         //reload when mag is empty
-        if (ammoInChamber == 0 && magAmout > 0)
+        if (ammoInChamber == 0 && magAmount > 0)
         {
             isReloading = true;
         }
         //you can only reload when mag is not full
-        if (inputManager.onFoot.Reload.IsPressed() && ammoInChamber < maxMagSize && magAmout > 0)
+        if (inputManager.onFoot.Reload.IsPressed() && ammoInChamber < maxMagSize && magAmount > 0)
         {
             isReloading = true;
         }
@@ -123,13 +131,13 @@ public abstract class GunScript : MonoBehaviour
         //fill mag when reloading is done
         if (timer > reloadTime)
         {
-            magAmout--;
+            magAmount--;
             ammoInChamber = maxMagSize;
             isReloading = false;
             timer = 0;
         }
 
-        UI.UpdateAmmoCounter(ammoInChamber, magAmout);
+        UI.UpdateAmmoCounter(ammoInChamber, magAmount);
         UI.ReloadBar(timer, reloadTime);
 
 

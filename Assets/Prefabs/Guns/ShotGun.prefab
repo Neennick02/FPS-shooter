@@ -132,16 +132,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e3d1a5c9e3a2c44971a5bb895cdc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullAutoEnabled: 0
   damage: 50
   range: 7
   fireRate: 1
-  recoilUp: 1
+  recoilUp: -1
   recoilSide: 0.5
+  fullAutoEnabled: 0
   isReloading: 0
   ammoInChamber: 0
-  maxMagSize: 5
-  magAmout: 5
+  maxMagSize: 6
+  magAmount: 5
   reloadTime: 3
   recoilScript: {fileID: 0}
   muzzleFlash: {fileID: 1143576233333614742}

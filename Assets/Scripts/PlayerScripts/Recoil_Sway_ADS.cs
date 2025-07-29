@@ -36,8 +36,10 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
     [SerializeField] PlayerLook playerLookScript;
     public InputManager input;
+    GunScript gun;
     private void Start()
     {
+        gun = GetComponentInChildren<GunScript>();
         currentPosition = Vector3.zero;
         currentRotation = Quaternion.identity;
 
@@ -60,7 +62,7 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
     void ChangeGrip()
     {
-        if (input.onFoot.Aim.IsPressed())
+        if (input.onFoot.Aim.IsPressed() && !gun.isReloading)
         {
             isAiming = true;
         }
@@ -69,6 +71,8 @@ public class Recoil_Sway_ADS : MonoBehaviour
             isAiming = false;
         }
 
+
+        //makes sure to use pistol hold positions when using pistols
         if(weaponManager.weaponIndex == 0)
         {
             Aim(pistol_Hip_Pos, pistol_ADS_Pos);

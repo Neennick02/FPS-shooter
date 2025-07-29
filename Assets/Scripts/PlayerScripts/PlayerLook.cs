@@ -8,8 +8,8 @@ public class PlayerLook : MonoBehaviour
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
 
-    float recoilX = -2;
-    float recoilY = 2;
+    float recoilX = 0;
+    float recoilY = 0;
     [SerializeField] float recoilReturnSpeed = 8;
     public void ProcessLook(Vector2 input)
     {
