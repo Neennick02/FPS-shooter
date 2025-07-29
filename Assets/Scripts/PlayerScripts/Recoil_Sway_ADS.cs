@@ -12,8 +12,6 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
     [Header("Recoil config")]
     [SerializeField] float recoilKickBack = .1f;
-    [SerializeField] float recoilUp = 2f;
-    [SerializeField] float recoilSide = 2f;
     [SerializeField] float recoilReturnSpeed = 6f;
 
     Vector3 currentPosition;
@@ -23,8 +21,12 @@ public class Recoil_Sway_ADS : MonoBehaviour
     public bool isAiming = false;
     [SerializeField] Transform ADS_pos;
     [SerializeField] Transform hip_Pos;
-    [SerializeField] float aimSpeed = 8f;
 
+    [SerializeField] Transform pistol_Hip_Pos;
+    [SerializeField] Transform pistol_ADS_Pos;
+
+    [SerializeField] float aimSpeed = 8f;
+    [SerializeField] WeaponManager weaponManager;
     [SerializeField] Camera playerCam;
     [SerializeField] float zoomFOV = 40f;
     float normalFOV;
@@ -67,6 +69,18 @@ public class Recoil_Sway_ADS : MonoBehaviour
             isAiming = false;
         }
 
+        if(weaponManager.weaponIndex == 0)
+        {
+            Aim(pistol_Hip_Pos, pistol_ADS_Pos);
+        }
+        else
+        {
+            Aim(hip_Pos, ADS_pos);
+        }
+    }
+
+    void Aim(Transform hipPos, Transform ADSpos)
+    {
         //move between hipPos and ADSpos
         if (isAiming)
         {
@@ -113,7 +127,7 @@ public class Recoil_Sway_ADS : MonoBehaviour
     }
 
 
-    public void RecoilFire()
+    public void RecoilFire(float recoilUp, float recoilSide)
     {
         //gun recoil
         currentPosition -= new Vector3(0, 0, recoilKickBack);

@@ -6,13 +6,15 @@ public class PlayerMotor : MonoBehaviour
     CharacterController controller;
     Vector3 playerVelocity;
     public float speed = 5f;
+    public float sprintSpeed = 10f;
     bool isGrounded;
+    bool isSprinting = false;
     public float gravity = -9.8f;
-
+    InputManager input;
     void Start()
     {
         controller = GetComponent<CharacterController>();
-
+        input = GetComponent<InputManager>();
         //makes cursor invisible during gameplay
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -22,6 +24,16 @@ public class PlayerMotor : MonoBehaviour
     void Update()
     {
         isGrounded = controller.isGrounded;
+
+
+        if (input.onFoot.Sprint.triggered)
+        {
+            isSprinting = true;
+        }
+        else if (input.onFoot.Sprint.WasReleasedThisFrame())
+        {
+            isSprinting = false;
+        }
     }
 
     //receive input from InputManager and apply to CharacterController
@@ -31,7 +43,14 @@ public class PlayerMotor : MonoBehaviour
         moveDirection.x = input.x;
         moveDirection.z = input.y;
 
-        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+        if (isSprinting)
+        {
+            controller.Move(transform.TransformDirection(moveDirection) * sprintSpeed * Time.deltaTime);
+        }
+        else
+        {
+            controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+        }
 
         if(controller.isGrounded && playerVelocity.y < 0)
         {

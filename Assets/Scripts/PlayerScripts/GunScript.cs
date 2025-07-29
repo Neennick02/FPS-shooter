@@ -1,47 +1,49 @@
 using UnityEngine;
-
-public class GunScript : MonoBehaviour
+using System.Collections;
+public abstract class GunScript : MonoBehaviour
 {
-    public bool fullAutoEnabled;
-    public bool isReloading;
+    [Header("Shooting config")]
+    [SerializeField] protected int damage = 10;
+    [SerializeField] protected float range = 100f;
+    [SerializeField] protected float fireRate = .2f;
+    float fullAutoTimer = 0;
+    [SerializeField] protected float recoilUp, recoilSide;
 
     [Header("Ammo config")]
+    public bool fullAutoEnabled;
+    public bool isReloading;
     public int ammoInChamber;
-    public int maxMagSize =5;
-    public int magAmout = 5;
-    public float reloadTime = 3f;
+    public int maxMagSize;
+    public int magAmout;
+    public float reloadTime;
     float timer = 0;
 
-    [SerializeField] int damage = 10;
-    [SerializeField] float range = 100f;
+    [Header("Effects config")]
+    [SerializeField] protected Recoil_Sway_ADS recoilScript;
+    protected Camera playerCam;
+    [SerializeField] protected ParticleSystem muzzleFlash;
+    [SerializeField] protected GameObject impactEffect;
 
-
-    [SerializeField] float fireRate = .2f;
-    float fullAutoTimer = 0;
-
-    [SerializeField] Camera playerCam;
-    [SerializeField] Recoil_Sway_ADS recoilScript;
-
-    [SerializeField] ParticleSystem muzzleFlash;
-    [SerializeField] GameObject impactEffect;
-
-    InputManager inputManager;
-    PlayerUI UI;
-    void Start()
+    protected InputManager inputManager;
+    protected  PlayerUI UI;
+    protected virtual void Start()
     {
         ammoInChamber = maxMagSize;
-        UI = GetComponent<PlayerUI>();
-        inputManager = GetComponent<InputManager>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        UI = player.GetComponent<PlayerUI>();
+        playerCam = Camera.main;
+        inputManager = player.GetComponent<InputManager>();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         //full auto
         if (fullAutoEnabled)
         {
             fullAutoTimer += Time.deltaTime;
 
-            if(inputManager.onFoot.Shoot.IsPressed() && fullAutoTimer > fireRate && ammoInChamber > 0)
+            if(inputManager.onFoot.Shoot.IsPressed() && fullAutoTimer > fireRate && ammoInChamber > 0 && !isReloading)
             {
                 Shoot();
                 fullAutoTimer = 0f;
@@ -50,18 +52,22 @@ public class GunScript : MonoBehaviour
         //semi auto
         else
         {
-            if (inputManager.onFoot.Shoot.triggered && Time.time >= fireRate && ammoInChamber > 0)
+            if (inputManager.onFoot.Shoot.triggered && Time.time >= fireRate && ammoInChamber > 0 && !isReloading)
             {
-                
                 Shoot();
             }
+        }
+
+        if (inputManager.onFoot.FullAutoonoff.IsPressed())
+        {
+            fullAutoEnabled = !fullAutoEnabled;
         }
 
 
         Reload();
     }
 
-    void Shoot()
+    protected virtual void Shoot()
     {
         //change ammo amount
         ammoInChamber--;
@@ -70,7 +76,7 @@ public class GunScript : MonoBehaviour
         {
             muzzleFlash.Play();
         }
-        recoilScript.RecoilFire();
+        recoilScript.RecoilFire(recoilUp ,recoilSide);
 
         RaycastHit hit;
         //send raycast
@@ -93,7 +99,8 @@ public class GunScript : MonoBehaviour
         }
     }
 
-    public void Reload()
+
+    protected void Reload()
     {
         //reload when mag is empty
         if (ammoInChamber == 0 && magAmout > 0)

@@ -172,6 +172,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchNextWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""052e1f14-b8bf-4c58-b06d-03a2542e467b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchLastWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""18670c75-68c8-4559-89d6-75882413caf8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FullAuto on/off"",
+                    ""type"": ""Button"",
+                    ""id"": ""6cbbe1d4-7b53-4e7f-9876-de75d8bf58b6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -469,6 +496,72 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a60e8c2-35ea-473e-8837-22704eaa2666"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchNextWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cff1cf60-7198-4f21-b47e-185b0e30725e"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchNextWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03e1746a-5202-4282-9434-09819144760b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchLastWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64883a25-7a5f-4bdc-9a4b-b8422e5c74bc"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchLastWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82a14d46-027d-4ce5-96be-875a31fd72ca"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FullAuto on/off"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3496d048-efc6-4b1d-ac2c-8445ff18b863"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FullAuto on/off"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1004,6 +1097,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_Reload = m_OnFoot.FindAction("Reload", throwIfNotFound: true);
         m_OnFoot_Sprint = m_OnFoot.FindAction("Sprint", throwIfNotFound: true);
         m_OnFoot_Crouch = m_OnFoot.FindAction("Crouch", throwIfNotFound: true);
+        m_OnFoot_SwitchNextWeapon = m_OnFoot.FindAction("SwitchNextWeapon", throwIfNotFound: true);
+        m_OnFoot_SwitchLastWeapon = m_OnFoot.FindAction("SwitchLastWeapon", throwIfNotFound: true);
+        m_OnFoot_FullAutoonoff = m_OnFoot.FindAction("FullAuto on/off", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1106,6 +1202,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_Reload;
     private readonly InputAction m_OnFoot_Sprint;
     private readonly InputAction m_OnFoot_Crouch;
+    private readonly InputAction m_OnFoot_SwitchNextWeapon;
+    private readonly InputAction m_OnFoot_SwitchLastWeapon;
+    private readonly InputAction m_OnFoot_FullAutoonoff;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnFoot".
     /// </summary>
@@ -1153,6 +1252,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnFoot/Crouch".
         /// </summary>
         public InputAction @Crouch => m_Wrapper.m_OnFoot_Crouch;
+        /// <summary>
+        /// Provides access to the underlying input action "OnFoot/SwitchNextWeapon".
+        /// </summary>
+        public InputAction @SwitchNextWeapon => m_Wrapper.m_OnFoot_SwitchNextWeapon;
+        /// <summary>
+        /// Provides access to the underlying input action "OnFoot/SwitchLastWeapon".
+        /// </summary>
+        public InputAction @SwitchLastWeapon => m_Wrapper.m_OnFoot_SwitchLastWeapon;
+        /// <summary>
+        /// Provides access to the underlying input action "OnFoot/FullAutoonoff".
+        /// </summary>
+        public InputAction @FullAutoonoff => m_Wrapper.m_OnFoot_FullAutoonoff;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1206,6 +1317,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @SwitchNextWeapon.started += instance.OnSwitchNextWeapon;
+            @SwitchNextWeapon.performed += instance.OnSwitchNextWeapon;
+            @SwitchNextWeapon.canceled += instance.OnSwitchNextWeapon;
+            @SwitchLastWeapon.started += instance.OnSwitchLastWeapon;
+            @SwitchLastWeapon.performed += instance.OnSwitchLastWeapon;
+            @SwitchLastWeapon.canceled += instance.OnSwitchLastWeapon;
+            @FullAutoonoff.started += instance.OnFullAutoonoff;
+            @FullAutoonoff.performed += instance.OnFullAutoonoff;
+            @FullAutoonoff.canceled += instance.OnFullAutoonoff;
         }
 
         /// <summary>
@@ -1244,6 +1364,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @SwitchNextWeapon.started -= instance.OnSwitchNextWeapon;
+            @SwitchNextWeapon.performed -= instance.OnSwitchNextWeapon;
+            @SwitchNextWeapon.canceled -= instance.OnSwitchNextWeapon;
+            @SwitchLastWeapon.started -= instance.OnSwitchLastWeapon;
+            @SwitchLastWeapon.performed -= instance.OnSwitchLastWeapon;
+            @SwitchLastWeapon.canceled -= instance.OnSwitchLastWeapon;
+            @FullAutoonoff.started -= instance.OnFullAutoonoff;
+            @FullAutoonoff.performed -= instance.OnFullAutoonoff;
+            @FullAutoonoff.canceled -= instance.OnFullAutoonoff;
         }
 
         /// <summary>
@@ -1542,6 +1671,27 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCrouch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchNextWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchNextWeapon(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchLastWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchLastWeapon(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FullAuto on/off" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFullAutoonoff(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
