@@ -4,18 +4,10 @@ public class Shotgun : GunScript
 {
     public int pelletsPerShot = 8;
     public float spreadAngle = 5;
+    [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] Color trailStartColor;
+    [SerializeField] Color trailEndColor;
 
-
-    protected override void Update()
-    {
-        Reload();
-
-        //disable full auto
-        if (inputManager.onFoot.Shoot.triggered && Time.time >= fireRate && ammoInChamber > 0)
-        {
-            Shoot();
-        }
-    }
 
     protected override void Shoot()
     {
@@ -37,9 +29,19 @@ public class Shotgun : GunScript
             //fire pallets
             if (Physics.Raycast(ray, out RaycastHit hit, range))
             {
+                //draw bullet trails
+                lineRenderer.enabled = true;
+                lineRenderer.startColor = trailStartColor;
+                lineRenderer.endColor = trailEndColor;
+
+                lineRenderer.SetPosition(0, playerCam.transform.position);
+                lineRenderer.SetPosition(1, hit.point);
+
+
                 //damage target
                 Health targetHealth = hit.transform.gameObject.GetComponent<Health>();
                 Rigidbody targetRigidbody = hit.rigidbody;
+
                 if(targetHealth != null)
                 {
                     targetHealth.TakeDamage(damage);

@@ -14,8 +14,6 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         onFoot.Jump.performed += ctx => motor.Jump();
-
-        look.ProcessLook(Vector2.zero);
     }
 
     private void FixedUpdate()

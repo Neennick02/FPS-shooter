@@ -13,6 +13,7 @@ public abstract class GunScript : MonoBehaviour
     [Header("Ammo config")]
     [SerializeField] protected bool fullAutoEnabled;
     public bool isReloading;
+    public bool isAiming;
     [SerializeField] protected int ammoInChamber;
     [SerializeField] protected int maxMagSize= 10;
     [SerializeField] protected int magAmount = 5;
@@ -27,11 +28,22 @@ public abstract class GunScript : MonoBehaviour
 
     protected InputManager inputManager;
     protected  PlayerUI UI;
+    [Header("Aiming config")]
+    [SerializeField] float aimSpeed = 8f;
+    [Header("Hip config")]
+    [SerializeField] protected Vector3 hipPos;
+    [SerializeField] protected Vector3 hipRot;
+
+    [Header("ADS config")]
+    [SerializeField] protected Vector3 ADSPos;
+    [SerializeField] protected Vector3 ADSRot;
+
+    protected float zoomFOV = 40;
+    float normalFOV = 60;
     protected virtual void Start()
     {
         ammoInChamber = maxMagSize;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-
         UI = player.GetComponent<PlayerUI>();
         playerCam = Camera.main;
         inputManager = player.GetComponent<InputManager>();
@@ -66,6 +78,7 @@ public abstract class GunScript : MonoBehaviour
 
 
         Reload();
+        ChangeGrip();
     }
 
     protected virtual void Shoot()
@@ -105,6 +118,35 @@ public abstract class GunScript : MonoBehaviour
                 Destroy(impactGo, 2f);
             }
         }
+    }
+
+    void ChangeGrip()
+    {
+        //can only ADS when not reloading
+        if (inputManager.onFoot.Aim.IsPressed() && !isReloading)
+        {
+            isAiming = true;
+        }
+        else
+        {
+            isAiming = false;
+        }
+        Aim();
+    }
+
+    void Aim()
+    {
+        //target pos / rotations
+        Vector3 targetPos = isAiming ? ADSPos : hipPos;
+        Quaternion targetRot = Quaternion.Euler(isAiming ? ADSRot : hipRot);
+
+        //move between points
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * aimSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * aimSpeed);
+
+        //change FOV
+        float targetFOV = isAiming ? zoomFOV : normalFOV;
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, Time.deltaTime * aimSpeed);
     }
 
 
