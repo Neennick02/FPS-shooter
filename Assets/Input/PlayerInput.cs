@@ -193,12 +193,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""FullAuto on/off"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""6cbbe1d4-7b53-4e7f-9876-de75d8bf58b6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -501,12 +501,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6a60e8c2-35ea-473e-8837-22704eaa2666"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""id"": ""2a0ab52e-d49a-4d3c-a93d-1f9c212a8502"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchNextWeapon"",
+                    ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -523,8 +523,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""03e1746a-5202-4282-9434-09819144760b"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""id"": ""07237462-a0ac-4022-ba48-e0791e2320f4"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchNextWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64883a25-7a5f-4bdc-9a4b-b8422e5c74bc"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -534,8 +545,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""64883a25-7a5f-4bdc-9a4b-b8422e5c74bc"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""id"": ""35a8674b-9918-4b1f-b3f0-6be0f7aa91fc"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

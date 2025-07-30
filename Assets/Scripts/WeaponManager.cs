@@ -1,12 +1,11 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class WeaponManager : MonoBehaviour
 {
     public Transform weaponHolder;
     public int  weaponIndex = 0;
     InputManager input;
     [SerializeField] Recoil_Sway_ADS recoilScript;
-
     private void Start()
     {
         input = GetComponent<InputManager>();
@@ -34,6 +33,31 @@ public class WeaponManager : MonoBehaviour
                 weaponIndex = weaponHolder.childCount -1;
             }
             SelectWeapon(weaponIndex);
+        }
+
+        if(Mouse.current != null)
+        {
+            float scroll = Mouse.current.scroll.ReadValue().y;
+            if(scroll > 0)
+            {
+                // Scroll up = next weapon
+                weaponIndex++;
+                if (weaponIndex >= weaponHolder.childCount)
+                {
+                    weaponIndex = 0;
+                }
+                SelectWeapon(weaponIndex);
+            }
+            else if(scroll < 0)
+            {
+                // Scroll down = previous weapon
+                weaponIndex--;
+                if (weaponIndex < 0)
+                {
+                    weaponIndex = weaponHolder.childCount - 1;
+                }
+                SelectWeapon(weaponIndex);
+            }
         }
     }
 
