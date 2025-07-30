@@ -62,7 +62,6 @@ public class Shotgun : GunScript
             }
             else
             {
-                Debug.Log("out of range");
                 //when the raycast hits nothing
                 targetPos = firePoint.position + dir.normalized * range;
             }

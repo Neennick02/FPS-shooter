@@ -3962,7 +3962,23 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: endC.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: endC.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: endC.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: endC.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
@@ -4007,7 +4023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: startC.a
-      value: 1
+      value: 0.7294118
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: startC.b
@@ -4019,11 +4035,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: startC.r
-      value: 1
+      value: 0.6037736
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: magAmount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: rangeOffSet
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: spreadAngle
