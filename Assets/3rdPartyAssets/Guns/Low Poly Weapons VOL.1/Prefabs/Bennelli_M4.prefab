@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33898383997488124}
   - component: {fileID: 23904141403194016}
   - component: {fileID: 9017129585755411369}
+  - component: {fileID: 8759583198393814700}
   m_Layer: 0
   m_Name: Bennelli_M4
   m_TagString: Untagged
@@ -105,6 +106,7 @@ MonoBehaviour:
   damage: 10
   force: 50
   range: 8
+  rangeOffSet: 2
   fireRate: 1
   recoilUp: -3
   recoilSide: 1
@@ -125,9 +127,25 @@ MonoBehaviour:
   ADSRot: {x: -1.6, y: 180, z: 0}
   pelletsPerShot: 8
   spreadAngle: 5
-  lineRenderer: {fileID: 0}
-  trailStartColor: {r: 1, g: 0.26575696, b: 0, a: 0}
-  trailEndColor: {r: 1, g: 0, b: 0.06914902, a: 0.33333334}
+  firePoint: {fileID: 6693945775543757308}
+  startC: {r: 1, g: 0.2521821, b: 0.0141509175, a: 0}
+  endC: {r: 0.6132076, g: 0, b: 0, a: 1}
+  palletManager: {fileID: 8759583198393814700}
+--- !u!114 &8759583198393814700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236257789494122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299605c4844f570479b0497893d9a9ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRendererPrefab: {fileID: 1447475531036152594, guid: d682381c8b8625447a2ecddfbb4f3c9e, type: 3}
+  poolSize: 8
+  duration: 1
 --- !u!1 &1326079549577358
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.086
+      value: -0.0929
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -322,7 +340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.3028
+      value: -0.1921
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalRotation.w

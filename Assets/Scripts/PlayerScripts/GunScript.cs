@@ -6,6 +6,7 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected int damage = 10;
     [SerializeField] protected float force = 50;
     [SerializeField] protected float range = 100f;
+    [SerializeField] protected float rangeOffSet = 5;
     [SerializeField] protected float fireRate = .2f;
     float fullAutoTimer = 0;
     [SerializeField] protected float recoilUp, recoilSide;
@@ -85,6 +86,7 @@ public abstract class GunScript : MonoBehaviour
     {
         //change ammo amount
         ammoInChamber--;
+        range = Random.Range(range - rangeOffSet, range + rangeOffSet);
 
         if(muzzleFlash != null)
         {
