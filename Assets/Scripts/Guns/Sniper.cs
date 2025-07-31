@@ -36,22 +36,32 @@ public class Sniper : GunScript
 
     protected override void Aim()
     {
+        //standard aim code
         base.Aim();
 
+        //find out if gun is almost in ADS
         bool closeToADSpos = Vector3.Distance(transform.localPosition, ADSPos) < .06f;
-        crossHair.SetActive(!closeToADSpos);
 
+        //Disable/ enable crosshairs
+        crossHair.SetActive(!closeToADSpos);
+        crossHair.GetComponentInParent<Image>().enabled = !closeToADSpos;
+
+        //enable post processing effects (lensdistorition / vignette)
         if (closeToADSpos && !showEffect)
         {
             showEffect = true;
             EnablePostEffects(.6f, .5f);
 
+            //check if coroutine is still running
             if (currentFadeCoroutine != null)
             {
                 StopCoroutine(currentFadeCoroutine);
             }
 
+            //start new coroutine
             currentFadeCoroutine = StartCoroutine(FadeInImage());
+
+            //disable gun meshes
             HideGun();
         }
         else if(!closeToADSpos && showEffect)
@@ -59,11 +69,14 @@ public class Sniper : GunScript
                 showEffect = false;
                 DisablePostEffects();
 
-                if (currentFadeCoroutine != null)
+            //check if coroutine is still running
+            if (currentFadeCoroutine != null)
                 {
                     StopCoroutine(currentFadeCoroutine);
                 }
-                currentFadeCoroutine = StartCoroutine(FadeOutImage());
+
+            //start new coroutine
+            currentFadeCoroutine = StartCoroutine(FadeOutImage());
                 ShowGun();
         }
     }
@@ -89,6 +102,7 @@ public class Sniper : GunScript
 
     public IEnumerator FadeOutImage()
     {
+        //scope image
         Color imgColor = scopeImage.color;
         SetScopeAlpha(1);
 
@@ -119,7 +133,7 @@ public class Sniper : GunScript
     }
 
     // To show the gun again
-    void ShowGun()
+    public void ShowGun()
     {
         MeshRenderer mainMesh = GetComponent<MeshRenderer>();
         mainMesh.enabled = true;
@@ -131,7 +145,7 @@ public class Sniper : GunScript
         }
     }
 
-    void SetScopeAlpha(float alpha)
+    public void SetScopeAlpha(float alpha)
     {
         Color imgColor = scopeImage.color;
         imgColor.a = alpha;
@@ -149,7 +163,7 @@ public class Sniper : GunScript
         vignette.intensity.value = vignetteAmount;
     }
 
-    void DisablePostEffects()
+    public void DisablePostEffects()
     {
 
         //disable both effects

@@ -42,8 +42,10 @@ public abstract class GunScript : MonoBehaviour
 
     protected float zoomFOV = 40;
     protected float normalFOV = 60;
+    Crosshair crossHairScript;
     protected virtual void Start()
     {
+        crossHairScript = FindFirstObjectByType<Crosshair>();
         ammoInChamber = maxMagSize;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         UI = player.GetComponent<PlayerUI>();
@@ -106,9 +108,13 @@ public abstract class GunScript : MonoBehaviour
             Health targetHealth = hit.transform.GetComponent<Health>();
             Rigidbody targetRigidbody = hit.transform.GetComponent<Rigidbody>();
 
+            //check if hitpoint has health
             if(targetHealth != null)
             {
+                //damage
                 targetHealth.TakeDamage(damage);
+                //hit marker
+                UI.ShowHitMarker(.5f);
             }
 
             if(targetRigidbody != null)
@@ -131,10 +137,12 @@ public abstract class GunScript : MonoBehaviour
         if (inputManager.onFoot.Aim.IsPressed() && !isReloading)
         {
             isAiming = true;
+            crossHairScript.SetCrossHairSize(50);
         }
         else
         {
             isAiming = false;
+            crossHairScript.SetCrossHairSize(100);
         }
         Aim();
     }
@@ -186,7 +194,11 @@ public abstract class GunScript : MonoBehaviour
 
         UI.UpdateAmmoCounter(ammoInChamber, magAmount);
         UI.ReloadBar(timer, reloadTime);
+    }
 
-
+    public void ResetGunPos()
+    {
+        transform.localPosition = hipPos;
+        transform.localRotation = Quaternion.Euler( hipRot);
     }
 }

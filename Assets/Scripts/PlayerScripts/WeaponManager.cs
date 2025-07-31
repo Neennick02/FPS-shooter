@@ -6,9 +6,11 @@ public class WeaponManager : MonoBehaviour
     public int  weaponIndex = 0;
     InputManager input;
     [SerializeField] Recoil_Sway_ADS recoilScript;
+    Sniper sniperScript;
     private void Start()
     {
         input = GetComponent<InputManager>();
+        sniperScript = FindAnyObjectByType<Sniper>();
         SelectWeapon(weaponIndex);
     }
 
@@ -22,6 +24,7 @@ public class WeaponManager : MonoBehaviour
             {
                 weaponIndex = 0;
             }
+
             SelectWeapon(weaponIndex);
         }
         else if (input.onFoot.SwitchLastWeapon.triggered)
@@ -70,6 +73,19 @@ public class WeaponManager : MonoBehaviour
             bool active = (i == index);
             //enables the currently selected gun
             weaponHolder.GetChild(i).gameObject.SetActive(active);
+
+            //resets gun position to hip when switching
+            GunScript gunScript = weaponHolder.GetChild(i).GetComponent<GunScript>();
+            gunScript.ResetGunPos();
+
+            //checks if sniper is active and disables scope
+            if (sniperScript != null)
+            {
+                sniperScript.SetScopeAlpha(0);
+                sniperScript.DisablePostEffects();
+                sniperScript.ShowGun();
+                sniperScript.ResetGunPos();
+            }
 
             if (active)
             {

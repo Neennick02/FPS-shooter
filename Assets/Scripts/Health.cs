@@ -92,9 +92,5 @@ public class Health : MonoBehaviour
         {
             Debug.Log("Game over");
         }
-        else if (gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-        }
     }
 }

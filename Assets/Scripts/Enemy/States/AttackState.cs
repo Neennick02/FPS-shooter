@@ -13,6 +13,8 @@ public class AttackState : BaseState
 
     public override void Perform()
     {
+        CheckHealth();
+
         if (enemy.CanSeePlayer())
         {
             losePlayerTimer = 0;

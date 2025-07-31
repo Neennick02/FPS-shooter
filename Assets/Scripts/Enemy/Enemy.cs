@@ -98,9 +98,6 @@ public class Enemy : MonoBehaviour
             case States.findAlly:
                 FindAlly();
                 break;
-            case States.heal:
-                Healt();
-                break;
             case States.dead:
                 Dead();
                 break;
