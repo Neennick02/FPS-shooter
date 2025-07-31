@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 public class Sniper : GunScript
@@ -8,7 +9,9 @@ public class Sniper : GunScript
     [SerializeField] Volume volume;
     Vignette vignette;
     LensDistortion distorition;
+
     [SerializeField] Image scopeImage;
+    [SerializeField] GameObject crossHair;
     [SerializeField] float fadeDuration;
     float fadeTimer ;
     Coroutine currentFadeCoroutine;
@@ -18,19 +21,11 @@ public class Sniper : GunScript
         
         base.Start();
         zoomFOV = normalFOV / 4;
-        volume.profile = Instantiate(volume.profile);
         VolumeProfile profile = volume.profile;
 
         //find post processing effects
-        if(profile.TryGet(out Vignette v))
-        {
-            vignette = v;
-        }
-        
-        if(profile.TryGet(out LensDistortion l))
-        {
-            distorition = l;
-        }
+        profile.TryGet<Vignette>(out vignette);
+        profile.TryGet<LensDistortion>(out distorition);
         //disable effects
         DisablePostEffects();
 
@@ -43,7 +38,8 @@ public class Sniper : GunScript
     {
         base.Aim();
 
-        bool closeToADSpos = Vector3.Distance(transform.localPosition, ADSPos) < .04f;
+        bool closeToADSpos = Vector3.Distance(transform.localPosition, ADSPos) < .06f;
+        crossHair.SetActive(!closeToADSpos);
 
         if (closeToADSpos && !showEffect)
         {
@@ -155,8 +151,9 @@ public class Sniper : GunScript
 
     void DisablePostEffects()
     {
+
         //disable both effects
-        distorition.intensity.overrideState = false;
-        vignette.intensity.overrideState = false;
+        distorition.intensity.value = 0;
+        vignette.intensity.value = 0;
     }
 }
