@@ -13,6 +13,7 @@ public class PatrolState : BaseState
 
     public override void Perform()
     {
+        CheckHealth();
         PatrolCyle();
         if (enemy.CanSeePlayer())
         {
@@ -27,23 +28,26 @@ public class PatrolState : BaseState
 
     public void PatrolCyle()
     {
-        if(enemy.Agent.remainingDistance < 0.2f)
+        if (enemy.Agent.enabled)
         {
-            waitTimer += Time.deltaTime;
-            if(waitTimer > enemy.waitDuration)
+            if (enemy.Agent.remainingDistance < 0.2f)
             {
-                if (waypointIndex < enemy.path.waypoints.Count - 1)
+                waitTimer += Time.deltaTime;
+                if (waitTimer > enemy.waitDuration)
                 {
-                    waypointIndex++;
+                    if (waypointIndex < enemy.path.waypoints.Count - 1)
+                    {
+                        waypointIndex++;
+                    }
+                    else
+                    {
+                        waypointIndex = 0;
+                    }
+                    enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
+                    waitTimer = 0;
                 }
-                else
-                {
-                    waypointIndex = 0;
-                }
-                enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
-                waitTimer = 0;
+
             }
-            
         }
     }
 }

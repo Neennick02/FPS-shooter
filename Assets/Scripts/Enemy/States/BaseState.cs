@@ -12,9 +12,9 @@ public abstract class BaseState
 
     protected void CheckHealth()
     {
-    //    Health currentHealth = GetComponent<Health>();
+        Health currentHealth = enemy.GetComponent<Health>();
 
-        /*//if health is low flee 
+         //if health is low flee 
         if (currentHealth.GetHealth() <= currentHealth.maxHealth / 3
              && currentHealth.GetHealth() > 0 && stateMachine.activeState is not FleeState)
         {
@@ -25,7 +25,7 @@ public abstract class BaseState
         if (currentHealth.GetHealth() <= 0)
         {
             stateMachine.ChangeState(new DeadState());
-        }*/
+        }
 
     }
 }
