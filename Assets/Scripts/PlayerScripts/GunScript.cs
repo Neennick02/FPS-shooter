@@ -8,7 +8,8 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected float range = 100f;
     [SerializeField] protected float rangeOffSet = 5;
     [SerializeField] protected float fireRate = .2f;
-    float fullAutoTimer = 0;
+    float fireRateTimer = 0;
+
     [SerializeField] protected float recoilUp, recoilSide;
 
     [Header("Ammo config")]
@@ -55,20 +56,22 @@ public abstract class GunScript : MonoBehaviour
         //full auto
         if (fullAutoEnabled)
         {
-            fullAutoTimer += Time.deltaTime;
+            fireRateTimer += Time.deltaTime;
 
-            if(inputManager.onFoot.Shoot.IsPressed() && fullAutoTimer > fireRate && ammoInChamber > 0 && !isReloading)
+            if(inputManager.onFoot.Shoot.IsPressed() && fireRateTimer > fireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
-                fullAutoTimer = 0f;
+                fireRateTimer = 0f;
             }
         }
         //semi auto
         else
         {
-            if (inputManager.onFoot.Shoot.triggered && Time.time >= fireRate && ammoInChamber > 0 && !isReloading)
+            fireRateTimer += Time.deltaTime;
+            if (inputManager.onFoot.Shoot.triggered && fireRateTimer >= fireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
+                fireRateTimer = 0;
             }
         }
 
