@@ -501,17 +501,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2a0ab52e-d49a-4d3c-a93d-1f9c212a8502"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""cff1cf60-7198-4f21-b47e-185b0e30725e"",
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",

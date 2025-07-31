@@ -30,7 +30,7 @@ public abstract class GunScript : MonoBehaviour
     protected InputManager inputManager;
     protected  PlayerUI UI;
     [Header("Aiming config")]
-    [SerializeField] float aimSpeed = 8f;
+    [SerializeField] protected float aimSpeed = 8f;
     [Header("Hip config")]
     [SerializeField] protected Vector3 hipPos;
     [SerializeField] protected Vector3 hipRot;
@@ -40,7 +40,7 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected Vector3 ADSRot;
 
     protected float zoomFOV = 40;
-    float normalFOV = 60;
+    protected float normalFOV = 60;
     protected virtual void Start()
     {
         ammoInChamber = maxMagSize;
@@ -59,7 +59,7 @@ public abstract class GunScript : MonoBehaviour
 
             if(inputManager.onFoot.Shoot.IsPressed() && fullAutoTimer > fireRate && ammoInChamber > 0 && !isReloading)
             {
-                Shoot();
+                Attack();
                 fullAutoTimer = 0f;
             }
         }
@@ -68,7 +68,7 @@ public abstract class GunScript : MonoBehaviour
         {
             if (inputManager.onFoot.Shoot.triggered && Time.time >= fireRate && ammoInChamber > 0 && !isReloading)
             {
-                Shoot();
+                Attack();
             }
         }
 
@@ -82,7 +82,7 @@ public abstract class GunScript : MonoBehaviour
         ChangeGrip();
     }
 
-    protected virtual void Shoot()
+    protected virtual void Attack()
     {
         //change ammo amount
         ammoInChamber--;
@@ -136,7 +136,7 @@ public abstract class GunScript : MonoBehaviour
         Aim();
     }
 
-    void Aim()
+    protected virtual void Aim()
     {
         //target pos / rotations
         Vector3 targetPos = isAiming ? ADSPos : hipPos;

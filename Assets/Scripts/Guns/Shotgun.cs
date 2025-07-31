@@ -9,7 +9,7 @@ public class Shotgun : GunScript
     [SerializeField] Color startC;
     [SerializeField] Color endC;
     [SerializeField] PoolManager palletManager;
-    protected override void Shoot()
+    protected override void Attack()
     {
         //change ammo amount
         ammoInChamber--;

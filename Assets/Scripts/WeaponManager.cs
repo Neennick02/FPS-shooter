@@ -35,6 +35,7 @@ public class WeaponManager : MonoBehaviour
             SelectWeapon(weaponIndex);
         }
 
+        //checks if player has mouse
         if(Mouse.current != null)
         {
             float scroll = Mouse.current.scroll.ReadValue().y;
