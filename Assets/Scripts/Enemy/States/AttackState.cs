@@ -15,12 +15,20 @@ public class AttackState : BaseState
     {
         CheckHealth();
 
-        if (enemy.CanSeePlayer())
+        if (enemy.CanSeePlayer() || enemy.CanHearPlayer())
         {
             losePlayerTimer = 0;
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
-            enemy.transform.LookAt(enemy.Player.transform);
+            
+            //find direction to player
+            Vector3 lookDir = new Vector3(enemy.Player.transform.position.x, enemy.Player.transform.position.y, enemy.Player.transform.position.z);
+            Vector3 direction = lookDir - enemy.transform.position;
+
+            //rotate to player
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.forward);
+            enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation, rotation, enemy.rotationSpeed * Time.deltaTime);
+
 
             if(shotTimer > enemy.fireRate)
             {

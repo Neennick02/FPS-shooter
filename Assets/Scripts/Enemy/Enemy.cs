@@ -54,7 +54,6 @@ public class Enemy : MonoBehaviour
         runAway,
         standAndAttack,
         findAlly,
-        heal,
         dead
     }
 
@@ -228,9 +227,10 @@ public class Enemy : MonoBehaviour
     [Header("Sight Values")]
     
     public float spottingDistance;
+    public float hearingDistance;
+    public float rotationSpeed;
     public float FOV = 85;
     public float eyeHeight;
-    public float waitDuration = 1;
 
     [Header("Weapon Values")]
     public int damageAmount;
@@ -268,6 +268,7 @@ public class Enemy : MonoBehaviour
                 float angleToPlayer = Vector3.Angle(targetDir, transform.forward);
                 targetDir.Normalize();
 
+                //draw line in sceneview
                 Debug.DrawLine(
                            transform.position + (Vector3.up * eyeHeight),
                            transform.position + (Vector3.up * eyeHeight) + targetDir * spottingDistance,
@@ -287,6 +288,18 @@ public class Enemy : MonoBehaviour
                         }
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    public bool CanHearPlayer()
+    {
+        if(player != null)
+        {
+            if(Vector3.Distance(transform.position, player.transform.position) < hearingDistance)
+            {
+                return true;
             }
         }
         return false;

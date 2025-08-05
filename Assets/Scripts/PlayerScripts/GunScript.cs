@@ -104,30 +104,63 @@ public abstract class GunScript : MonoBehaviour
         //send raycast
         if(Physics.Raycast(ray, out hit, range))
         {
-            //find target health
-            Health targetHealth = hit.transform.GetComponent<Health>();
-            Rigidbody targetRigidbody = hit.transform.GetComponent<Rigidbody>();
+            FindTargetHealth(hit);
+            FindTargetRB(hit, ray);
+            AddImpact(hit);
 
-            //check if hitpoint has health
-            if(targetHealth != null)
-            {
-                //damage
-                targetHealth.TakeDamage(damage);
-                //hit marker
-                UI.ShowHitMarker(.5f);
-            }
 
-            if(targetRigidbody != null)
-            {
-                targetRigidbody.AddForceAtPosition(ray.direction * force, hit.point, ForceMode.Impulse);
-            }
+            //move behint hit point
+            Vector3 behindFirstHit = hit.point + ray.direction * .01f;
 
-            //add impactEffect
-            if(impactEffect != null)
+            //find distance to hit point
+            float remainingDistance = range - Vector3.Distance(playerCam.transform.position, behindFirstHit);
+
+            //shoot raycast to check if enemy is behind target
+            if(Physics.Raycast(ray, out RaycastHit newHit, remainingDistance))
             {
-                GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(impactGo, 2f);
+                if(newHit.collider != hit.collider)
+                {
+                    FindTargetHealth(newHit);
+                    FindTargetRB(newHit, ray);
+                    AddImpact(newHit);
+                }
             }
+        }
+    }
+
+    void FindTargetHealth(RaycastHit hit)
+    {
+        //find target health
+        Health targetHealth = hit.transform.GetComponent<Health>();
+
+        //check if hitpoint has health
+        if (targetHealth != null)
+        {
+            //damage
+            targetHealth.TakeDamage(damage);
+            //hit marker
+            UI.ShowHitMarker(.5f);
+        }
+    }
+
+    void FindTargetRB(RaycastHit hit, Ray ray)
+    {
+        Rigidbody targetRigidbody = hit.transform.GetComponent<Rigidbody>();
+
+        if (targetRigidbody != null)
+        {
+            targetRigidbody.AddForceAtPosition(ray.direction * force, hit.point, ForceMode.Impulse);
+        }
+
+    }
+
+    void AddImpact(RaycastHit hit)
+    {
+        //add impactEffect
+        if (impactEffect != null)
+        {
+            GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGo, 2f);
         }
     }
 

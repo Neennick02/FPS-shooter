@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: e982820ea73cdf34e88e68f04945ab9a, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3870,7 +3870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1040867331
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3920,9 +3920,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 1037129081}
   spottingDistance: 20
+  hearingDistance: 10
+  rotationSpeed: 0
   FOV: 90
   eyeHeight: 0.6
-  waitDuration: 1
   damageAmount: 30
   barrel: {fileID: 260857543}
   fireRate: 1.18
@@ -5488,9 +5489,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 1037129081}
   spottingDistance: 20
+  hearingDistance: 10
+  rotationSpeed: 0
   FOV: 90
   eyeHeight: 0.6
-  waitDuration: 1
   damageAmount: 30
   barrel: {fileID: 8028372715412463094}
   fireRate: 1.18
