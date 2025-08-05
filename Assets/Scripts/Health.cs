@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     [Header("Health Bar")]
-    [SerializeField] Image healthBar;
+    [SerializeField] public Image healthBar;
+    public GameObject canvas;
     [SerializeField] int health;
     [SerializeField] public int maxHealth;
 
@@ -92,5 +93,10 @@ public class Health : MonoBehaviour
         {
             Debug.Log("Game over");
         }
+    }
+
+    public void DisableHealthBar()
+    {
+        canvas.SetActive(false);
     }
 }

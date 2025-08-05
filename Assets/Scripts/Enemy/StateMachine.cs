@@ -7,7 +7,6 @@ public class StateMachine : MonoBehaviour
     public void Initialise()
     {
         //setup default state
-        Debug.Log("initialize");
         ChangeState(new PatrolState());
     }
 

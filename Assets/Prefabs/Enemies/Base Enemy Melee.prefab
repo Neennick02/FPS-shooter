@@ -537,6 +537,9 @@ MonoBehaviour:
   healthBar: {fileID: 7475638278791627938}
   health: 0
   maxHealth: 100
+  overlay: {fileID: 0}
+  duration: 0
+  fadeSpeed: 0
 --- !u!195 &1628263979353723754
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -571,12 +574,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314fa2db65da94b42bb67ed1ab911616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: {fileID: 0}
+  spottingDistance: 0
+  hearingDistance: 0
   rotationSpeed: 3
-  movementSpeed: 3
-  attackInterval: 1
-  SpottingDistance: 15
-  InRangeDistance: 3
+  FOV: 85
+  eyeHeight: 0
   damageAmount: 30
-  startState: 0
-  wayPointsObject: {fileID: 0}
+  barrel: {fileID: 0}
+  fireRate: 0.1
+  bulletSpeed: 30
+  shootingAccuracy: 3
   currentState: 0

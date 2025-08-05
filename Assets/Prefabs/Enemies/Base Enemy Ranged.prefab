@@ -534,18 +534,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d909311a05e29144784cc98de32fb63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: {fileID: 0}
+  spottingDistance: 0
+  hearingDistance: 0
   rotationSpeed: 3
-  movementSpeed: 3
-  attackInterval: 1
-  SpottingDistance: 15
-  InRangeDistance: 5
+  FOV: 85
+  eyeHeight: 0
   damageAmount: 10
-  startState: 0
-  wayPointsObject: {fileID: 0}
+  barrel: {fileID: 0}
+  fireRate: 0.1
+  bulletSpeed: 30
+  shootingAccuracy: 3
   currentState: 0
-  bulletPrefab: {fileID: 8003829122551913419, guid: 6420bfd2d310f6d4fa6111417a5135e3, type: 3}
-  firePos: {fileID: 4622167497049562395}
-  attackDelay: 0.5
 --- !u!114 &2506989512622660260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,6 +561,9 @@ MonoBehaviour:
   healthBar: {fileID: 2658354628820353882}
   health: 0
   maxHealth: 100
+  overlay: {fileID: 0}
+  duration: 0
+  fadeSpeed: 0
 --- !u!195 &8028619098138602169
 NavMeshAgent:
   m_ObjectHideFlags: 0

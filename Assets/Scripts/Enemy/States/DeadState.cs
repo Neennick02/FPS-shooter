@@ -1,20 +1,19 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class DeadState : BaseState
 {
     bool isDead = false;
     float despawnTime = 20f;
-    float timer = 0;
     public override void Enter()
     {
         //disable navmeshAgent
         enemy.Agent.enabled = false;
 
-        //add rigidbody
-            isDead = true;
-            Rigidbody enemyRB = enemy.gameObject.AddComponent<Rigidbody>();
-            enemyRB.isKinematic = false;
-            enemyRB.mass = 40f;
+        isDead = true;
+
+        //disable healthbar
+        enemy.transform.GetComponent<Health>().DisableHealthBar();
+        
     }
 
     public override void Perform()

@@ -165,7 +165,6 @@ public class Sniper : GunScript
 
     public void DisablePostEffects()
     {
-
         //disable both effects
         distorition.intensity.value = 0;
         vignette.intensity.value = 0;

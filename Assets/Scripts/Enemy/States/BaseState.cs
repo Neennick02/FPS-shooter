@@ -25,6 +25,7 @@ public abstract class BaseState
         if (currentHealth.GetHealth() <= 0)
         {
             stateMachine.ChangeState(new DeadState());
+            enemy.animator.ActivateRagdoll();
         }
 
     }

@@ -118,6 +118,7 @@ public abstract class GunScript : MonoBehaviour
             //shoot raycast to check if enemy is behind target
             if(Physics.Raycast(ray, out RaycastHit newHit, remainingDistance))
             {
+                //make sure you dont hit the same object
                 if(newHit.collider != hit.collider)
                 {
                     FindTargetHealth(newHit);
@@ -130,16 +131,21 @@ public abstract class GunScript : MonoBehaviour
 
     void FindTargetHealth(RaycastHit hit)
     {
-        //find target health
-        Health targetHealth = hit.transform.GetComponent<Health>();
-
-        //check if hitpoint has health
-        if (targetHealth != null)
+        //find health component in parent
+        Health targetHealth = hit.transform.GetComponentInParent<Health>();
+        Debug.Log(hit.collider.name);
+        if(targetHealth != null)
         {
-            //damage
-            targetHealth.TakeDamage(damage);
-            //hit marker
-            UI.ShowHitMarker(.5f);
+            int finalDamage = damage;
+            if (hit.collider.CompareTag("Head"))
+            {
+                finalDamage *= 3;
+                Debug.Log("headshot");
+            }
+                //damage
+                targetHealth.TakeDamage(finalDamage);
+                //hit marker
+                UI.ShowHitMarker(.5f);
         }
     }
 
