@@ -253,9 +253,10 @@ MonoBehaviour:
   damage: 20
   force: 50
   range: 50
+  rangeOffSet: 5
   fireRate: 0.25
-  recoilUp: -2
-  recoilSide: 1
+  recoilUp: -0.7
+  recoilSide: 0.2
   fullAutoEnabled: 0
   isReloading: 0
   isAiming: 0
@@ -267,10 +268,13 @@ MonoBehaviour:
   muzzleFlash: {fileID: 5766072880312836908}
   impactEffect: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   aimSpeed: 8
+  crossHair: {fileID: 0}
   hipPos: {x: 0.2, y: -0.12, z: 0.4}
   hipRot: {x: 11.45, y: 164.1, z: 0}
   ADSPos: {x: 0, y: -0.05, z: 0.5}
   ADSRot: {x: 0, y: 180, z: 0}
+  aimPos: {x: 0, y: -0.5, z: 0.5}
+  aimRot: {x: -50, y: 180, z: 0}
 --- !u!1 &1748277932983872
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1229
+      value: -0.178
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.y

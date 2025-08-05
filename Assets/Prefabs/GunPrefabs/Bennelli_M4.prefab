@@ -108,8 +108,8 @@ MonoBehaviour:
   range: 8
   rangeOffSet: 2
   fireRate: 1
-  recoilUp: -3
-  recoilSide: 1
+  recoilUp: -0.6
+  recoilSide: 0.3
   fullAutoEnabled: 0
   isReloading: 0
   isAiming: 0
@@ -121,12 +121,15 @@ MonoBehaviour:
   muzzleFlash: {fileID: 8490199002353702974}
   impactEffect: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   aimSpeed: 8
+  crossHair: {fileID: 0}
   hipPos: {x: 0.2, y: -0.12, z: 0.61}
   hipRot: {x: 11.45, y: 164, z: 0}
   ADSPos: {x: 0, y: -0.05, z: 0.8}
   ADSRot: {x: -1.6, y: 180, z: 0}
+  aimPos: {x: 0, y: -0.5, z: 0.5}
+  aimRot: {x: -50, y: 180, z: 0}
   pelletsPerShot: 8
-  spreadAngle: 5
+  spreadAngle: 3
   firePoint: {fileID: 6693945775543757308}
   startC: {r: 1, g: 0.2521821, b: 0.0141509175, a: 0}
   endC: {r: 0.6132076, g: 0, b: 0, a: 1}
@@ -146,6 +149,7 @@ MonoBehaviour:
   lineRendererPrefab: {fileID: 1447475531036152594, guid: d682381c8b8625447a2ecddfbb4f3c9e, type: 3}
   poolSize: 8
   duration: 1
+  gunScript: {fileID: 0}
 --- !u!1 &1326079549577358
 GameObject:
   m_ObjectHideFlags: 0

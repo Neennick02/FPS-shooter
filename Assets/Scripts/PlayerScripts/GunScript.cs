@@ -32,6 +32,7 @@ public abstract class GunScript : MonoBehaviour
     protected  PlayerUI UI;
     [Header("Aiming config")]
     [SerializeField] protected float aimSpeed = 8f;
+    [SerializeField] protected GameObject crossHair;
     [Header("Hip config")]
     [SerializeField] protected Vector3 hipPos;
     [SerializeField] protected Vector3 hipRot;
@@ -39,6 +40,10 @@ public abstract class GunScript : MonoBehaviour
     [Header("ADS config")]
     [SerializeField] protected Vector3 ADSPos;
     [SerializeField] protected Vector3 ADSRot;
+
+    [Header("Reload config")]
+    [SerializeField] protected Vector3 aimPos;
+    [SerializeField] protected Vector3 aimRot;
 
     protected float zoomFOV = 40;
     protected float normalFOV = 60;
@@ -183,7 +188,15 @@ public abstract class GunScript : MonoBehaviour
             isAiming = false;
             crossHairScript.SetCrossHairSize(100);
         }
-        Aim();
+        if (!isReloading)
+        {
+            Aim();
+        }
+        else
+        {
+            MoveToReloadPos();
+        }
+        
     }
 
     protected virtual void Aim()
@@ -196,8 +209,17 @@ public abstract class GunScript : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * aimSpeed);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * aimSpeed);
 
-        //change FOV
-        float targetFOV = isAiming ? zoomFOV : normalFOV;
+        //dis/enable crosshair
+        if (Vector3.Distance(transform.localPosition, ADSPos) < 0.05f)
+        {
+            crossHair.SetActive(false);
+        }
+        else
+        {
+            crossHair.SetActive(true);
+        }
+            //change FOV
+            float targetFOV = isAiming ? zoomFOV : normalFOV;
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, Time.deltaTime * aimSpeed);
     }
 
@@ -233,6 +255,13 @@ public abstract class GunScript : MonoBehaviour
 
         UI.UpdateAmmoCounter(ammoInChamber, magAmount);
         UI.ReloadBar(timer, reloadTime);
+    }
+
+    void MoveToReloadPos()
+    {
+        //move between points
+        transform.localPosition = Vector3.Lerp(transform.localPosition, aimPos, Time.deltaTime * aimSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(aimRot), Time.deltaTime * aimSpeed);
     }
 
     public void ResetGunPos()

@@ -191,11 +191,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  force: 30
+  force: 45
   range: 40
+  rangeOffSet: 5
   fireRate: 0.075
-  recoilUp: -0.2
-  recoilSide: 0.2
+  recoilUp: -0.1
+  recoilSide: 0.1
   fullAutoEnabled: 1
   isReloading: 0
   isAiming: 0
@@ -207,10 +208,13 @@ MonoBehaviour:
   muzzleFlash: {fileID: 8433607369039305065}
   impactEffect: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   aimSpeed: 8
+  crossHair: {fileID: 0}
   hipPos: {x: 0.16, y: -0.16, z: 0.4}
   hipRot: {x: 4.85, y: 170.1, z: 0}
   ADSPos: {x: 0, y: -0.08, z: 0.5}
   ADSRot: {x: 0, y: 180, z: 0}
+  aimPos: {x: 0, y: -0.5, z: 0.5}
+  aimRot: {x: -50, y: 180, z: 0}
 --- !u!1 &1382682361031114
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,31 +574,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0006
+      value: -0.14355783
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0302
+      value: 0.09516462
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.23
+      value: -0.136
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9606608
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.2777243
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -606,7 +610,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392214099968335841, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -32.249
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309454644266034343, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309454644266034343, guid: 309f2dc593b8855438e3a93bd2d5e13e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.027
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

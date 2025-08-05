@@ -199,6 +199,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PrimairyThrowAble"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff018688-fa4e-4d9e-8e47-58727404b38c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondairyThrowAble"",
+                    ""type"": ""Button"",
+                    ""id"": ""afbe0a7a-7843-4813-a6d4-b6a14d4b8d25"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -562,6 +580,50 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""FullAuto on/off"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f73ec8e-378c-4f77-848e-b344d378c720"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimairyThrowAble"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2b5538e-3fe6-4fa2-9501-2ec7c2a8302b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimairyThrowAble"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""345a61b3-0dcf-4553-8b7a-5f40289d4600"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondairyThrowAble"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d63592b9-2d1a-4b0f-8dba-4b490cad33f3"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondairyThrowAble"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1100,6 +1162,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_SwitchNextWeapon = m_OnFoot.FindAction("SwitchNextWeapon", throwIfNotFound: true);
         m_OnFoot_SwitchLastWeapon = m_OnFoot.FindAction("SwitchLastWeapon", throwIfNotFound: true);
         m_OnFoot_FullAutoonoff = m_OnFoot.FindAction("FullAuto on/off", throwIfNotFound: true);
+        m_OnFoot_PrimairyThrowAble = m_OnFoot.FindAction("PrimairyThrowAble", throwIfNotFound: true);
+        m_OnFoot_SecondairyThrowAble = m_OnFoot.FindAction("SecondairyThrowAble", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1205,6 +1269,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_SwitchNextWeapon;
     private readonly InputAction m_OnFoot_SwitchLastWeapon;
     private readonly InputAction m_OnFoot_FullAutoonoff;
+    private readonly InputAction m_OnFoot_PrimairyThrowAble;
+    private readonly InputAction m_OnFoot_SecondairyThrowAble;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnFoot".
     /// </summary>
@@ -1264,6 +1330,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnFoot/FullAutoonoff".
         /// </summary>
         public InputAction @FullAutoonoff => m_Wrapper.m_OnFoot_FullAutoonoff;
+        /// <summary>
+        /// Provides access to the underlying input action "OnFoot/PrimairyThrowAble".
+        /// </summary>
+        public InputAction @PrimairyThrowAble => m_Wrapper.m_OnFoot_PrimairyThrowAble;
+        /// <summary>
+        /// Provides access to the underlying input action "OnFoot/SecondairyThrowAble".
+        /// </summary>
+        public InputAction @SecondairyThrowAble => m_Wrapper.m_OnFoot_SecondairyThrowAble;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1326,6 +1400,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FullAutoonoff.started += instance.OnFullAutoonoff;
             @FullAutoonoff.performed += instance.OnFullAutoonoff;
             @FullAutoonoff.canceled += instance.OnFullAutoonoff;
+            @PrimairyThrowAble.started += instance.OnPrimairyThrowAble;
+            @PrimairyThrowAble.performed += instance.OnPrimairyThrowAble;
+            @PrimairyThrowAble.canceled += instance.OnPrimairyThrowAble;
+            @SecondairyThrowAble.started += instance.OnSecondairyThrowAble;
+            @SecondairyThrowAble.performed += instance.OnSecondairyThrowAble;
+            @SecondairyThrowAble.canceled += instance.OnSecondairyThrowAble;
         }
 
         /// <summary>
@@ -1373,6 +1453,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FullAutoonoff.started -= instance.OnFullAutoonoff;
             @FullAutoonoff.performed -= instance.OnFullAutoonoff;
             @FullAutoonoff.canceled -= instance.OnFullAutoonoff;
+            @PrimairyThrowAble.started -= instance.OnPrimairyThrowAble;
+            @PrimairyThrowAble.performed -= instance.OnPrimairyThrowAble;
+            @PrimairyThrowAble.canceled -= instance.OnPrimairyThrowAble;
+            @SecondairyThrowAble.started -= instance.OnSecondairyThrowAble;
+            @SecondairyThrowAble.performed -= instance.OnSecondairyThrowAble;
+            @SecondairyThrowAble.canceled -= instance.OnSecondairyThrowAble;
         }
 
         /// <summary>
@@ -1692,6 +1778,20 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFullAutoonoff(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PrimairyThrowAble" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPrimairyThrowAble(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SecondairyThrowAble" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSecondairyThrowAble(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -3743,6 +3743,10 @@ PrefabInstance:
       value: 0.6037736
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: crossHair
+      value: 
+      objectReference: {fileID: 400221236}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: magAmount
       value: 3
       objectReference: {fileID: 0}
@@ -5620,6 +5624,10 @@ PrefabInstance:
       value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
+      propertyPath: crossHair
+      value: 
+      objectReference: {fileID: 400221236}
+    - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
       propertyPath: magAmount
       value: 3
       objectReference: {fileID: 0}
@@ -5775,6 +5783,10 @@ PrefabInstance:
       propertyPath: recoilUp
       value: -0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
+      propertyPath: crossHair
+      value: 
+      objectReference: {fileID: 400221236}
     - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
       propertyPath: magAmount
       value: 4
@@ -6889,7 +6901,7 @@ Transform:
   m_GameObject: {fileID: 1539518568126984573}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9730592, z: -0, w: 0.2305557}
-  m_LocalPosition: {x: -10.49, y: 0.83, z: 12.38}
+  m_LocalPosition: {x: -0.99, y: 0.83, z: 39.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7144,6 +7156,10 @@ MonoBehaviour:
   weaponHolder: {fileID: 520897304}
   weaponIndex: 0
   recoilScript: {fileID: 520897306}
+  grenadePrefab: {fileID: 0}
+  flashPrefab: {fileID: 0}
+  holdPoint: {fileID: 0}
+  throwForce: 15
 --- !u!81 &1539518569453362152
 AudioListener:
   m_ObjectHideFlags: 0

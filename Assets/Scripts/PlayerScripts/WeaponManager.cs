@@ -7,6 +7,12 @@ public class WeaponManager : MonoBehaviour
     InputManager input;
     [SerializeField] Recoil_Sway_ADS recoilScript;
     Sniper sniperScript;
+
+    GameObject heldGrenade = null;
+    [SerializeField] GameObject grenadePrefab;
+    [SerializeField] GameObject flashPrefab;
+    [SerializeField] Transform holdPoint;
+    [SerializeField] float throwForce = 15;
     private void Start()
     {
         input = GetComponent<InputManager>();
@@ -63,6 +69,25 @@ public class WeaponManager : MonoBehaviour
                 SelectWeapon(weaponIndex);
             }
         }
+
+        //check if player grabs throwable
+        if (input.onFoot.PrimairyThrowAble.IsPressed())
+        {
+            StartHoldingGrenade(grenadePrefab);
+        }
+        if (input.onFoot.PrimairyThrowAble.WasReleasedThisFrame())
+        {
+            ThrowGrenade();
+        }
+
+        if (input.onFoot.SecondairyThrowAble.IsPressed())
+        {
+            StartHoldingGrenade(flashPrefab);
+        }
+        if (input.onFoot.SecondairyThrowAble.WasReleasedThisFrame())
+        {
+            ThrowGrenade();
+        }
     }
 
     void SelectWeapon(int index)
@@ -96,5 +121,39 @@ public class WeaponManager : MonoBehaviour
         }
 
         weaponIndex = index;
+    }
+
+    void StartHoldingGrenade(GameObject prefab)
+    {
+        if (heldGrenade == null)
+        {
+            heldGrenade = Instantiate(prefab, holdPoint.position, holdPoint.rotation);
+            heldGrenade.transform.SetParent(holdPoint);
+            // Optional: disable physics so it doesn’t fall while held
+            Rigidbody rb = heldGrenade.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+            }
+        }
+    }
+
+    void ThrowGrenade()
+    {
+        if (heldGrenade != null)
+        {
+            // Unparent so it’s free
+            heldGrenade.transform.SetParent(null);
+
+            Rigidbody rb = heldGrenade.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+                // Apply force forward relative to player or holdPoint
+                rb.AddForce(holdPoint.forward * throwForce, ForceMode.VelocityChange);
+            }
+
+            heldGrenade = null;
+        }
     }
 }

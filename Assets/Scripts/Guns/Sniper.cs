@@ -11,7 +11,6 @@ public class Sniper : GunScript
     LensDistortion distorition;
 
     [SerializeField] Image scopeImage;
-    [SerializeField] GameObject crossHair;
     [SerializeField] float fadeDuration;
     float fadeTimer ;
     Coroutine currentFadeCoroutine;

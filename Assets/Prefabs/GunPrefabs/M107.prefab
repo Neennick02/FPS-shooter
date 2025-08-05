@@ -368,8 +368,8 @@ MonoBehaviour:
   range: 250
   rangeOffSet: 5
   fireRate: 0.75
-  recoilUp: -2
-  recoilSide: 0.5
+  recoilUp: -0.7
+  recoilSide: 0.3
   fullAutoEnabled: 0
   isReloading: 0
   isAiming: 0
@@ -381,10 +381,16 @@ MonoBehaviour:
   muzzleFlash: {fileID: 0}
   impactEffect: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   aimSpeed: 2
+  crossHair: {fileID: 0}
   hipPos: {x: 0.28, y: -0.22, z: 0.57}
   hipRot: {x: 4.96, y: 172.7, z: 0}
   ADSPos: {x: 0, y: -0.1, z: 1}
   ADSRot: {x: 0, y: 180, z: 0}
+  aimPos: {x: 0, y: -0.5, z: 0.5}
+  aimRot: {x: -50, y: 180, z: 0}
+  volume: {fileID: 0}
+  scopeImage: {fileID: 0}
+  fadeDuration: 0
 --- !u!1 &5682006740586777626
 GameObject:
   m_ObjectHideFlags: 0
