@@ -4,10 +4,10 @@ public abstract class ThrowAble : MonoBehaviour
 {
     protected float radius = 5f;
     protected float duration = 5f;
-    float elapsedTime = 0f;
+    protected float elapsedTime = 0f;
     [SerializeField] protected GameObject explosionPrefab;
 
-    private void Update()
+    protected virtual void Update()
     {
         elapsedTime += Time.deltaTime;
 
