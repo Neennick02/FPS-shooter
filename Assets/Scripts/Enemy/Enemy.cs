@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Processors;
 
 public class Enemy : MonoBehaviour
 {
-    NavMeshAgent agent;
+    [SerializeField] NavMeshAgent agent;
     StateMachine stateMachine;
     GameObject player;
     Vector3 lastKnownPlayPos;
@@ -28,8 +28,8 @@ public class Enemy : MonoBehaviour
     public float bulletSpeed = 30;
     [Range(0.1f, 10f)] public float shootingAccuracy = 3;
     [SerializeField] string currentState;
-    public EnemyAnimator animator;
-
+    public EnemyAnimator animatorScript;
+    public Transform firePoint;
 
     private void Start()
     {
@@ -93,5 +93,11 @@ public class Enemy : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(Agent.destination, new Vector3(2, 2, 2));
     }
 }

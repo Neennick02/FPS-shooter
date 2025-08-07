@@ -4,6 +4,10 @@ public class BulletScript : MonoBehaviour
 {
     int damageAmount;
 
+    private void Start()
+    {
+        Destroy(gameObject, 5f);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))

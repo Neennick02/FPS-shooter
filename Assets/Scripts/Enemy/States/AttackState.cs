@@ -7,13 +7,14 @@ public class AttackState : BaseState
     float shotTimer;
     public override void Enter()
     {
-
+        enemy.Agent.updateRotation = false;
     }
 
 
     public override void Perform()
     {
         CheckHealth();
+        RotateToPlayer();
 
         if (enemy.CanSeePlayer() || enemy.CanHearPlayer())
         {
@@ -21,8 +22,9 @@ public class AttackState : BaseState
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
 
-            // RotateToPlayer();
-            enemy.transform.LookAt(enemy.transform.position);
+          
+
+
             if (shotTimer > enemy.fireRate)
             {
                 Attack();
@@ -35,31 +37,36 @@ public class AttackState : BaseState
             if (moveTimer > Random.Range(3, 6))
             {
                 Vector3 destination;
+                float bufferDistance = 3f;
 
                 if (distanceToPlayer < safeDistance)
                 {
                     // Move away from player to maintain distance
 
-                    Vector3 awayFromPlayer = enemy.transform.position - enemy.Player.transform.position;
-                    awayFromPlayer.y = 0;
-                    awayFromPlayer.Normalize();
+                    Vector3 awayFromPlayer = (enemy.transform.position - enemy.Player.transform.position).normalized;
 
                     // Add some random strafe component so enemy doesn't just back away straight
                     Vector3 strafe = Vector3.Cross(Vector3.up, awayFromPlayer) * Random.Range(-1f, 1f);
+                    Vector3 moveDir = (awayFromPlayer + strafe).normalized;
+                    
+     
 
-                    Vector3 moveDirection = (awayFromPlayer + strafe).normalized;
-
-                    destination = enemy.transform.position + moveDirection * safeDistance/ 2;  // Move 2 units away/strafe
+                    destination = enemy.transform.position + moveDir * (safeDistance - distanceToPlayer + bufferDistance);
+                    enemy.Agent.SetDestination(destination);
                 }
-                else
+                else if(distanceToPlayer > safeDistance + bufferDistance)
                 {
                     // random offset within 2 units radius
                     Vector3 randomOffset = Random.insideUnitSphere * 2f;
                     randomOffset.y = 0;  // keep on same ground level if your game is 3D on flat ground
 
-                     destination = enemy.Player.transform.position + randomOffset;
+                   destination = enemy.Player.transform.position + randomOffset;
+                    enemy.Agent.SetDestination(destination);
                 }
-                enemy.Agent.SetDestination(destination);
+                else
+                {
+                    enemy.Agent.ResetPath();
+                }
                 moveTimer = 0;
             }
             //store player position
@@ -82,22 +89,22 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-
+        enemy.Agent.updateRotation = true;
     }
 
     void RotateToPlayer()
     {
-        Vector3 direction = enemy.Player.transform.position - enemy.transform.position;
-        direction.y = 0; // keep rotation horizontal
+        Vector3 targetDir = enemy.Player.transform.position - enemy.barrel.position;
+        targetDir.y = 0; // Keep it flat if you're not using vertical aiming
 
-        float distance = direction.magnitude;
-
-
-        // Rotate towards targetRotation at a fixed speed (degrees per second)
-        if (direction.sqrMagnitude > 0.01f) // avoid zero-length vectors
+        if (targetDir.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation, targetRotation, enemy.rotationSpeed * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.LookRotation(targetDir, Vector3.up);
+            enemy.transform.rotation = Quaternion.Slerp(
+                enemy.transform.rotation,
+                targetRotation,
+                Time.deltaTime * enemy.rotationSpeed
+            );
         }
     }
 
@@ -107,7 +114,7 @@ public class AttackState : BaseState
         RotateToPlayer();
         Transform gunBarrel = enemy.barrel;
 
-        Vector3 shootDir = -gunBarrel.forward;
+        Vector3 shootDir = gunBarrel.forward;
 
         //instantiate new bullet
         GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/RifleBullet") as GameObject, gunBarrel.position, Quaternion.LookRotation(shootDir));
@@ -120,6 +127,5 @@ public class AttackState : BaseState
         bullet.GetComponent<BulletScript>().SetDamage(enemy.damageAmount);
         shotTimer = 0;
 
-        Debug.DrawRay(gunBarrel.position, shootDir * 5f, Color.red, 2f);
     }
 }

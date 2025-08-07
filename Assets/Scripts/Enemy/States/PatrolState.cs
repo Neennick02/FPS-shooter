@@ -7,7 +7,7 @@ public class PatrolState : BaseState
 
     public override void Enter()
     {
-
+        enemy.Agent.speed = 2f;
     }
 
     public override void Perform()
@@ -27,9 +27,9 @@ public class PatrolState : BaseState
 
     public void PatrolCyle()
     {
-        if (enemy.Agent.enabled)
+        if (enemy.Agent.enabled && enemy.path != null && enemy.path.waypoints.Count > 0)
         {
-            if (enemy.Agent.remainingDistance < 0.2f)
+            if (!enemy.Agent.pathPending && enemy.Agent.remainingDistance <= 0.2f)
             {
                     if (waypointIndex < enemy.path.waypoints.Count - 1)
                     {
@@ -39,7 +39,9 @@ public class PatrolState : BaseState
                     {
                         waypointIndex = 0;
                     }
-                    enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
+                enemy.Agent.isStopped = false; // Unpause agent
+
+                enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
             }
         }
     }

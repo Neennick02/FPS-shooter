@@ -10,10 +10,16 @@ public class WeaponManager : MonoBehaviour
 
     [Header("Throwable config")]
     GameObject heldGrenade = null;
-    [SerializeField] GameObject grenadePrefab;
-    [SerializeField] GameObject flashPrefab;
+    [SerializeField] GameObject primeThrowable;
+    [SerializeField] GameObject secondThrowable;
     [SerializeField] Transform holdPoint;
     [SerializeField] float throwForce = 15;
+
+    int secondCounter = 0;
+    int primCounter = 0;
+    int maxThrowables = 2;
+    bool isHolding = false;
+    GunScript gunScript;
     private void Start()
     {
         input = GetComponent<InputManager>();
@@ -71,25 +77,50 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        //check if player grabs throwable
-        if (input.onFoot.PrimairyThrowAble.IsPressed())
+        //check if player grabs 1st throwable
+        if (input.onFoot.PrimairyThrowAble.IsPressed()&& !isHolding)
         {
-            StartHoldingGrenade(grenadePrefab);
+            if(primCounter < maxThrowables)
+            {
+                primCounter++;
+                isHolding = true;
+                StartHoldingGrenade(primeThrowable);
+            }
         }
         if (input.onFoot.PrimairyThrowAble.WasReleasedThisFrame())
         {
             ThrowGrenade();
+            isHolding = false;
         }
 
-        if (input.onFoot.SecondairyThrowAble.IsPressed())
+        //check if player grabs 2nd throwable
+        if (input.onFoot.SecondairyThrowAble.IsPressed() && !isHolding)
         {
-            StartHoldingGrenade(flashPrefab);
+            if (secondCounter < maxThrowables)
+            {
+                secondCounter++;
+                isHolding = true;
+                StartHoldingGrenade(secondThrowable);
+            }
         }
         if (input.onFoot.SecondairyThrowAble.WasReleasedThisFrame())
         {
             ThrowGrenade();
+            isHolding = false;
+        }
+
+        //when holding throwable move gun down
+        if (isHolding)
+        {
+            //loops over weapons
+            for (int i = 0; i < weaponHolder.childCount; i++)
+            {
+                gunScript = weaponHolder.GetChild(i).GetComponent<GunScript>();
+                gunScript.MoveToReloadPos();
+            }
         }
     }
+
 
     void SelectWeapon(int index)
     {
@@ -155,6 +186,7 @@ public class WeaponManager : MonoBehaviour
             }
 
             heldGrenade = null;
+            gunScript.ResetGunPos();
         }
     }
 }

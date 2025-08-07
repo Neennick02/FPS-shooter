@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyAnimator : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [SerializeField] public Animator animator;
     StateMachine stateMachine;
     [SerializeField] Transform aimingPos;
     [SerializeField] Transform idlePos;

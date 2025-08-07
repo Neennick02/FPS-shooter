@@ -27,6 +27,7 @@ public abstract class GunScript : MonoBehaviour
     protected Camera playerCam;
     [SerializeField] protected ParticleSystem muzzleFlash;
     [SerializeField] protected GameObject impactEffect;
+    [SerializeField] protected GameObject bloodEffect;
 
     protected InputManager inputManager;
     protected  PlayerUI UI;
@@ -170,8 +171,18 @@ public abstract class GunScript : MonoBehaviour
         //add impactEffect
         if (impactEffect != null)
         {
-            GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impactGo, 2f);
+            if (hit.transform.CompareTag("Terrain"))
+            {
+                GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactGo, 2f);
+            }
+            else if(hit.transform.CompareTag("Enemy"))
+            {
+                GameObject impactGo = Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                impactGo.transform.SetParent(hit.transform);
+                Destroy(impactGo, 10f);
+            }
+            
         }
     }
 
@@ -257,7 +268,7 @@ public abstract class GunScript : MonoBehaviour
         UI.ReloadBar(timer, reloadTime);
     }
 
-    void MoveToReloadPos()
+    public void MoveToReloadPos()
     {
         //move between points
         transform.localPosition = Vector3.Lerp(transform.localPosition, aimPos, Time.deltaTime * aimSpeed);
