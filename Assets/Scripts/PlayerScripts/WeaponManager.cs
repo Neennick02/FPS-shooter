@@ -8,6 +8,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] Recoil_Sway_ADS recoilScript;
     Sniper sniperScript;
 
+    [Header("Throwable config")]
     GameObject heldGrenade = null;
     [SerializeField] GameObject grenadePrefab;
     [SerializeField] GameObject flashPrefab;
