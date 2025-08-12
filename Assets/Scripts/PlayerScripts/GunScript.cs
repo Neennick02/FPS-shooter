@@ -130,7 +130,7 @@ public abstract class GunScript : MonoBehaviour
         recoilScript.RecoilFire(recoilUp, recoilSide / 2);
     }
 
-    void FindTargetHealth(RaycastHit hit)
+    protected void FindTargetHealth(RaycastHit hit)
     {
         //find health component in parent
         Health targetHealth = hit.transform.GetComponentInParent<Health>();
@@ -150,7 +150,7 @@ public abstract class GunScript : MonoBehaviour
         }
     }
 
-    void FindTargetRB(RaycastHit hit, Ray ray)
+    protected void FindTargetRB(RaycastHit hit, Ray ray)
     {
         Rigidbody targetRigidbody = hit.transform.GetComponent<Rigidbody>();
 
@@ -161,7 +161,7 @@ public abstract class GunScript : MonoBehaviour
 
     }
 
-    void AddImpact(RaycastHit hit)
+    protected void AddImpact(RaycastHit hit)
     {
         //add impactEffect
         if (impactEffect != null)

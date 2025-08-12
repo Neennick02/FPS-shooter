@@ -18,9 +18,9 @@ public class Shotgun : GunScript
         {
             muzzleFlash.Play();
         }
-        recoilScript.RecoilFire(recoilUp, recoilSide);
+        Physics.SyncTransforms();
 
-        for(int i =0; i < pelletsPerShot; i++)
+        for (int i =0; i < pelletsPerShot; i++)
         {
             Vector3 dir = playerCam.transform.forward;
             dir = AddSpread(dir);
@@ -33,32 +33,14 @@ public class Shotgun : GunScript
             {
                 targetPos = hit.point;
 
-
-
-
-
-
                 //damage target
-                Health targetHealth = hit.transform.gameObject.GetComponent<Health>();
-                Rigidbody targetRigidbody = hit.rigidbody;
-                
-                if(targetHealth != null)
-                {
-                    targetHealth.TakeDamage(damage);
-                }
+                FindTargetHealth(hit);
 
                 //send object flying
-                if (targetRigidbody != null)
-                {
-                    targetRigidbody.AddForceAtPosition(ray.direction * force, hit.point, ForceMode.Impulse);
-                }
+                FindTargetRB(hit, ray);
 
                 //impact effect
-                if (impactEffect != null)
-                {
-                    GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                    Destroy(impactGo, 2);
-                }
+                AddImpact(hit);
             }
             else
             {
@@ -67,16 +49,13 @@ public class Shotgun : GunScript
             }
             palletManager.DrawPelletTrail(firePoint.position, targetPos, startC, endC);
 
-
-           
-
-
-
             //draws rays for trails
             Ray trailRay = new Ray(firePoint.position, firePoint.transform.forward);
             
 
         }
+        recoilScript.RecoilFire(recoilUp, recoilSide);
+
     }
 
     Vector3 AddSpread(Vector3 direction)

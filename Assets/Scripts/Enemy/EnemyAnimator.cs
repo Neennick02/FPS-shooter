@@ -5,16 +5,23 @@ public class EnemyAnimator : MonoBehaviour
     [SerializeField] public Animator animator;
     StateMachine stateMachine;
     Enemy enemyScript;
-    [SerializeField] Transform aimingPos;
+    [SerializeField] public Transform aimingPos;
     [SerializeField] Transform idlePos;
     [SerializeField] Transform gunPos;
     [SerializeField] GameObject gun;
+    [SerializeField] public Transform target;
+    Camera player;
+    Enemy enemy;
+    Rigidbody[] bodies;
     float aimSpeed = 5;
     bool isAttacking;
     private void Start()
     {
         stateMachine = GetComponent<StateMachine>();
         enemyScript = GetComponent<Enemy>();
+        player = Camera.main;
+        enemy = GetComponent<Enemy>();
+        DeactivateRagdoll();
     }
 
     private void Update()
@@ -55,6 +62,23 @@ public class EnemyAnimator : MonoBehaviour
     public void ActivateRagdoll()
     {
         animator.enabled = false;
+
+        bodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody body in bodies)
+        {
+            body.isKinematic = false;
+        }
+    }
+
+    public void DeactivateRagdoll()
+    {
+        animator.enabled = true;
+        
+        bodies = GetComponentsInChildren<Rigidbody>();
+        foreach(Rigidbody body in bodies)
+        {
+            body.isKinematic = true;
+        }
     }
 
 }
