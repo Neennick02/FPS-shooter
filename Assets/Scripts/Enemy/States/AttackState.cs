@@ -34,7 +34,7 @@ public class AttackState : BaseState
             float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
             float safeDistance = 10f;
 
-            if (moveTimer > Random.Range(3, 6))
+            if (moveTimer > 3)
             {
                 Vector3 destination;
                 float bufferDistance = 3f;
@@ -94,18 +94,28 @@ public class AttackState : BaseState
 
     void RotateToPlayer()
     {
-        Vector3 targetDir = enemy.Player.transform.position - enemy.barrel.position;
-        targetDir.y = 0; // Keep it flat if you're not using vertical aiming
-
-        if (targetDir.sqrMagnitude > 0.01f)
+        // Horizontal rotation for the body
+        Vector3 flatDir = enemy.Player.transform.position - enemy.transform.position;
+        flatDir.y = 0;
+        
+        if (flatDir.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(targetDir, Vector3.up);
+            Quaternion bodyRot = Quaternion.LookRotation(flatDir, Vector3.up);
             enemy.transform.rotation = Quaternion.Slerp(
                 enemy.transform.rotation,
-                targetRotation,
+                bodyRot,
                 Time.deltaTime * enemy.rotationSpeed
             );
         }
+
+        // Vertical aim for the barrel
+        Vector3 aimDir = enemy.Player.transform.position - enemy.barrel.position;
+        Quaternion aimRot = Quaternion.LookRotation(aimDir, Vector3.up);
+        enemy.barrel.rotation = Quaternion.Slerp(
+            enemy.barrel.rotation,
+            aimRot,
+            Time.deltaTime * enemy.rotationSpeed
+        );
     }
 
 
@@ -114,7 +124,8 @@ public class AttackState : BaseState
         RotateToPlayer();
         Transform gunBarrel = enemy.barrel;
 
-        Vector3 shootDir = gunBarrel.forward;
+        Vector3 shootDir = (enemy.Player.transform.position - enemy.barrel.position).normalized;
+
 
         //instantiate new bullet
         GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/RifleBullet") as GameObject, gunBarrel.position, Quaternion.LookRotation(shootDir));

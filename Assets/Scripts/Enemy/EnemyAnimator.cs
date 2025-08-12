@@ -4,6 +4,7 @@ public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] public Animator animator;
     StateMachine stateMachine;
+    Enemy enemyScript;
     [SerializeField] Transform aimingPos;
     [SerializeField] Transform idlePos;
     [SerializeField] Transform gunPos;
@@ -13,6 +14,7 @@ public class EnemyAnimator : MonoBehaviour
     private void Start()
     {
         stateMachine = GetComponent<StateMachine>();
+        enemyScript = GetComponent<Enemy>();
     }
 
     private void Update()
@@ -47,7 +49,6 @@ public class EnemyAnimator : MonoBehaviour
                 target.localRotation,
                 Time.deltaTime * aimSpeed
             );
-
         }
     }
 

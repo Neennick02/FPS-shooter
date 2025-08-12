@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Processors;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] public GameObject gunObject;
     StateMachine stateMachine;
     GameObject player;
     Vector3 lastKnownPlayPos;
