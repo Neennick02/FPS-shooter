@@ -63,7 +63,7 @@ public class Sniper : GunScript
             //disable gun meshes
             HideGun();
         }
-        else if(!closeToADSpos && showEffect)
+        else if(!closeToADSpos && showEffect || isReloading)
          {
                 showEffect = false;
                 DisablePostEffects();

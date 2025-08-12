@@ -59,7 +59,7 @@ public abstract class GunScript : MonoBehaviour
         inputManager = player.GetComponent<InputManager>();
     }
 
-    protected virtual void Update()
+    protected virtual void LateUpdate()
     {
         //full auto
         if (fullAutoEnabled)
@@ -103,36 +103,31 @@ public abstract class GunScript : MonoBehaviour
         {
             muzzleFlash.Play();
         }
-        recoilScript.RecoilFire(recoilUp ,recoilSide);
 
-        RaycastHit hit;
+        Physics.SyncTransforms();
+
         Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
+        //make array of hits
+        RaycastHit[] hits = Physics.RaycastAll(ray, range);
+
+        //sort array
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
         //send raycast
-        if(Physics.Raycast(ray, out hit, range))
+        foreach (RaycastHit hit in hits)
         {
-            FindTargetHealth(hit);
+            
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                FindTargetHealth(hit);
+            }
+            
             FindTargetRB(hit, ray);
             AddImpact(hit);
-
-
-            //move behint hit point
-            Vector3 behindFirstHit = hit.point + ray.direction * .01f;
-
-            //find distance to hit point
-            float remainingDistance = range - Vector3.Distance(playerCam.transform.position, behindFirstHit);
-
-            //shoot raycast to check if enemy is behind target
-            if(Physics.Raycast(ray, out RaycastHit newHit, remainingDistance))
-            {
-                //make sure you dont hit the same object
-                if(newHit.collider != hit.collider)
-                {
-                    FindTargetHealth(newHit);
-                    FindTargetRB(newHit, ray);
-                    AddImpact(newHit);
-                }
-            }
         }
+
+        //add recoil
+        recoilScript.RecoilFire(recoilUp, recoilSide / 2);
     }
 
     void FindTargetHealth(RaycastHit hit)

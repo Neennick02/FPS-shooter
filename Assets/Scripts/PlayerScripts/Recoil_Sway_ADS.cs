@@ -81,6 +81,6 @@ public class Recoil_Sway_ADS : MonoBehaviour
         currentRotation *= Quaternion.Euler(-recoilUp, 0, 0);
 
         //camera recoil
-        playerLookScript.AddCamRecoil(Random.Range(recoilUp, recoilUp - 1) /3, Random.Range(-recoilSide, recoilSide));
+        playerLookScript.AddCamRecoil(Random.Range(recoilUp - 1, recoilUp ) /3, Random.Range(-recoilSide, recoilSide));
     }
 }
