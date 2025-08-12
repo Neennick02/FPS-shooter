@@ -275,4 +275,9 @@ public abstract class GunScript : MonoBehaviour
         transform.localPosition = hipPos;
         transform.localRotation = Quaternion.Euler( hipRot);
     }
+
+    public void UpdateAmmo(int amount)
+    {
+        magAmount = amount;
+    }
 }

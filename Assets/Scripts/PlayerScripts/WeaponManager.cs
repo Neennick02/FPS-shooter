@@ -15,6 +15,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] Transform holdPoint;
     [SerializeField] float throwForce = 15;
 
+    GameObject currentWeapon;
+
     int secondCounter = 0;
     int primCounter = 0;
     int maxThrowables = 2;
@@ -131,6 +133,11 @@ public class WeaponManager : MonoBehaviour
             //enables the currently selected gun
             weaponHolder.GetChild(i).gameObject.SetActive(active);
 
+            if (active)
+            {
+                currentWeapon = weaponHolder.GetChild(i).gameObject;
+            }
+
             //resets gun position to hip when switching
             GunScript gunScript = weaponHolder.GetChild(i).GetComponent<GunScript>();
             gunScript.ResetGunPos();
@@ -188,5 +195,10 @@ public class WeaponManager : MonoBehaviour
             heldGrenade = null;
             gunScript.ResetGunPos();
         }
+    }
+
+    public void FillAmmo(int amount)
+    {
+        currentWeapon.GetComponent<GunScript>().UpdateAmmo(amount);
     }
 }

@@ -7,7 +7,7 @@ public class AttackState : BaseState
     float shotTimer;
     public override void Enter()
     {
-        enemy.Agent.updateRotation = false;
+        enemy.Agent.stoppingDistance = 5f;
     }
 
 
