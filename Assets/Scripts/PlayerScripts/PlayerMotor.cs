@@ -11,6 +11,7 @@ public class PlayerMotor : MonoBehaviour
     bool isSprinting = false;
     public float gravity = -9.8f;
     InputManager input;
+    public int currentSpeed;
 
 
     // Ladder climbing
@@ -39,6 +40,7 @@ public class PlayerMotor : MonoBehaviour
         //makes cursor invisible during gameplay
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        currentSpeed = 0;
     }
 
     // Update is called once per frame
@@ -46,12 +48,13 @@ public class PlayerMotor : MonoBehaviour
     {
         isGrounded = controller.isGrounded;
 
+        Vector2 moveInput = input.onFoot.Movement.ReadValue<Vector2>();
 
-        if (input.onFoot.Sprint.triggered)
+        if (input.onFoot.Sprint.triggered && moveInput.magnitude > 0.1f)
         {
             isSprinting = true;
         }
-        else if (input.onFoot.Sprint.WasReleasedThisFrame())
+        else if (input.onFoot.Sprint.WasReleasedThisFrame() || moveInput.magnitude < 0.1f)
         {
             isSprinting = false;
         }
@@ -98,16 +101,25 @@ public class PlayerMotor : MonoBehaviour
         if (isSprinting)
         {
             controller.Move(transform.TransformDirection(moveDirection) * sprintSpeed * Time.deltaTime);
+            currentSpeed = 2;
             isCrouching = false;
         }
         else
         {
             controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+            currentSpeed = 1;
         }
+      
+        if (input.magnitude < 0.1f)
+        {
+            currentSpeed = 0;
+        }
+
 
         if (isCrouching)
         {
-            controller.Move(transform.TransformDirection(moveDirection) * crouchSpeed * Time.deltaTime); 
+            controller.Move(transform.TransformDirection(moveDirection) * crouchSpeed * Time.deltaTime);
+            currentSpeed = 1;
         }
 
         if (controller.isGrounded && playerVelocity.y < 0)

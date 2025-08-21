@@ -10,6 +10,16 @@ public class Recoil_Sway_ADS : MonoBehaviour
     private Vector3 swayOffset;
     private Quaternion swayRotation;
 
+    [Header("Movement Sway/Bob")]
+    [SerializeField] float walkSwayAmount = 0.05f;
+    [SerializeField] float runSwayAmount = 0.1f;
+    [SerializeField] float walkSwaySpeed = 6f;
+    [SerializeField] float runSwaySpeed = 10f;
+
+    private float swayTimer = 0f;
+
+    [SerializeField] PlayerMotor playerMovement; // reference your movement script
+
     [Header("Recoil config")]
     [SerializeField] float recoilKickBack = .1f;
     [SerializeField] float recoilReturnSpeed = 6f;
@@ -45,6 +55,7 @@ public class Recoil_Sway_ADS : MonoBehaviour
     private void LateUpdate()
     {
         HandleSway();
+        HandleMovementSway();
     }
 
 
@@ -82,5 +93,27 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
         //camera recoil
         playerLookScript.AddCamRecoil(Random.Range(recoilUp - 1, recoilUp ) /3, Random.Range(-recoilSide, recoilSide));
+    }
+
+    void HandleMovementSway()
+    {
+        if (playerMovement == null) return;
+
+        // Get player speed factor (0 = idle, 1 = walking, 2 = running)
+        float speedFactor = playerMovement.currentSpeed ; // or normalized 0..1 or 0..2
+        if (speedFactor < 0.01f) return; // no movement, no sway
+
+        float swayAmount = speedFactor > 1 ? runSwayAmount /10: walkSwayAmount / 10;
+        float swaySpeed = speedFactor > 1 ? runSwaySpeed /10 : walkSwaySpeed / 10;
+
+        swayTimer += Time.deltaTime * swaySpeed;
+
+        // Vertical bob (up/down) and horizontal sway (left/right)
+        float swayX = Mathf.Sin(swayTimer) * swayAmount;
+        float swayY = Mathf.Sin(swayTimer * 2f) * swayAmount;
+
+        // Apply to final gun position
+        Vector3 movementSwayOffset = new Vector3(swayX, swayY, 0);
+        transform.localPosition += movementSwayOffset;
     }
 }

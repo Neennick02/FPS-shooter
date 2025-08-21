@@ -248,6 +248,8 @@ public abstract class GunScript : MonoBehaviour
         if (isReloading)
         {
             timer += Time.deltaTime;
+            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * aimSpeed);
+
         }
 
         //fill mag when reloading is done

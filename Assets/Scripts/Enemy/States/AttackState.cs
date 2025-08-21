@@ -8,6 +8,7 @@ public class AttackState : BaseState
     public override void Enter()
     {
         enemy.Agent.stoppingDistance = 5f;
+        enemy.Agent.speed = 4;
         enemy.Agent.updateRotation = false;
     }
 
@@ -22,62 +23,40 @@ public class AttackState : BaseState
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
 
-           // UpdateAimTargetPosition();
+            UpdateAimTargetPosition();
             RotateToTarget();
             AimGunAtTarget();
 
-            enemy.Agent.SetDestination(enemy.aimTarget.transform.position);
-
-
-            if (shotTimer > enemy.fireRate)
-            {
-                Attack();
-                shotTimer = 0;
-            }
 
             float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
-           // float safeDistance = 10f;
 
-            /*if (moveTimer > 3)
+            if (enemy.Agent.isActiveAndEnabled)
             {
-                Vector3 destination;
-                float bufferDistance = 3f;
-
-                if (distanceToPlayer < safeDistance)
+                if (distanceToPlayer > enemy.Agent.stoppingDistance)
                 {
-                    // Move away from player to maintain distance
-
-                    Vector3 awayFromPlayer = (enemy.transform.position - enemy.Player.transform.position).normalized;
-
-                    // Add some random strafe component so enemy doesn't just back away straight
-                    Vector3 strafe = Vector3.Cross(Vector3.up, awayFromPlayer) * Random.Range(-1f, 1f);
-                    Vector3 moveDir = (awayFromPlayer + strafe).normalized;
-                    
-     
-
-                    destination = enemy.transform.position + moveDir * (safeDistance - distanceToPlayer + bufferDistance);
-                    enemy.Agent.SetDestination(destination);
-                }
-                else if(distanceToPlayer > safeDistance + bufferDistance)
-                {
-                    // random offset within 2 units radius
-                    Vector3 randomOffset = Random.insideUnitSphere * 2f;
-                    randomOffset.y = 0;  // keep on same ground level if your game is 3D on flat ground
-
-                   destination = enemy.Player.transform.position + randomOffset;
-                    enemy.Agent.SetDestination(destination);
+                    enemy.Agent.isStopped = false;
+                    enemy.animatorScript.SetIsMoving(false);
+                    enemy.Agent.SetDestination(enemy.aimTarget.position);
                 }
                 else
                 {
-                    enemy.Agent.ResetPath();
+                    enemy.Agent.isStopped = true;
+                    enemy.animatorScript.SetIsMoving(false);
                 }
-                moveTimer = 0;
-            }*/
+
+
+                if (shotTimer > enemy.fireRate)
+                {
+                    Attack();
+                    shotTimer = 0;
+                }
+            }
+          
 
 
 
             //store player position
-            enemy.LastKnowsPlayerPos = enemy.Player.transform.position;
+            enemy.LastKnowsPlayerPos = enemy.aimTarget.position;
         }
         else
         {
@@ -97,6 +76,7 @@ public class AttackState : BaseState
     public override void Exit()
     {
         enemy.Agent.updateRotation = true;
+        enemy.Agent.speed = 3;
     }
 
     void RotateToTarget()
@@ -120,7 +100,9 @@ public class AttackState : BaseState
     {
         if (enemy.Player != null && enemy.aimTarget != null)
         {
-            enemy.aimTarget.position = enemy.Player.transform.position + Vector3.up * 1.5f;
+            Transform playerCamTransform = Camera.main.transform;
+
+            enemy.aimTarget.position = playerCamTransform.position ;
         }
     }
 

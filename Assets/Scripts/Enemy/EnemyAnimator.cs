@@ -33,7 +33,6 @@ public class EnemyAnimator : MonoBehaviour
         }
         else if(stateMachine.activeState is AttackState)
         {
-            animator.SetBool("IsMoving", true);
 
             animator.SetBool("enemyFound", true);
             isAttacking = true;
@@ -78,6 +77,11 @@ public class EnemyAnimator : MonoBehaviour
                enemy.gunObject.transform.localPosition,
                enemy.idlePos.localPosition,
                Time.deltaTime * enemy.rotationSpeed);
+    }
+
+    public void SetIsMoving(bool active)
+    {
+        animator.SetBool("IsMoving", active);
     }
 
 }

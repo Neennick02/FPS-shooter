@@ -13,16 +13,16 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] float recoilReturnSpeed = 8;
     public void ProcessLook(Vector2 input)
     {
-        float mouseX = input.x;
-        float mouseY = input.y;
+        float mouseX = input.x * xSensitivity * Time.deltaTime;
+        float mouseY = input.y * xSensitivity * Time.deltaTime;
 
         // Apply vertical rotation (pitch) with recoil
-        xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
+        xRotation -= mouseY;
         xRotation += recoilX; // Add recoil pitch
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
         // Apply horizontal rotation (yaw) with recoil
-        yRotation += (mouseX * Time.deltaTime) * xSensitivity;
+        yRotation += mouseX;
         yRotation += recoilY;
 
         // Apply rotations
