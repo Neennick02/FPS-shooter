@@ -8,14 +8,13 @@ public class AttackState : BaseState
     public override void Enter()
     {
         enemy.Agent.stoppingDistance = 5f;
+        enemy.Agent.updateRotation = false;
     }
 
 
     public override void Perform()
     {
         CheckHealth();
-        RotateToPlayer();
-        UpdateAimTargetPosition();
 
         if (enemy.CanSeePlayer() || enemy.CanHearPlayer())
         {
@@ -23,7 +22,11 @@ public class AttackState : BaseState
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
 
-          
+           // UpdateAimTargetPosition();
+            RotateToTarget();
+            AimGunAtTarget();
+
+            enemy.Agent.SetDestination(enemy.aimTarget.transform.position);
 
 
             if (shotTimer > enemy.fireRate)
@@ -33,7 +36,7 @@ public class AttackState : BaseState
             }
 
             float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
-            float safeDistance = 10f;
+           // float safeDistance = 10f;
 
             /*if (moveTimer > 3)
             {
@@ -72,8 +75,6 @@ public class AttackState : BaseState
             }*/
 
 
-            enemy.Agent.SetDestination(enemy.Player.transform.position);
-
 
             //store player position
             enemy.LastKnowsPlayerPos = enemy.Player.transform.position;
@@ -98,49 +99,73 @@ public class AttackState : BaseState
         enemy.Agent.updateRotation = true;
     }
 
-    void RotateToPlayer()
+    void RotateToTarget()
     {
-        Vector3 directionToPlayer = enemy.Player.transform.position - enemy.transform.position;
-        directionToPlayer.y = 0; // keep flat rotation
+        Vector3 directionToTarget = enemy.aimTarget.transform.position - enemy.transform.position;
+        directionToTarget.y = 0; // keep flat rotation
 
         // Rotate enemy body smoothly toward player
-        if (directionToPlayer.sqrMagnitude > 0.01f)
+        if (directionToTarget.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, Time.deltaTime * enemy.rotationSpeed);
-        }
-
-        // Move enemy forward towards player (or use NavMeshAgent)
-        if (enemy.Agent != null)
-        {
-            enemy.Agent.SetDestination(enemy.Player.transform.position);
-        }
-        else
-        {
-            // Simple movement toward player if no NavMeshAgent
-            float moveSpeed = 3f; // example speed
-            enemy.transform.position += enemy.transform.forward * moveSpeed * Time.deltaTime;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            enemy.transform.rotation = Quaternion.Slerp(
+                enemy.transform.rotation,
+                targetRotation,
+                Time.deltaTime * enemy.rotationSpeed
+                );
         }
     }
 
     void UpdateAimTargetPosition()
     {
-        // Update aim target position to player's head (or adjusted height)
-        Vector3 targetPos = enemy.Player.transform.position + Vector3.up * 1;
-        enemy.animatorScript.target.position = targetPos;
+        if (enemy.Player != null && enemy.aimTarget != null)
+        {
+            enemy.aimTarget.position = enemy.Player.transform.position + Vector3.up * 1.5f;
+        }
+    }
+
+    void AimGunAtTarget()
+    {
+        if (enemy.aimTarget == null || enemy.barrel == null) return;
+
+        // 1. Keep gun at hand/animation position
+        enemy.gunObject.transform.localPosition = Vector3.Lerp(
+            enemy.gunObject.transform.localPosition,
+            enemy.animatorScript.aimingPos.localPosition,
+            Time.deltaTime * enemy.rotationSpeed
+        );
+
+        // 2. Calculate direction from barrel to aimTarget
+        Vector3 dirToTarget = (enemy.aimTarget.position - enemy.barrel.position).normalized;
+
+
+        // 3. Rotate barrel/gun toward aimTarget using LookRotation
+        if (dirToTarget.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(dirToTarget);
+
+            Quaternion rotationOffset = Quaternion.Euler(0, 180f, 0); // flip Z-axis if needed
+
+
+            // Apply rotation to gunObject's world rotation
+            enemy.gunObject.transform.rotation = Quaternion.Slerp(
+                enemy.gunObject.transform.rotation,
+                targetRot * rotationOffset,
+                Time.deltaTime * 3f
+            );
+        }
     }
 
 
 void Attack()
     {
-        RotateToPlayer();
         Transform gunBarrel = enemy.barrel;
 
-        Vector3 shootDir = (enemy.Player.transform.position - enemy.barrel.position).normalized;
+        Vector3 shootDir = gunBarrel.forward;
 
 
         //instantiate new bullet
-        GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/RifleBullet") as GameObject, gunBarrel.position, Quaternion.LookRotation(gunBarrel.forward));
+        GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/RifleBullet") as GameObject, gunBarrel.position, Quaternion.LookRotation(shootDir));
 
 
         //add force to bullet

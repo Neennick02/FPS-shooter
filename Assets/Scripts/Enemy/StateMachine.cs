@@ -3,7 +3,7 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     public BaseState activeState;
-
+    public BaseState startState;  // assign in Inspector
     public void Initialise()
     {
         //setup default state

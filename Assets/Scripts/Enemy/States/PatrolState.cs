@@ -14,6 +14,8 @@ public class PatrolState : BaseState
     {
         CheckHealth();
         PatrolCyle();
+
+
         if (enemy.CanSeePlayer() || enemy.CanHearPlayer())
         {
             stateMachine.ChangeState(new AttackState());

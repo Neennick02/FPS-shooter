@@ -11,6 +11,9 @@ public class SearchState : BaseState
 
     public override void Perform()
     {
+       
+
+
         //checks if player can be seen
         if (enemy.CanSeePlayer())
         {

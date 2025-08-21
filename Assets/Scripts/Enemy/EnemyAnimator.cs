@@ -28,35 +28,23 @@ public class EnemyAnimator : MonoBehaviour
     {
         if (stateMachine.activeState is PatrolState)
         {
-            Debug.Log("Patrolstate is active");
             animator.SetBool("IsMoving", true);
+            MoveGunToIdlePos();
         }
         else if(stateMachine.activeState is AttackState)
         {
+            animator.SetBool("IsMoving", true);
+
             animator.SetBool("enemyFound", true);
             isAttacking = true;
         }
 
         if(stateMachine.activeState is SearchState)
         {
+            MoveGunToIdlePos();
             animator.SetBool("enemyFound", false);
         }
 
-
-        if (isAttacking)
-        {
-            var target = isAttacking ? aimingPos : idlePos;
-            gun.transform.localPosition = Vector3.Lerp(
-                gun.transform.localPosition,
-                target.localPosition,
-                Time.deltaTime * aimSpeed
-            );
-            gun.transform.localRotation = Quaternion.Lerp(
-                gun.transform.localRotation,
-                target.localRotation,
-                Time.deltaTime * aimSpeed
-            );
-        }
     }
 
     public void ActivateRagdoll()
@@ -68,6 +56,9 @@ public class EnemyAnimator : MonoBehaviour
         {
             body.isKinematic = false;
         }
+
+        gun.AddComponent<Rigidbody>();
+        gun.AddComponent<BoxCollider>();
     }
 
     public void DeactivateRagdoll()
@@ -79,6 +70,14 @@ public class EnemyAnimator : MonoBehaviour
         {
             body.isKinematic = true;
         }
+    }
+
+    void MoveGunToIdlePos()
+    {
+        enemy.gunObject.transform.localPosition = Vector3.Lerp(
+               enemy.gunObject.transform.localPosition,
+               enemy.idlePos.localPosition,
+               Time.deltaTime * enemy.rotationSpeed);
     }
 
 }

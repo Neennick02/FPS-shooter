@@ -6,7 +6,6 @@ using UnityEngine.InputSystem.Processors;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] public GameObject gunObject;
     StateMachine stateMachine;
     GameObject player;
     Vector3 lastKnownPlayPos;
@@ -24,13 +23,16 @@ public class Enemy : MonoBehaviour
 
     [Header("Weapon Values")]
     public int damageAmount;
-    public Transform barrel;
     [Range(0.1f, 10f)] public float fireRate;
     public float bulletSpeed = 30;
     [Range(0.1f, 10f)] public float shootingAccuracy = 3;
     [SerializeField] string currentState;
     public EnemyAnimator animatorScript;
-    public Transform firePoint;
+    [SerializeField] public GameObject gunObject;
+    [SerializeField] public Transform idlePos;
+    public Transform barrel;
+
+    public Transform aimTarget;
 
     private void Start()
     {
