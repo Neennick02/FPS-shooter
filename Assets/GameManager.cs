@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
+    [SerializeField] GameObject _player;
+    CharacterController _characterController;
     public static GameManager Instance
     {
         get
@@ -17,6 +19,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+    }
+
+    private void Update()
+    {
+        if()
     }
 
 }
