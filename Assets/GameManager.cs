@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if()
+     //   if()
     }
 
 }

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e472cd4950be58141b00e7d8553d758a, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1672178855912333713, guid: f7cc3fcc049c16d4f83a50182fca4601, type: 3}
+  type: 0
+  description: A bright red fresh food from the trees.
+  restoreHealthValue: 15
