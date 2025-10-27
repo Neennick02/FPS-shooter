@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2248be3c70038464193b7da1932307b1, type: 3}
   m_Name: Sword 2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2094590981852982723, guid: 288f0825ad2f7904fbd01b9756d3df8f, type: 3}
+  Id: 6
+  UIdisplay: {fileID: 21300000, guid: 27bdb876939215f41bd72bd2f5ad21f4, type: 3}
   type: 1
   description: A shield for defending.
-  atkBonus: 13
-  defeceBonus: 0
+  buffs:
+  - attribute: 3
+    value: 0
+    min: 5
+    max: 50

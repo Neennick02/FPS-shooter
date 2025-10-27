@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2248be3c70038464193b7da1932307b1, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7102974778642902302, guid: 5ccc88c9a1c545e45ae15ddca40fe69e, type: 3}
+  Id: 4
+  UIdisplay: {fileID: 21300000, guid: d625705c2b10393418fa45b27c7370b0, type: 3}
   type: 1
   description: A sword for attacking.
-  atkBonus: 8
-  defeceBonus: 0
+  buffs:
+  - attribute: 0
+    value: 0
+    min: 10
+    max: 20

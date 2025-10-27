@@ -37,9 +37,6 @@ public class PlayerMotor : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         input = GetComponent<InputManager>();
-        //makes cursor invisible during gameplay
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         currentSpeed = 0;
     }
 

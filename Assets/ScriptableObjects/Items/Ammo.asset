@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b8f57b9263e1ed4299f996165022b9b, type: 3}
   m_Name: Ammo
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5635632485385502725, guid: e2e8ea07e8eef8649bd7fd062ce0dcb1, type: 3}
+  Id: 0
+  UIdisplay: {fileID: 21300000, guid: 89f23bff12960d44b9e2ff317502a1eb, type: 3}
   type: 3
   description: "Ammunition used for rifle style weapons.\t\t\t"
   amount: 30

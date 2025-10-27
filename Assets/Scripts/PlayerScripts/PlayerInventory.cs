@@ -6,10 +6,10 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddItem(GameObject other)
     {
-        var item = other.GetComponent<Item>();
+        var item = other.GetComponent<GroundItem>();
         if (item)
         {
-            inventory.AddItem(item.item, 1);
+            inventory.AddItem(new Item(item.item), 1);
         }
     }
 
@@ -29,6 +29,6 @@ public class PlayerInventory : MonoBehaviour
     private void OnApplicationQuit()
     {
         //on close empty inventory slots
-        inventory.Container.Clear();
+        inventory.Container.Items = new InventorySlot[24];
     }
 }

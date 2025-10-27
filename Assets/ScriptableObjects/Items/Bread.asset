@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e472cd4950be58141b00e7d8553d758a, type: 3}
   m_Name: Bread
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1672178855912333713, guid: f7cc3fcc049c16d4f83a50182fca4601, type: 3}
+  Id: 0
+  UIdisplay: {fileID: 21300000, guid: c5eceadfabbf8214abff1dad1b45500c, type: 3}
   type: 0
   description: "A fresh baked peace of bread.\t"
   restoreHealthValue: 12
