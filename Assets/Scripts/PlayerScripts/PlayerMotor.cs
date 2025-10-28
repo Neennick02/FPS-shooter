@@ -26,13 +26,16 @@ public class PlayerMotor : MonoBehaviour
     float standingHeight = 2f;
 
     float targetHeight;
-    float crouchSpeed = 2;
+
+    float crouchSpeed;
+    float standSpeed;
+    float slideSpeed;
 
     Vector3 targetCenter;
 
-    public float slideSpeed = 15f;
-    public float slideDuration = 0.7f;
-    float slideTimer;
+    float slideDuration = 0.3f;
+    float slideInterval = 1f; 
+    float slideTimer = 0;
 
     [Header("Scripts")]
     [SerializeField] InputManager input;
@@ -40,6 +43,9 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] PlayerLook playerLook;
     void Start()
     {
+        crouchSpeed = speed / 2;
+        standSpeed = speed;
+        slideSpeed = speed * 1.1f;
         currentSpeed = 0;
     }
 
@@ -59,7 +65,6 @@ public class PlayerMotor : MonoBehaviour
             isSprinting = false;
         }
         HandleCrouchInput();
-        HandleSlideTimer();
     }
 
     public void Jump()
@@ -118,22 +123,20 @@ public class PlayerMotor : MonoBehaviour
     //receive input from InputManager and apply to CharacterController
     public void ProcessMove(Vector2 input)
     {
-        if (!isClimbing)
+        if (isClimbing) 
         {
-            if (isSliding)
+            ClimbLadder(input); 
+            return;
+        }
+
+        if (isSliding)
             {
-                SlideMovement(input);
+                StartCoroutine(Slide(input));
             }
-            else
+        else
             {
                 NormalMovement(input);
-
             }
-        }
-        else
-        {
-            ClimbLadder(input);
-        }
     }
 
 
@@ -185,23 +188,8 @@ public class PlayerMotor : MonoBehaviour
 
 
 
-    void SlideMovement(Vector2 input)
-    {
-        //// Slide forward direction
-        //Vector3 slideDir = transform.forward;
-        //controller.Move(slideDir * slideSpeed * Time.deltaTime);
-
-        //// Gravity during slide
-        //playerVelocity.y += gravity * Time.deltaTime;
-        //controller.Move(playerVelocity * Time.deltaTime);
-    }
-
-
-
-
     void HandleCrouchInput()
     {
-        Debug.Log(isCrouching);
         if (isSliding) return; // ignore crouch input during slide
 
         if (input.onFoot.Crouch.triggered)
@@ -219,16 +207,16 @@ public class PlayerMotor : MonoBehaviour
 
 
         // Start slide if sprinting, crouching, and moving forward
-        if (isCrouching && isSprinting && !isSliding && input.onFoot.Movement.ReadValue<Vector2>().y > 0.1f)
+        if (isSprinting && !isSliding && input.onFoot.Crouch.triggered && input.onFoot.Movement.ReadValue<Vector2>().y > 0.1f)
         {
-            StartSlide();
+            isSliding = true;
         }
     }
 
     void Crouch()
     {
         isCrouching = true;
-        speed = speed / 2;
+        speed = crouchSpeed;
         controller.height = crouchHeight;
     }
 
@@ -242,45 +230,45 @@ public class PlayerMotor : MonoBehaviour
         if (!Physics.SphereCast(start, controller.radius, Vector3.up, out hit, castDistance))
         {
             isCrouching = false;
-            speed = speed * 2;
+            speed = standSpeed;
             controller.height = standingHeight;
         }
     }
 
-    void StartSlide()
+    IEnumerator Slide(Vector2 inputDir)
     {
-        //isSliding = true;
-        //slideTimer = slideDuration;
-        //controller.height = crouchHeight / 2f;
-        //Vector3 center = controller.center;
-        //center.y = controller.height / 2f;
-        //controller.center = center;
-    }
+        isSprinting = false; //make sure sprint/crouch is disabled
+        isCrouching = false;
 
-    void HandleSlideTimer()
-    {
-        //    if (isSliding)
-        //    {
-        //        slideTimer -= Time.deltaTime;
-        //        if (slideTimer <= 0f)
-        //        {
-        //            isSliding = false;
-        //            if (isCrouching)
-        //            {
-        //                controller.height = crouchHeight;
-        //                Vector3 center = controller.center;
-        //                center.y = crouchHeight / 2f;
-        //                controller.center = center;
-        //            }
-        //            else
-        //            {
-        //                controller.height = standingHeight;
-        //                Vector3 center = controller.center;
-        //                center.y = standingHeight / 2f;
-        //                controller.center = center;
-        //            }
-        //        }
-        //    }
-        //}
+        speed = slideSpeed;
+        playerVelocity.y = 0f;
+
+        Vector2 lastDirection = Vector2.zero;
+
+        while (slideTimer < slideDuration)
+        {
+            //make player smaller
+            controller.height = crouchHeight;
+
+            //move in slide direction
+            if (inputDir == Vector2.zero) inputDir = lastDirection;
+
+
+            Vector3 moveDir = new Vector3(inputDir.x, 0, inputDir.y);
+            controller.Move(transform.TransformDirection(moveDir) * slideSpeed * Time.deltaTime + playerVelocity * Time.deltaTime);
+
+            //add gravity
+            playerVelocity.y += gravity * Time.deltaTime;
+
+            //add to timer
+            slideTimer += Time.deltaTime;
+
+            lastDirection = inputDir;
+            yield return null;
+        }
+        controller.height = standingHeight;
+        speed = standSpeed;
+        isSliding = false;
+        slideTimer = 0;
     }
 }
