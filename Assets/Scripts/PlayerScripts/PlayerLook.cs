@@ -50,11 +50,4 @@ public class PlayerLook : MonoBehaviour
     {
         Camera.main.fieldOfView = fov;
     }
-
-    public void ActivateMouse(bool active)
-    {
-        //makes cursor invisible during gameplay
-        Cursor.visible = active;
-        if(!active) Cursor.lockState = CursorLockMode.Locked;
-    }
 }

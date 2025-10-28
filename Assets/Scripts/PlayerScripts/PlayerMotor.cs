@@ -3,14 +3,12 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     public float jumpHeight = 3;
-    CharacterController controller;
     Vector3 playerVelocity;
     public float speed = 5f;
     public float sprintSpeed = 10f;
     bool isGrounded;
     bool isSprinting = false;
     public float gravity = -9.8f;
-    InputManager input;
     public int currentSpeed;
 
 
@@ -32,11 +30,14 @@ public class PlayerMotor : MonoBehaviour
     public float slideSpeed = 15f;
     public float slideDuration = 0.7f;
     float slideTimer;
+    
 
+    [Header("Scripts")]
+    [SerializeField] InputManager input;
+    [SerializeField] CharacterController controller;
+    [SerializeField] PlayerLook playerLook;
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-        input = GetComponent<InputManager>();
         currentSpeed = 0;
     }
 
@@ -55,7 +56,6 @@ public class PlayerMotor : MonoBehaviour
         {
             isSprinting = false;
         }
-
         HandleCrouchInput();
         HandleSlideTimer();
     }

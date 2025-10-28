@@ -217,6 +217,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""c390891a-fe9c-4380-8749-ebce7386a805"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -624,6 +633,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SecondairyThrowAble"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f56e725b-dbe9-43b9-89db-e7166d3e5bc1"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14ac3104-d78f-4736-8d51-831f518aed30"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1164,6 +1195,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_FullAutoonoff = m_OnFoot.FindAction("FullAuto on/off", throwIfNotFound: true);
         m_OnFoot_PrimairyThrowAble = m_OnFoot.FindAction("PrimairyThrowAble", throwIfNotFound: true);
         m_OnFoot_SecondairyThrowAble = m_OnFoot.FindAction("SecondairyThrowAble", throwIfNotFound: true);
+        m_OnFoot_Inventory = m_OnFoot.FindAction("Inventory", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1271,6 +1303,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_FullAutoonoff;
     private readonly InputAction m_OnFoot_PrimairyThrowAble;
     private readonly InputAction m_OnFoot_SecondairyThrowAble;
+    private readonly InputAction m_OnFoot_Inventory;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnFoot".
     /// </summary>
@@ -1339,6 +1372,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SecondairyThrowAble => m_Wrapper.m_OnFoot_SecondairyThrowAble;
         /// <summary>
+        /// Provides access to the underlying input action "OnFoot/Inventory".
+        /// </summary>
+        public InputAction @Inventory => m_Wrapper.m_OnFoot_Inventory;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
@@ -1406,6 +1443,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SecondairyThrowAble.started += instance.OnSecondairyThrowAble;
             @SecondairyThrowAble.performed += instance.OnSecondairyThrowAble;
             @SecondairyThrowAble.canceled += instance.OnSecondairyThrowAble;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
         }
 
         /// <summary>
@@ -1459,6 +1499,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SecondairyThrowAble.started -= instance.OnSecondairyThrowAble;
             @SecondairyThrowAble.performed -= instance.OnSecondairyThrowAble;
             @SecondairyThrowAble.canceled -= instance.OnSecondairyThrowAble;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
         }
 
         /// <summary>
@@ -1792,6 +1835,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSecondairyThrowAble(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Inventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInventory(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

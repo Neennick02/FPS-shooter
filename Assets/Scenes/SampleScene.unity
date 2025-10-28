@@ -3389,7 +3389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495d0a1ed8e23a74aaba5fe643a81187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 1539518568126984573}
 --- !u!1001 &320909569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21114,7 +21114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
+  m_Color: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -24289,6 +24289,9 @@ MonoBehaviour:
   crouchHeight: 1
   slideSpeed: 15
   slideDuration: 0.7
+  input: {fileID: 1539518568126984581}
+  controller: {fileID: 1539518568126984583}
+  playerLook: {fileID: 1539518568126984584}
 --- !u!143 &1539518568126984583
 CharacterController:
   m_ObjectHideFlags: 0
@@ -24362,6 +24365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 568e45bbdb758de47ac105f08f9191d2, type: 2}
+  inventoryCanvas: {fileID: 1876402094}
 --- !u!81 &1539518569453362152
 AudioListener:
   m_ObjectHideFlags: 0
