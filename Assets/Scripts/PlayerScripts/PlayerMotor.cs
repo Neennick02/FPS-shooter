@@ -30,7 +30,6 @@ public class PlayerMotor : MonoBehaviour
     public float slideSpeed = 15f;
     public float slideDuration = 0.7f;
     float slideTimer;
-    
 
     [Header("Scripts")]
     [SerializeField] InputManager input;

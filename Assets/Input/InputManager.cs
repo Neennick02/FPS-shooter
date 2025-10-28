@@ -7,6 +7,8 @@ public class InputManager : MonoBehaviour
 
     PlayerMotor motor;
     PlayerLook look;
+
+    bool blockInputs = false;
     void Awake()
     {
         playerInput = new PlayerInput();
@@ -18,12 +20,14 @@ public class InputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (blockInputs) return;
         //tell playermotor to move using values from movement action
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
     }
 
     private void LateUpdate()
     {
+        if (blockInputs) return;
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
     void OnEnable()
@@ -34,5 +38,10 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         onFoot.Disable();
+    }
+
+    public void BlockInput(bool value)
+    {
+        blockInputs = value;
     }
 }

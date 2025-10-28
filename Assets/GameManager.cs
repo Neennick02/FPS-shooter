@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject _player;
     CharacterController _characterController;
+
+    InputManager input;
+    UI_Manager uiManager;
+    bool paused = false;
     public static GameManager Instance
     {
         get
@@ -19,11 +23,19 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        input = FindFirstObjectByType<InputManager>();
+        uiManager = GetComponent<UI_Manager>();
     }
 
     private void Update()
     {
-     //   if()
+        if(input.onFoot.Pause.triggered)
+        {
+            paused = !paused;
+            Time.timeScale = paused? 0 : 1;
+
+            if(paused) uiManager.OpenPauseMenu();
+        }
     }
 
 }

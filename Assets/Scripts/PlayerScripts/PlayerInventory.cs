@@ -7,6 +7,8 @@ public class PlayerInventory : MonoBehaviour
 {
     public InventoryObject inventory;
     [SerializeField] GameObject inventoryCanvas;
+    [SerializeField] PlayerLook playerLook;
+    [SerializeField] PlayerMotor playerMotor;
     bool inventoryOpened = false;
     InputManager input;
     List<Transform> inventorySlots = new List<Transform>();
@@ -32,11 +34,11 @@ public class PlayerInventory : MonoBehaviour
 
             if (!inventoryOpened)
             {
-                OpenInventory();
+                OpenAndCloseInventory(false);
             }
             else
             {
-                CloseInventory();
+                OpenAndCloseInventory(true);
             }
         }
     }
@@ -63,19 +65,15 @@ public class PlayerInventory : MonoBehaviour
     private void OnApplicationQuit()
     {
         //on close empty inventory slots
-        inventory.Container.Items = new InventorySlot[24];
+        inventory.Container.Items = new InventorySlot[25];
     }
 
-    void OpenInventory()
-    {
-        ActivateMouse(true);
-        EnableCanvas(true);
-    }
+    void OpenAndCloseInventory(bool value)  //set mouselock, inventory canvas
+    {                                       //disable player look/ move
+        ActivateMouse(value);
+        EnableCanvas(value);
 
-    void CloseInventory()
-    {
-        ActivateMouse(false);
-        EnableCanvas(false);
+       input.BlockInput(value); //prevent player from moving/ turn head during inventory
     }
     public void ActivateMouse(bool active)
     {
@@ -94,7 +92,6 @@ public class PlayerInventory : MonoBehaviour
     void EnableCanvas(bool enable)
     {
         Image img = inventoryCanvas.GetComponent<Image>();
-
         if (!enable)
         {
             img.color = new Color(img.color.r, img.color.g, img.color.b, 0); //disable

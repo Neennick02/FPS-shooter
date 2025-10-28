@@ -10,28 +10,31 @@ public class PlayerLook : MonoBehaviour
 
     float recoilX = 0;
     float recoilY = 0;
+
+
     [SerializeField] float recoilReturnSpeed = 8;
+
     public void ProcessLook(Vector2 input)
     {
-        float mouseX = input.x * xSensitivity * Time.deltaTime;
-        float mouseY = input.y * xSensitivity * Time.deltaTime;
+            float mouseX = input.x * xSensitivity * Time.deltaTime;
+            float mouseY = input.y * xSensitivity * Time.deltaTime;
 
-        // Apply vertical rotation (pitch) with recoil
-        xRotation -= mouseY;
-        xRotation += recoilX; // Add recoil pitch
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+            // Apply vertical rotation (pitch) with recoil
+            xRotation -= mouseY;
+            xRotation += recoilX; // Add recoil pitch
+            xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
-        // Apply horizontal rotation (yaw) with recoil
-        yRotation += mouseX;
-        yRotation += recoilY;
+            // Apply horizontal rotation (yaw) with recoil
+            yRotation += mouseX;
+            yRotation += recoilY;
 
-        // Apply rotations
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        transform.rotation = Quaternion.Euler(0, yRotation, 0);
+            // Apply rotations
+            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            transform.rotation = Quaternion.Euler(0, yRotation, 0);
 
-        // Smoothly reset recoil over time
-        recoilX = Mathf.Lerp(recoilX, 0, Time.deltaTime * recoilReturnSpeed);
-        recoilY = Mathf.Lerp(recoilY, 0, Time.deltaTime * recoilReturnSpeed);
+            // Smoothly reset recoil over time
+            recoilX = Mathf.Lerp(recoilX, 0, Time.deltaTime * recoilReturnSpeed);
+            recoilY = Mathf.Lerp(recoilY, 0, Time.deltaTime * recoilReturnSpeed);
     }
 
     public void AddCamRecoil(float up, float side)
