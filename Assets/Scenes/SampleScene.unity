@@ -3362,6 +3362,9 @@ MonoBehaviour:
   controls_button: {fileID: 531603991}
   keyboard_Controls: {fileID: 1220740615}
   gamepad_Controls: {fileID: 1031282814}
+  AudioSettings: {fileID: 1839196243}
+  GameplaySettings: {fileID: 1177304528}
+  DisplaySettings: {fileID: 1720963132}
 --- !u!4 &313347743
 Transform:
   m_ObjectHideFlags: 0
@@ -8404,7 +8407,7 @@ GameObject:
   - component: {fileID: 743736027}
   - component: {fileID: 743736026}
   m_Layer: 5
-  m_Name: Options
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11306,7 +11309,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 953498860}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 313347742}
+        m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
+        m_MethodName: OpenAudioTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &953498860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14129,7 +14144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1177304529
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16385,7 +16400,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1408499328}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 313347742}
+        m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
+        m_MethodName: OpenGameplayTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1408499328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18358,7 +18385,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1624528554}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 313347742}
+        m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
+        m_MethodName: OpenDisplayTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1624528554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22851,10 +22890,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 313347742}
-        m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
-        m_MethodName: OpenPauseMenu
-        m_Mode: 1
+      - m_Target: {fileID: 313347744}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PauseMenu
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -24418,8 +24457,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1539518569453362153}
-  xSensitivity: 25
-  ySensitivity: 25
+  xSensitivity: 20
+  ySensitivity: 20
   recoilReturnSpeed: 15
 --- !u!114 &1539518568126984585
 MonoBehaviour:
@@ -24454,8 +24493,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 568e45bbdb758de47ac105f08f9191d2, type: 2}
   inventoryCanvas: {fileID: 1876402094}
-  playerLook: {fileID: 0}
-  playerMotor: {fileID: 0}
+  playerLook: {fileID: 1539518568126984584}
+  playerMotor: {fileID: 1539518568126984582}
 --- !u!81 &1539518569453362152
 AudioListener:
   m_ObjectHideFlags: 0

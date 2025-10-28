@@ -24,6 +24,20 @@ public class UI_Manager : MonoBehaviour
     // [Header("Audio_Settings")]
 
     //  [Header("Display_Settings")]
+
+    [Header("Settings Tabs")]
+    [SerializeField] GameObject AudioSettings;
+    [SerializeField] GameObject GameplaySettings;
+    [SerializeField] GameObject DisplaySettings;
+
+    enum MenuState
+    {
+        Gameplay,
+        Audio,
+        Display
+    }
+
+    MenuState state;
     public void QuitGame()
     {
         Debug.Log("Quit app");
@@ -46,5 +60,27 @@ public class UI_Manager : MonoBehaviour
         else gamepad_Controls.SetActive(!gamepad_Controls.activeInHierarchy);
     }
 
+    public void CloseAllTabs()
+    {
+        AudioSettings.SetActive(false);
+        GameplaySettings.SetActive(false);
+        DisplaySettings.SetActive(false);
+    }
 
+    public void OpenGameplayTab()
+    {
+        CloseAllTabs();
+        GameplaySettings.SetActive(false);
+    }
+
+    public void OpenAudioTab()
+    {
+        CloseAllTabs();
+        AudioSettings.SetActive(false);
+    }
+    public void OpenDisplayTab()
+    {
+        CloseAllTabs();
+        DisplaySettings.SetActive(false);
+    }
 }

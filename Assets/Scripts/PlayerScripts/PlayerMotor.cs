@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
@@ -59,27 +60,6 @@ public class PlayerMotor : MonoBehaviour
         HandleSlideTimer();
     }
 
-    //receive input from InputManager and apply to CharacterController
-    public void ProcessMove(Vector2 input)
-    {
-        if (!isClimbing)
-        {
-            if (isSliding)
-            {
-                SlideMovement(input);  
-            }
-            else
-            {
-                NormalMovement(input);
-
-            }
-        }
-        else
-        {
-            ClimbLadder(input);
-        }
-    }
-
     public void Jump()
     {
         if (isGrounded)
@@ -130,29 +110,52 @@ public class PlayerMotor : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    void SlideMovement(Vector2 input)
-    {
-        // Slide forward direction
-        Vector3 slideDir = transform.forward;
-        controller.Move(slideDir * slideSpeed * Time.deltaTime);
 
-        // Gravity during slide
-        playerVelocity.y += gravity * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+
+
+    //receive input from InputManager and apply to CharacterController
+    public void ProcessMove(Vector2 input)
+    {
+        if (!isClimbing)
+        {
+            if (isSliding)
+            {
+                SlideMovement(input);
+            }
+            else
+            {
+                NormalMovement(input);
+
+            }
+        }
+        else
+        {
+            ClimbLadder(input);
+        }
     }
 
 
-    void ClimbLadder(Vector2 input)
+
+    void ClimbLadder(Vector2 _input)
     {
+        //cancel crouch 
+        isCrouching = false;
+
+
         // Only vertical movement on ladder
-        Vector3 climbDirection = new Vector3(0, input.y, 0);
+        Vector3 climbDirection = new Vector3(0, _input.y, 0);
         controller.Move(climbDirection * climbSpeed * Time.deltaTime);
 
         // Reset vertical velocity so gravity doesn't pull down while climbing
         playerVelocity.y = 0;
 
-        // Optional: exit ladder if player jumps or moves off ladder top/bottom
-        if (input.y == 0 && !controller.isGrounded)
+        //exit ladder if player jumps or moves off ladder top/bottom
+        if (input.onFoot.Jump.IsPressed())
+        {
+            isClimbing = false;
+        }
+
+        if (_input.y == 0 && !controller.isGrounded)
         {
             // Stay on ladder if not grounded and no vertical input
         }
@@ -165,7 +168,6 @@ public class PlayerMotor : MonoBehaviour
         {
             isClimbing = true;
             currentLadder = other.transform;
-            playerVelocity.y = 0f; // Reset velocity on ladder enter
         }
     }
 
@@ -178,17 +180,31 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
+
+
+
+    void SlideMovement(Vector2 input)
+    {
+        //// Slide forward direction
+        //Vector3 slideDir = transform.forward;
+        //controller.Move(slideDir * slideSpeed * Time.deltaTime);
+
+        //// Gravity during slide
+        //playerVelocity.y += gravity * Time.deltaTime;
+        //controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+
+
+
     void HandleCrouchInput()
     {
-        if (input.onFoot.Crouch.triggered)
-        {
-            if (isSliding)
-                return; // ignore crouch input during slide
+        if (isSliding) return; // ignore crouch input during slide
 
-            if (isCrouching)
-                StandUp();
-            else
-                Crouch();
+        if (input.onFoot.Crouch.WasReleasedThisFrame())
+        {
+            if (isCrouching) StandUp();
+            else Crouch();
         }
 
         // Start slide if sprinting, crouching, and moving forward
@@ -201,9 +217,7 @@ public class PlayerMotor : MonoBehaviour
     void Crouch()
     {
         isCrouching = true;
-
-        targetHeight = crouchHeight;
-        targetCenter = new Vector3(controller.center.x, crouchHeight / 2f, controller.center.z);
+        controller.height = crouchHeight;
     }
 
     void StandUp()
@@ -212,49 +226,48 @@ public class PlayerMotor : MonoBehaviour
         RaycastHit hit;
         float castDistance = standingHeight - controller.height;
         Vector3 start = transform.position + Vector3.up * controller.height;
+
         if (!Physics.SphereCast(start, controller.radius, Vector3.up, out hit, castDistance))
         {
             isCrouching = false;
             controller.height = standingHeight;
-            Vector3 center = controller.center;
-            center.y = standingHeight / 2f;
-            controller.center = center;
         }
     }
 
     void StartSlide()
     {
-        isSliding = true;
-        slideTimer = slideDuration;
-        controller.height = crouchHeight / 2f;
-        Vector3 center = controller.center;
-        center.y = controller.height / 2f;
-        controller.center = center;
+        //isSliding = true;
+        //slideTimer = slideDuration;
+        //controller.height = crouchHeight / 2f;
+        //Vector3 center = controller.center;
+        //center.y = controller.height / 2f;
+        //controller.center = center;
     }
 
     void HandleSlideTimer()
     {
-        if (isSliding)
-        {
-            slideTimer -= Time.deltaTime;
-            if (slideTimer <= 0f)
-            {
-                isSliding = false;
-                if (isCrouching)
-                {
-                    controller.height = crouchHeight;
-                    Vector3 center = controller.center;
-                    center.y = crouchHeight / 2f;
-                    controller.center = center;
-                }
-                else
-                {
-                    controller.height = standingHeight;
-                    Vector3 center = controller.center;
-                    center.y = standingHeight / 2f;
-                    controller.center = center;
-                }
-            }
-        }
+        //    if (isSliding)
+        //    {
+        //        slideTimer -= Time.deltaTime;
+        //        if (slideTimer <= 0f)
+        //        {
+        //            isSliding = false;
+        //            if (isCrouching)
+        //            {
+        //                controller.height = crouchHeight;
+        //                Vector3 center = controller.center;
+        //                center.y = crouchHeight / 2f;
+        //                controller.center = center;
+        //            }
+        //            else
+        //            {
+        //                controller.height = standingHeight;
+        //                Vector3 center = controller.center;
+        //                center.y = standingHeight / 2f;
+        //                controller.center = center;
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

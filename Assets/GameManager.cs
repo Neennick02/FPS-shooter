@@ -29,13 +29,31 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(input.onFoot.Pause.triggered)
+        if (input.onFoot.Pause.triggered)
         {
             paused = !paused;
-            Time.timeScale = paused? 0 : 1;
-
-            if(paused) uiManager.OpenPauseMenu();
+            input.BlockInput(paused);
+            
+            PauseMenu(paused);
         }
     }
 
+    public void PauseMenu(bool paused)
+    {
+        uiManager.OpenPauseMenu();
+        ActivateMouse(true);
+    }
+    private void ActivateMouse(bool active)
+    {
+        //makes cursor invisible during gameplay
+        Cursor.visible = active;
+        if (!active)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 }
