@@ -7,7 +7,7 @@ public class FindCamera : MonoBehaviour
 
     private void Start()
     {
-        cam = FindFirstObjectByType<Camera> ();
+        cam = Camera.main;
         if(cam != null)
         {
             canvas.worldCamera = cam;

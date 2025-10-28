@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
+
     PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
@@ -11,7 +13,17 @@ public class InputManager : MonoBehaviour
     bool blockInputs = false;
     void Awake()
     {
+        //null check
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         playerInput = new PlayerInput();
+
         onFoot = playerInput.OnFoot;
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();

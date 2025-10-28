@@ -109,7 +109,7 @@ public class DisplayInventory : MonoBehaviour
         }
         else
         {
-
+            //remove item when not hovering over inventory slot
         }
         Destroy(mouseItem.obj);
         mouseItem.item = null;
