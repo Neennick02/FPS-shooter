@@ -19,9 +19,9 @@ public class PauseScreenUi : MonoBehaviour
     }
 
 
-    public void Settings()
+    public void Settings(bool active)
     {
-        _settingsMenu.SetActive(true);    
+        _settingsMenu.SetActive(active);    
     }
 
     public void QuitGame()

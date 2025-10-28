@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
-    public Camera cam;
+    Camera _cam;
     float xRotation = 0f;
     float yRotation = 0f;
     public float xSensitivity = 30f;
@@ -14,6 +14,10 @@ public class PlayerLook : MonoBehaviour
 
     [SerializeField] float recoilReturnSpeed = 8;
 
+    private void Start()
+    {
+        _cam = Camera.main;
+    }
     public void ProcessLook(Vector2 input)
     {
             float mouseX = input.x * xSensitivity * Time.deltaTime;
@@ -29,7 +33,7 @@ public class PlayerLook : MonoBehaviour
             yRotation += recoilY;
 
             // Apply rotations
-            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            _cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
 
             // Smoothly reset recoil over time
@@ -51,6 +55,15 @@ public class PlayerLook : MonoBehaviour
 
     public void UpdateFOV(float fov)
     {
-        Camera.main.fieldOfView = fov;
+        _cam.fieldOfView = fov;
+    }
+
+    public float ReturnSensitivity()
+    {
+        return xSensitivity;
+    }
+    public float ReturnFov()
+    {
+        return _cam.fieldOfView;
     }
 }

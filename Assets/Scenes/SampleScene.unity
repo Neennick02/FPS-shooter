@@ -5924,11 +5924,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 392390424}
   - {fileID: 2114896725}
   - {fileID: 743736025}
   - {fileID: 146039984}
   - {fileID: 646511029}
+  - {fileID: 392390424}
   m_Father: {fileID: 1469816761}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7070,7 +7070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &646511029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8513,14 +8513,14 @@ MonoBehaviour:
       - m_Target: {fileID: 531195237}
         m_TargetAssemblyTypeName: PauseScreenUi, Assembly-CSharp
         m_MethodName: Settings
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &743736027
 MonoBehaviour:
@@ -14343,6 +14343,7 @@ GameObject:
   - component: {fileID: 1177304529}
   - component: {fileID: 1177304531}
   - component: {fileID: 1177304530}
+  - component: {fileID: 1177304532}
   m_Layer: 5
   m_Name: Gameplay
   m_TagString: Untagged
@@ -14413,6 +14414,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177304528}
   m_CullTransparentMesh: 1
+--- !u!114 &1177304532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177304528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 340500520edcdd84dbce70f65cf12e96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sensitivitySlider: {fileID: 1653044541}
+  _FovSlider: {fileID: 1290831914}
+  _sensitivityMultiplier: 100
+  _FovMultiplier: 100
 --- !u!1 &1180992638
 GameObject:
   m_ObjectHideFlags: 0
@@ -19837,6 +19854,7 @@ GameObject:
   - component: {fileID: 1720963133}
   - component: {fileID: 1720963135}
   - component: {fileID: 1720963134}
+  - component: {fileID: 1720963136}
   m_Layer: 5
   m_Name: Display
   m_TagString: Untagged
@@ -19905,6 +19923,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720963132}
   m_CullTransparentMesh: 1
+--- !u!114 &1720963136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720963132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1a4b9a11aa0394a877b4cba5710ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1725755923
 GameObject:
   m_ObjectHideFlags: 0
@@ -21067,6 +21097,7 @@ GameObject:
   - component: {fileID: 1839196244}
   - component: {fileID: 1839196246}
   - component: {fileID: 1839196245}
+  - component: {fileID: 1839196247}
   m_Layer: 5
   m_Name: Audio
   m_TagString: Untagged
@@ -21134,6 +21165,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839196243}
   m_CullTransparentMesh: 1
+--- !u!114 &1839196247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839196243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1212b4aacf4fdf44cb5b5e98015c525e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1844418582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4788733273437227858, guid: 5ef3d2423aa2846498e194e99d7f41e1, type: 3}
@@ -24711,10 +24754,10 @@ GameObject:
   - component: {fileID: 1539518568126984578}
   - component: {fileID: 1539518568126984579}
   - component: {fileID: 1539518568126984580}
+  - component: {fileID: 1539518568126984584}
   - component: {fileID: 1539518568126984582}
   - component: {fileID: 1539518568126984581}
   - component: {fileID: 1539518568126984583}
-  - component: {fileID: 1539518568126984584}
   - component: {fileID: 1539518568126984585}
   - component: {fileID: 1539518568126984586}
   m_Layer: 0
@@ -24863,7 +24906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a453b55b96cce9c4e8fb284bac2394cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1539518569453362153}
   xSensitivity: 20
   ySensitivity: 20
   recoilReturnSpeed: 15

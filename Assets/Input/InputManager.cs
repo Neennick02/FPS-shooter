@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
 
     PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
-
+    public PlayerInput.UIActions uiActions;
     PlayerMotor motor;
     PlayerLook look;
 
@@ -45,12 +45,15 @@ public class InputManager : MonoBehaviour
     void OnEnable()
     {
         onFoot.Enable();
+      //  uiActions.Disable();
     }
 
     private void OnDisable()
     {
         onFoot.Disable();
+        //uiActions.Enable();
     }
+
 
     public void BlockInput(bool value)
     {

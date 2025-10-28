@@ -28,7 +28,6 @@ public class UI_Manager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(isPaused);
 
         if (InputManager.Instance.onFoot.Pause.triggered)
         {
@@ -39,6 +38,7 @@ public class UI_Manager : MonoBehaviour
     public void OpenAndClose_PauseScreen(bool active)
     {
         _pauseMenu.gameObject.SetActive(active);
+        _pauseMenu.Settings(false);
         ActivateMouse(active);
         isPaused = active;
         InputManager.Instance.BlockInput(active);
