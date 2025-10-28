@@ -22,10 +22,12 @@ public class PlayerMotor : MonoBehaviour
     bool isCrouching = false;
     bool isSliding = false;
 
-    public float crouchHeight = 1f;
-    float crouchSpeed = 2;
-    float standingHeight;
+    public float crouchHeight = 0f;
+    float standingHeight = 2f;
+
     float targetHeight;
+    float crouchSpeed = 2;
+
     Vector3 targetCenter;
 
     public float slideSpeed = 15f;
@@ -199,13 +201,22 @@ public class PlayerMotor : MonoBehaviour
 
     void HandleCrouchInput()
     {
+        Debug.Log(isCrouching);
         if (isSliding) return; // ignore crouch input during slide
 
-        if (input.onFoot.Crouch.WasReleasedThisFrame())
+        if (input.onFoot.Crouch.triggered)
         {
             if (isCrouching) StandUp();
             else Crouch();
         }
+
+        if(isCrouching &&
+            input.onFoot.Jump.triggered ||
+            input.onFoot.Sprint.triggered) //when jumping or sprinting
+        {
+            StandUp();
+        }
+
 
         // Start slide if sprinting, crouching, and moving forward
         if (isCrouching && isSprinting && !isSliding && input.onFoot.Movement.ReadValue<Vector2>().y > 0.1f)
@@ -217,6 +228,7 @@ public class PlayerMotor : MonoBehaviour
     void Crouch()
     {
         isCrouching = true;
+        speed = speed / 2;
         controller.height = crouchHeight;
     }
 
@@ -230,6 +242,7 @@ public class PlayerMotor : MonoBehaviour
         if (!Physics.SphereCast(start, controller.radius, Vector3.up, out hit, castDistance))
         {
             isCrouching = false;
+            speed = speed * 2;
             controller.height = standingHeight;
         }
     }
