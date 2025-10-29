@@ -3494,8 +3494,8 @@ MonoBehaviour:
   onInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1539518568126984578}
-        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+      - m_Target: {fileID: 1539518568126984587}
+        m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
         m_MethodName: Heal
         m_Mode: 3
         m_Arguments:
@@ -5911,7 +5911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &531195234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6989,7 +6989,7 @@ GameObject:
   - component: {fileID: 627259405}
   - component: {fileID: 627259404}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: BarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7070,7 +7070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &646511029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11674,14 +11674,14 @@ MonoBehaviour:
   onInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1539518568126984578}
-        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+      - m_Target: {fileID: 1539518568126984587}
+        m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
         m_MethodName: TakeDamage
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 50
+          m_IntArgument: 20
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -12039,9 +12039,6 @@ MonoBehaviour:
   canvas: {fileID: 782785460}
   health: 0
   maxHealth: 100
-  overlay: {fileID: 0}
-  duration: 0
-  fadeSpeed: 0
 --- !u!4 &1004917318
 Transform:
   m_ObjectHideFlags: 0
@@ -12587,7 +12584,7 @@ GameObject:
   - component: {fileID: 1040030540}
   - component: {fileID: 1040030539}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14428,7 +14425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sensitivitySlider: {fileID: 1653044541}
   _FovSlider: {fileID: 1290831914}
-  _sensitivityMultiplier: 100
+  _sensitivityMultiplier: 50
   _FovMultiplier: 100
 --- !u!1 &1180992638
 GameObject:
@@ -18355,9 +18352,6 @@ MonoBehaviour:
   canvas: {fileID: 0}
   health: 0
   maxHealth: 100
-  overlay: {fileID: 0}
-  duration: 0
-  fadeSpeed: 0
 --- !u!4 &1594505579
 Transform:
   m_ObjectHideFlags: 0
@@ -24751,15 +24745,15 @@ GameObject:
   - component: {fileID: 1539518568126984563}
   - component: {fileID: 1539518568126984562}
   - component: {fileID: 1539518568126984575}
-  - component: {fileID: 1539518568126984578}
-  - component: {fileID: 1539518568126984579}
-  - component: {fileID: 1539518568126984580}
+  - component: {fileID: 1539518568126984581}
   - component: {fileID: 1539518568126984584}
   - component: {fileID: 1539518568126984582}
-  - component: {fileID: 1539518568126984581}
   - component: {fileID: 1539518568126984583}
-  - component: {fileID: 1539518568126984585}
+  - component: {fileID: 1539518568126984579}
+  - component: {fileID: 1539518568126984580}
   - component: {fileID: 1539518568126984586}
+  - component: {fileID: 1539518568126984585}
+  - component: {fileID: 1539518568126984587}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -24783,25 +24777,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &1539518568126984578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539518568126984573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f66ce47507bbd4d84a586476aa57f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1040030539}
-  canvas: {fileID: 0}
-  health: 0
-  maxHealth: 150
-  overlay: {fileID: 42990237}
-  duration: 1
-  fadeSpeed: 1
 --- !u!114 &1539518568126984579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24860,8 +24835,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 1
-  speed: 8
-  sprintSpeed: 13
+  speed: 5
+  sprintSpeed: 15
   gravity: -13
   currentSpeed: 0
   climbSpeed: 3
@@ -24944,6 +24919,25 @@ MonoBehaviour:
   inventoryCanvas: {fileID: 1876402094}
   playerLook: {fileID: 1539518568126984584}
   playerMotor: {fileID: 1539518568126984582}
+--- !u!114 &1539518568126984587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539518568126984573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b46f6f1c4a82c4eacfe9d1de9a31cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 1040030539}
+  overlay: {fileID: 42990237}
+  health: 100
+  maxHealth: 100
+  healthDelay: 1
+  duration: 1
+  fadeSpeed: 1
 --- !u!81 &1539518569453362152
 AudioListener:
   m_ObjectHideFlags: 0
