@@ -34,7 +34,7 @@ public class PlayerMotor : MonoBehaviour
     Vector3 targetCenter;
 
     float slideDuration = 0.3f;
-    float slideInterval = 1f; 
+  //  float slideInterval = 1f; 
     float slideTimer = 0;
 
     [Header("Scripts")]

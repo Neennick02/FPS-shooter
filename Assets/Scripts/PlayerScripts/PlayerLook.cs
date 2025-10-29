@@ -53,7 +53,7 @@ public class PlayerLook : MonoBehaviour
         ySensitivity = speed;
     }
 
-    public void UpdateFOV(float fov)
+    public void setFov(float fov)
     {
         _cam.fieldOfView = fov;
     }

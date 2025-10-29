@@ -3,7 +3,6 @@ using UnityEngine;
 public class PauseScreenUi : MonoBehaviour
 {
     [SerializeField] private GameObject _settingsMenu;
-    bool inPaused = true;
     private void Update()
     {
         if (InputManager.Instance.onFoot.Pause.triggered)

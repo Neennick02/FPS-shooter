@@ -21,8 +21,9 @@ public class FirstPersonController : MonoBehaviour
     #region Camera Movement Variables
 
     public Camera playerCamera;
+    private float _camRotation;
 
-    public float fov = 60f;
+    public float Fov;
     public bool invertCamera = false;
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
@@ -35,16 +36,16 @@ public class FirstPersonController : MonoBehaviour
     public Color crosshairColor = Color.white;
 
     // Internal Variables
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
-    private Image crosshairObject;
+    private float _yaw = 0.0f;
+    private float _pitch = 0.0f;
+    private Image _crosshairObject;
 
     #region Camera Zoom Variables
 
     public bool enableZoom = true;
     public bool holdToZoom = false;
     public KeyCode zoomKey = KeyCode.Mouse1;
-    public float zoomFOV = 30f;
+    public float zoomFOV;
     public float zoomStepTime = 5f;
 
     // Internal Variables
@@ -135,7 +136,7 @@ public class FirstPersonController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        crosshairObject = GetComponentInChildren<Image>();
+        _crosshairObject = GetComponentInChildren<Image>();
 
         // Set internal variables
         originalScale = transform.localScale;
@@ -150,6 +151,8 @@ public class FirstPersonController : MonoBehaviour
 
     void Start()
     {
+        zoomFOV = Fov / 2;
+
         if(lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -157,8 +160,8 @@ public class FirstPersonController : MonoBehaviour
 
         if(crosshair)
         {
-            crosshairObject.sprite = crosshairImage;
-            crosshairObject.color = crosshairColor;
+            _crosshairObject.sprite = crosshairImage;
+            _crosshairObject.color = crosshairColor;
         }
         else
         {
@@ -197,7 +200,6 @@ public class FirstPersonController : MonoBehaviour
         #endregion
     }
 
-    float camRotation;
 
     private void Update()
     {
@@ -206,23 +208,23 @@ public class FirstPersonController : MonoBehaviour
         // Control camera movement
         if(cameraCanMove)
         {
-            yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
+            _yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
             if (!invertCamera)
             {
-                pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
+                _pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
             }
             else
             {
                 // Inverted Y
-                pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
+                _pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
             }
 
             // Clamp pitch between lookAngle
-            pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+            _pitch = Mathf.Clamp(_pitch, -maxLookAngle, maxLookAngle);
 
-            transform.localEulerAngles = new Vector3(0, yaw, 0);
-            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+            transform.localEulerAngles = new Vector3(0, _yaw, 0);
+            playerCamera.transform.localEulerAngles = new Vector3(_pitch, 0, 0);
         }
 
         #region Camera Zoom
@@ -264,7 +266,7 @@ public class FirstPersonController : MonoBehaviour
             }
             else if(!isZoomed && !isSprinting)
             {
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
+                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, Fov, zoomStepTime * Time.deltaTime);
             }
         }
 
@@ -336,12 +338,14 @@ public class FirstPersonController : MonoBehaviour
 
         if (enableCrouch)
         {
-            if(Input.GetKeyDown(crouchKey) && !holdToCrouch)
+            InputManager input = InputManager.Instance;
+
+            if(input.onFoot.Crouch.triggered && !holdToCrouch)
             {
                 Crouch();
             }
             
-            if(Input.GetKeyDown(crouchKey) && holdToCrouch)
+            if(input.onFoot.Crouch.triggered && holdToCrouch)
             {
                 isCrouched = false;
                 Crouch();
@@ -361,6 +365,11 @@ public class FirstPersonController : MonoBehaviour
         {
             HeadBob();
         }
+    }
+
+    public void SetFov(float fov)
+    {
+        Fov = fov;
     }
 
     void FixedUpdate()
@@ -560,7 +569,7 @@ public class FirstPersonController : MonoBehaviour
         EditorGUILayout.Space();
 
         fpc.playerCamera = (Camera)EditorGUILayout.ObjectField(new GUIContent("Camera", "Camera attached to the controller."), fpc.playerCamera, typeof(Camera), true);
-        fpc.fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.fov, fpc.zoomFOV, 179f);
+        fpc.Fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.Fov, fpc.zoomFOV, 179f);
         fpc.cameraCanMove = EditorGUILayout.ToggleLeft(new GUIContent("Enable Camera Rotation", "Determines if the camera is allowed to move."), fpc.cameraCanMove);
 
         GUI.enabled = fpc.cameraCanMove;
@@ -599,7 +608,7 @@ public class FirstPersonController : MonoBehaviour
         GUI.enabled = fpc.enableZoom;
         fpc.holdToZoom = EditorGUILayout.ToggleLeft(new GUIContent("Hold to Zoom", "Requires the player to hold the zoom key instead if pressing to zoom and unzoom."), fpc.holdToZoom);
         fpc.zoomKey = (KeyCode)EditorGUILayout.EnumPopup(new GUIContent("Zoom Key", "Determines what key is used to zoom."), fpc.zoomKey);
-        fpc.zoomFOV = EditorGUILayout.Slider(new GUIContent("Zoom FOV", "Determines the field of view the camera zooms to."), fpc.zoomFOV, .1f, fpc.fov);
+        fpc.zoomFOV = EditorGUILayout.Slider(new GUIContent("Zoom FOV", "Determines the field of view the camera zooms to."), fpc.zoomFOV, .1f, fpc.Fov);
         fpc.zoomStepTime = EditorGUILayout.Slider(new GUIContent("Step Time", "Determines how fast the FOV transitions while zooming in."), fpc.zoomStepTime, .1f, 10f);
         GUI.enabled = true;
 
@@ -637,7 +646,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.sprintCooldown = EditorGUILayout.Slider(new GUIContent("Sprint Cooldown", "Determines how long the recovery time is when the player runs out of sprint."), fpc.sprintCooldown, .1f, fpc.sprintDuration);
         //GUI.enabled = true;
 
-        fpc.sprintFOV = EditorGUILayout.Slider(new GUIContent("Sprint FOV", "Determines the field of view the camera changes to while sprinting."), fpc.sprintFOV, fpc.fov, 179f);
+        fpc.sprintFOV = EditorGUILayout.Slider(new GUIContent("Sprint FOV", "Determines the field of view the camera changes to while sprinting."), fpc.sprintFOV, fpc.Fov, 179f);
         fpc.sprintFOVStepTime = EditorGUILayout.Slider(new GUIContent("Step Time", "Determines how fast the FOV transitions while sprinting."), fpc.sprintFOVStepTime, .1f, 20f);
 
         fpc.useSprintBar = EditorGUILayout.ToggleLeft(new GUIContent("Use Sprint Bar", "Determines if the default sprint bar will appear on screen."), fpc.useSprintBar);

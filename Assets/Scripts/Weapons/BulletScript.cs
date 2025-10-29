@@ -13,7 +13,7 @@ public class BulletScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player hit");
-            collision.gameObject.GetComponent<Health>().TakeDamage(damageAmount);
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
 
         }
         Destroy(gameObject);

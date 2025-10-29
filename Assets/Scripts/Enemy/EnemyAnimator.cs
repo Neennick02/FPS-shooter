@@ -13,7 +13,7 @@ public class EnemyAnimator : MonoBehaviour
     Camera player;
     Enemy enemy;
     Rigidbody[] bodies;
-    float aimSpeed = 5;
+  //  float aimSpeed = 5;
     bool isAttacking;
     private void Start()
     {

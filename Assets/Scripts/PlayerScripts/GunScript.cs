@@ -8,7 +8,7 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected float range = 100f;
     [SerializeField] protected float rangeOffSet = 5;
     [SerializeField] protected float fireRate = .2f;
-    float fireRateTimer = 0;
+    private float _fireRateTimer = 0;
 
     [SerializeField] protected float recoilUp, recoilSide;
 
@@ -47,7 +47,7 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected Vector3 aimRot;
 
     protected float zoomFOV = 40;
-    protected float normalFOV = 60;
+    protected float normalFOV;
     Crosshair crossHairScript;
     protected virtual void Start()
     {
@@ -56,7 +56,10 @@ public abstract class GunScript : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         UI = player.GetComponent<PlayerUI>();
         playerCam = Camera.main;
-        inputManager = player.GetComponent<InputManager>();
+        inputManager = InputManager.Instance;
+
+        normalFOV = playerCam.fieldOfView;
+        zoomFOV = normalFOV / 1.5f;
     }
 
     protected virtual void LateUpdate()
@@ -64,22 +67,22 @@ public abstract class GunScript : MonoBehaviour
         //full auto
         if (fullAutoEnabled)
         {
-            fireRateTimer += Time.deltaTime;
+            _fireRateTimer += Time.deltaTime;
 
-            if(inputManager.onFoot.Shoot.IsPressed() && fireRateTimer > fireRate && ammoInChamber > 0 && !isReloading)
+            if(inputManager.onFoot.Shoot.IsPressed() && _fireRateTimer > fireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
-                fireRateTimer = 0f;
+                _fireRateTimer = 0f;
             }
         }
         //semi auto
         else
         {
-            fireRateTimer += Time.deltaTime;
-            if (inputManager.onFoot.Shoot.triggered && fireRateTimer >= fireRate && ammoInChamber > 0 && !isReloading)
+            _fireRateTimer += Time.deltaTime;
+            if (inputManager.onFoot.Shoot.triggered && _fireRateTimer >= fireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
-                fireRateTimer = 0;
+                _fireRateTimer = 0;
             }
         }
 
@@ -281,5 +284,10 @@ public abstract class GunScript : MonoBehaviour
     public void UpdateAmmo(int amount)
     {
         magAmount = amount;
+    }
+
+    public void SetFov(float fov)
+    {
+        normalFOV = fov;
     }
 }

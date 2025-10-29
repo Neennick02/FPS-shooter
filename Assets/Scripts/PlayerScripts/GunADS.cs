@@ -7,7 +7,7 @@ public class GunADS : MonoBehaviour
     [SerializeField] float aimSpeed = 8f;
 
     [SerializeField] Camera playerCam;
-    [SerializeField] float zoomFOV = 40f;
+    [SerializeField] float zoomFOV;
     float normalFOV;
 
     bool isAiming = false;
@@ -15,12 +15,17 @@ public class GunADS : MonoBehaviour
     private void Start()
     {
         normalFOV = playerCam.fieldOfView;
-        
+        zoomFOV = normalFOV / 1.5f;
+    }
+
+    public void setFov(float fov)
+    {
+        normalFOV = fov;
     }
 
     void Update()
     {
-        if (Input.GetButton("Fire2"))
+        if (InputManager.Instance.onFoot.Aim.triggered)
         {
             isAiming = true;
         }
@@ -35,14 +40,14 @@ public class GunADS : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, ADS_pos.localPosition, Time.deltaTime * aimSpeed);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, ADS_pos.localRotation, Time.deltaTime * aimSpeed);
 
-            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, zoomFOV, Time.deltaTime * aimSpeed);
+            playerCam.fieldOfView = Mathf.Lerp(normalFOV, zoomFOV, Time.deltaTime * aimSpeed);
         }
         else
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, hip_Pos.localPosition, Time.deltaTime * aimSpeed);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, hip_Pos.localRotation, Time.deltaTime * aimSpeed);
 
-            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * aimSpeed);
+            playerCam.fieldOfView = Mathf.Lerp(zoomFOV, normalFOV, Time.deltaTime * aimSpeed);
         }
     }
 }

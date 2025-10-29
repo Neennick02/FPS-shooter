@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     CharacterController _characterController;
 
     UI_Manager uiManager;
-    bool paused = false;
     InputManager _input;
     public static GameManager Instance
     {
