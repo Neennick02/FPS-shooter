@@ -2,24 +2,15 @@ using UnityEngine;
 using System.Collections;
 public abstract class GunScript : MonoBehaviour
 {
-    [Header("Shooting config")]
-    [SerializeField] protected int damage = 10;
-    [SerializeField] protected float force = 50;
-    [SerializeField] protected float range = 100f;
-    [SerializeField] protected float rangeOffSet = 5;
-    [SerializeField] protected float fireRate = .2f;
+    [SerializeField] protected GunObject _gunObject;
     private float _fireRateTimer = 0;
 
-    [SerializeField] protected float recoilUp, recoilSide;
-
     [Header("Ammo config")]
-    [SerializeField] protected bool fullAutoEnabled;
+    [SerializeField] protected bool fullAutoEnabled = false;
     public bool isReloading;
     public bool isAiming;
-    [SerializeField] protected int ammoInChamber;
-    [SerializeField] protected int maxMagSize= 10;
-    [SerializeField] protected int magAmount = 5;
-    [SerializeField] protected float reloadTime;
+    protected int ammoInChamber;
+ 
     float timer = 0;
 
     [Header("Effects config")]
@@ -29,7 +20,6 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected GameObject impactEffect;
     [SerializeField] protected GameObject bloodEffect;
 
-    protected InputManager inputManager;
     protected  PlayerUI UI;
     [Header("Aiming config")]
     [SerializeField] protected float aimSpeed = 8f;
@@ -46,20 +36,21 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected Vector3 aimPos;
     [SerializeField] protected Vector3 aimRot;
 
-    protected float zoomFOV = 40;
+    protected float zoomFOV;
     protected float normalFOV;
     Crosshair crossHairScript;
+    protected InputManager _inputManager;
     protected virtual void Start()
     {
         crossHairScript = FindFirstObjectByType<Crosshair>();
-        ammoInChamber = maxMagSize;
+        ammoInChamber = _gunObject.MaxMagSize;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         UI = player.GetComponent<PlayerUI>();
         playerCam = Camera.main;
-        inputManager = InputManager.Instance;
+        _inputManager = InputManager.Instance;
 
         normalFOV = playerCam.fieldOfView;
-        zoomFOV = normalFOV / 1.5f;
+        SetZoomFov(1.5f);
     }
 
     protected virtual void LateUpdate()
@@ -69,7 +60,7 @@ public abstract class GunScript : MonoBehaviour
         {
             _fireRateTimer += Time.deltaTime;
 
-            if(inputManager.onFoot.Shoot.IsPressed() && _fireRateTimer > fireRate && ammoInChamber > 0 && !isReloading)
+            if(_inputManager.onFoot.Shoot.IsPressed() && _fireRateTimer > _gunObject.FireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
                 _fireRateTimer = 0f;
@@ -79,14 +70,14 @@ public abstract class GunScript : MonoBehaviour
         else
         {
             _fireRateTimer += Time.deltaTime;
-            if (inputManager.onFoot.Shoot.triggered && _fireRateTimer >= fireRate && ammoInChamber > 0 && !isReloading)
+            if (_inputManager.onFoot.Shoot.triggered && _fireRateTimer >= _gunObject.FireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
                 _fireRateTimer = 0;
             }
         }
 
-        if (inputManager.onFoot.FullAutoonoff.IsPressed())
+        if (_inputManager.onFoot.FullAutoonoff.IsPressed())
         {
             fullAutoEnabled = !fullAutoEnabled;
         }
@@ -100,7 +91,7 @@ public abstract class GunScript : MonoBehaviour
     {
         //change ammo amount
         ammoInChamber--;
-        range = Random.Range(range - rangeOffSet, range + rangeOffSet);
+        _gunObject.Range = Random.Range(_gunObject.Range - _gunObject.RangeOffSet, _gunObject.Range + _gunObject.RangeOffSet);
 
         if(muzzleFlash != null)
         {
@@ -111,7 +102,7 @@ public abstract class GunScript : MonoBehaviour
 
         Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
         //make array of hits
-        RaycastHit[] hits = Physics.RaycastAll(ray, range);
+        RaycastHit[] hits = Physics.RaycastAll(ray, _gunObject.Range);
 
         //sort array
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
@@ -130,7 +121,7 @@ public abstract class GunScript : MonoBehaviour
         }
 
         //add recoil
-        recoilScript.RecoilFire(recoilUp, recoilSide / 2);
+        recoilScript.RecoilFire(_gunObject.RecoilUp, _gunObject.RecoilSide / 2);
     }
 
     protected void FindTargetHealth(RaycastHit hit)
@@ -140,7 +131,7 @@ public abstract class GunScript : MonoBehaviour
         Debug.Log(hit.collider.name);
         if(targetHealth != null)
         {
-            int finalDamage = damage;
+            float finalDamage = _gunObject.Damage;
             if (hit.collider.CompareTag("Head"))
             {
                 finalDamage *= 3;
@@ -159,7 +150,7 @@ public abstract class GunScript : MonoBehaviour
 
         if (targetRigidbody != null)
         {
-            targetRigidbody.AddForceAtPosition(ray.direction * force, hit.point, ForceMode.Impulse);
+            targetRigidbody.AddForceAtPosition(ray.direction * _gunObject.Force, hit.point, ForceMode.Impulse);
         }
 
     }
@@ -187,7 +178,7 @@ public abstract class GunScript : MonoBehaviour
     void ChangeGrip()
     {
         //can only ADS when not reloading
-        if (inputManager.onFoot.Aim.IsPressed() && !isReloading)
+        if (_inputManager.onFoot.Aim.IsPressed() && !isReloading)
         {
             isAiming = true;
             crossHairScript.SetCrossHairSize(50);
@@ -236,12 +227,12 @@ public abstract class GunScript : MonoBehaviour
     protected void Reload()
     {
         //reload when mag is empty
-        if (ammoInChamber == 0 && magAmount > 0)
+        if (ammoInChamber == 0 && _gunObject.MagAmount > 0)
         {
             isReloading = true;
         }
         //you can only reload when mag is not full
-        if (inputManager.onFoot.Reload.IsPressed() && ammoInChamber < maxMagSize && magAmount > 0)
+        if (_inputManager.onFoot.Reload.IsPressed() && ammoInChamber < _gunObject.MaxMagSize && _gunObject.MagAmount > 0)
         {
             isReloading = true;
         }
@@ -256,16 +247,16 @@ public abstract class GunScript : MonoBehaviour
         }
 
         //fill mag when reloading is done
-        if (timer > reloadTime)
+        if (timer > _gunObject.ReloadTime)
         {
-            magAmount--;
-            ammoInChamber = maxMagSize;
+            _gunObject.MagAmount--;
+            ammoInChamber = _gunObject.MaxMagSize;
             isReloading = false;
             timer = 0;
         }
 
-        UI.UpdateAmmoCounter(ammoInChamber, magAmount);
-        UI.ReloadBar(timer, reloadTime);
+        UI.UpdateAmmoCounter(ammoInChamber, _gunObject.MagAmount);
+        UI.ReloadBar(timer, _gunObject.ReloadTime);
     }
 
     public void MoveToReloadPos()
@@ -283,11 +274,17 @@ public abstract class GunScript : MonoBehaviour
 
     public void UpdateAmmo(int amount)
     {
-        magAmount = amount;
+        _gunObject.MagAmount = amount;
     }
 
-    public void SetFov(float fov)
+    public virtual void SetFov(float fov)
     {
         normalFOV = fov;
+        zoomFOV = normalFOV / 1.5f;
+    }
+
+    public void SetZoomFov(float division)
+    {
+        zoomFOV = normalFOV / division;
     }
 }

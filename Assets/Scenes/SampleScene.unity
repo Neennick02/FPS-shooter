@@ -8744,6 +8744,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4243371153570508, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
   m_PrefabInstance: {fileID: 1048189809}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &759726446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+  m_PrefabInstance: {fileID: 1048189809}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e3d1a5c9e3a2c44971a5bb895cdc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &771732091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4646160277296803439, guid: 2d1aed8ada79e4d4e99084037c3b094a, type: 3}
@@ -13142,6 +13153,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8759583198393814700, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: gunScript
+      value: 
+      objectReference: {fileID: 759726446}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: range
       value: 5
@@ -23032,6 +23047,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
+      propertyPath: _gunObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f352a0769cf77246a34e3eb395ac0dc, type: 2}
+    - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
       propertyPath: recoilSide
       value: 0.2
       objectReference: {fileID: 0}
@@ -23042,6 +23061,10 @@ PrefabInstance:
     - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
       propertyPath: ammoInChamber
       value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
+      propertyPath: fullAutoEnabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23607,6 +23630,10 @@ PrefabInstance:
       propertyPath: magAmount
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
+      propertyPath: _gunObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 37a82a555c518554590fbf96f998da6e, type: 2}
     - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
       propertyPath: recoilSide
       value: 0.5

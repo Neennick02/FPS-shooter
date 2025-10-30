@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 public class Sniper : GunScript
 {
+    [Header("Sniper config")]
     [SerializeField] Volume volume;
     Vignette vignette;
     LensDistortion distorition;
@@ -19,7 +20,7 @@ public class Sniper : GunScript
     {
         
         base.Start();
-        zoomFOV = normalFOV / 4;
+        SetZoomFov(4);
         VolumeProfile profile = volume.profile;
 
         //find post processing effects
@@ -167,5 +168,11 @@ public class Sniper : GunScript
         //disable both effects
         distorition.intensity.value = 0;
         vignette.intensity.value = 0;
+    }
+
+    public override void SetFov(float fov)
+    {
+        normalFOV = fov;
+        zoomFOV = normalFOV / 4f;
     }
 }

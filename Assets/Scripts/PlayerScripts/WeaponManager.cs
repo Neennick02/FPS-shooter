@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 public class WeaponManager : MonoBehaviour
 {
     public Transform weaponHolder;
@@ -22,6 +23,8 @@ public class WeaponManager : MonoBehaviour
     int maxThrowables = 2;
     bool isHolding = false;
     GunScript gunScript;
+
+    private List<GunScript> _gunArray = new List<GunScript>();
     private void Start()
     {
         input = GetComponent<InputManager>();
@@ -160,6 +163,15 @@ public class WeaponManager : MonoBehaviour
         }
 
         weaponIndex = index;
+    }
+
+    public List<GunScript> ReturnAllGuns()
+    {
+        for (int i = 0; i < weaponHolder.childCount; i++)
+        {
+            _gunArray.Add(weaponHolder.GetChild(i).GetComponent<GunScript>());
+        }
+        return _gunArray;
     }
 
     void StartHoldingGrenade(GameObject prefab)

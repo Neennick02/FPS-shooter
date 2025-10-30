@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.UI;
 public class GameplaySettings : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class GameplaySettings : MonoBehaviour
 
     InputManager _input;
     GunScript _gunScript;
-    FirstPersonController _controller;
     PlayerLook _lookScript;
+    WeaponManager _weaponManager;
+    private List<GunScript> _gunArray = new List<GunScript>();
+
+
 
     private void Start()
     {
@@ -23,9 +27,8 @@ public class GameplaySettings : MonoBehaviour
         _input = InputManager.Instance;
 
         _gunScript = _input.GetComponentInChildren<GunScript>();
-        _controller = _input.GetComponent<FirstPersonController>();
         _lookScript = _input.GetComponent<PlayerLook>();
-
+        _weaponManager = _input.GetComponent<WeaponManager>();
         _sensitivitySlider.value = _lookScript.ReturnSensitivity()/ _sensitivityMultiplier;
         _FovSlider.value = _lookScript.ReturnFov() / _FovMultiplier;
     }
@@ -40,10 +43,15 @@ public class GameplaySettings : MonoBehaviour
         //if slider value == fov value stop
         if (_lookScript.ReturnFov() == _value1) return;
 
-        
+
         //update fov values in scripts
+
+        _gunArray = _weaponManager.ReturnAllGuns();
+        for (int i = 0; i < _gunArray.Count; i++)
+        {
+            _gunArray[i].SetFov(_value1);
+        }
         _gunScript.SetFov(_value1);
-        _controller.SetFov(_value1);
         _lookScript.setFov(_value1);
     }
 }

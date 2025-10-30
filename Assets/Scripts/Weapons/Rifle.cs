@@ -5,7 +5,7 @@ public class Rifle : GunScript
     protected override void LateUpdate()
     {
         base.LateUpdate();
-        if (inputManager.onFoot.FullAutoonoff.triggered)
+        if (_inputManager.onFoot.FullAutoonoff.triggered)
         {
             fullAutoEnabled = !fullAutoEnabled;
         }

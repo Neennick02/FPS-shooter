@@ -227,7 +227,7 @@ public class PlayerHealth : MonoBehaviour
             if (healthUp) _health += 0.5f;
             else _health -= 0.5f;
 
-                UpdateHealthBar();
+            UpdateHealthBar();
             yield return new WaitForSeconds(0.005f);
         }
         _healCoroutine = null;

@@ -6,8 +6,8 @@ public class Health : MonoBehaviour
     [Header("Health Bar")]
     [SerializeField] public Image healthBar;
     public GameObject canvas;
-    [SerializeField] int health;
-    [SerializeField] public int maxHealth;
+    [SerializeField] float health;
+    [SerializeField] public float maxHealth;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
         }
     }
 
-   public void TakeDamage(int amount)
+   public void TakeDamage(float amount)
     {
         health -= amount;
         UpdateHealthBar();
@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
         UpdateHealthBar();
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }

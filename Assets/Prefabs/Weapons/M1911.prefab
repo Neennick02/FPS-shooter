@@ -250,20 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a7d3558dd28db4cb45efe36dac1762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  force: 50
-  range: 50
-  rangeOffSet: 5
-  fireRate: 0.25
-  recoilUp: -0.7
-  recoilSide: 0.2
-  fullAutoEnabled: 0
+  _gunObject: {fileID: 11400000, guid: 37a82a555c518554590fbf96f998da6e, type: 2}
   isReloading: 0
   isAiming: 0
-  ammoInChamber: 9
-  maxMagSize: 10
-  magAmount: 5
-  reloadTime: 1.5
   recoilScript: {fileID: 0}
   muzzleFlash: {fileID: 5766072880312836908}
   impactEffect: {fileID: 100002, guid: 99c73c92ac40473459640b165473206f, type: 3}

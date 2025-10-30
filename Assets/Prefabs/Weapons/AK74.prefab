@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f617297c7a284d498d1c360893ef9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gunObject: {fileID: 11400000, guid: 7650c77562ec7784f99aa73b82d9ea2d, type: 2}
   damage: 20
   force: 15
   range: 299.0945

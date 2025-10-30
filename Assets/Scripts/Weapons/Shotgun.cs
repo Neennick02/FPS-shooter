@@ -29,7 +29,7 @@ public class Shotgun : GunScript
             Vector3 targetPos;
 
             //fire pallets
-            if (Physics.Raycast(ray, out RaycastHit hit, range))
+            if (Physics.Raycast(ray, out RaycastHit hit, _gunObject.Range))
             {
                 targetPos = hit.point;
 
@@ -45,7 +45,7 @@ public class Shotgun : GunScript
             else
             {
                 //when the raycast hits nothing
-                targetPos = firePoint.position + dir.normalized * range;
+                targetPos = firePoint.position + dir.normalized * _gunObject.Range;
             }
             palletManager.DrawPelletTrail(firePoint.position, targetPos, startC, endC);
 
@@ -54,7 +54,7 @@ public class Shotgun : GunScript
             
 
         }
-        recoilScript.RecoilFire(recoilUp, recoilSide);
+        recoilScript.RecoilFire(_gunObject.RecoilUp, _gunObject.RecoilSide);
 
     }
 
