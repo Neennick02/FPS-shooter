@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e887496330bb3d84d9f7c705d8007251, type: 3}
   m_Name: Rifle Enemy
   m_EditorClassIdentifier: 
-  MaxHealth: 0
-  RegenerateHealth: 0
+  MaxHealth: 100
   HealthRegenSpeed: 0
-  SpottingDistance: 0
-  HearingDistance: 0
-  RotationSpeed: 0
-  Fov: 0
-  EyeHeight: 0
-  Damage: 0
-  FireRate: 0
-  BulletSpeed: 0
-  ShootingAccuracy: 0
+  SpottingDistance: 35
+  HearingDistance: 10
+  RotationSpeed: 5
+  Fov: 90
+  EyeHeight: 0.6
+  Damage: 15
+  FireRate: 0.6
+  BulletSpeed: 50
+  ShootingAccuracy: 3

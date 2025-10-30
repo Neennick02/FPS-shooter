@@ -251,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunObject: {fileID: 11400000, guid: 37a82a555c518554590fbf96f998da6e, type: 2}
+  _playerSettings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
+  fullAutoEnabled: 0
   isReloading: 0
   isAiming: 0
   recoilScript: {fileID: 0}

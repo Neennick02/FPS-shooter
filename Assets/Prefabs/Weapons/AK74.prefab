@@ -276,20 +276,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunObject: {fileID: 11400000, guid: 7650c77562ec7784f99aa73b82d9ea2d, type: 2}
-  damage: 20
-  force: 15
-  range: 299.0945
-  rangeOffSet: 5
-  fireRate: 0.1
-  recoilUp: -0.3
-  recoilSide: 0.2
+  _playerSettings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
   fullAutoEnabled: 1
   isReloading: 0
   isAiming: 0
-  ammoInChamber: 0
-  maxMagSize: 30
-  magAmount: 0
-  reloadTime: 2.5
   recoilScript: {fileID: 0}
   muzzleFlash: {fileID: 0}
   impactEffect: {fileID: 100002, guid: 99c73c92ac40473459640b165473206f, type: 3}

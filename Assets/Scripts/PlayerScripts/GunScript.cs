@@ -3,6 +3,8 @@ using System.Collections;
 public abstract class GunScript : MonoBehaviour
 {
     [SerializeField] protected GunObject _gunObject;
+    [SerializeField] protected Settings _playerSettings;
+
     private float _fireRateTimer = 0;
 
     [Header("Ammo config")]
@@ -49,18 +51,30 @@ public abstract class GunScript : MonoBehaviour
         playerCam = Camera.main;
         _inputManager = InputManager.Instance;
 
-        normalFOV = playerCam.fieldOfView;
-        SetZoomFov(1.5f);
+        normalFOV = _playerSettings.Fov;
     }
 
     protected virtual void LateUpdate()
     {
-        //full auto
+        SetFov();
+        EnableDisableFullAuto();
+        Reload();
+        ChangeGrip();
+    }
+
+    protected virtual void SetFov()
+    {
+        normalFOV = _playerSettings.Fov;
+        zoomFOV = _playerSettings.Fov / 1.5f;
+    }
+
+    void EnableDisableFullAuto()
+    {
         if (fullAutoEnabled)
         {
             _fireRateTimer += Time.deltaTime;
 
-            if(_inputManager.onFoot.Shoot.IsPressed() && _fireRateTimer > _gunObject.FireRate && ammoInChamber > 0 && !isReloading)
+            if (_inputManager.onFoot.Shoot.IsPressed() && _fireRateTimer > _gunObject.FireRate && ammoInChamber > 0 && !isReloading)
             {
                 Attack();
                 _fireRateTimer = 0f;
@@ -81,10 +95,6 @@ public abstract class GunScript : MonoBehaviour
         {
             fullAutoEnabled = !fullAutoEnabled;
         }
-
-
-        Reload();
-        ChangeGrip();
     }
 
     protected virtual void Attack()
@@ -277,7 +287,7 @@ public abstract class GunScript : MonoBehaviour
         _gunObject.MagAmount = amount;
     }
 
-    public virtual void SetFov(float fov)
+/*    public virtual void SetFov(float fov)
     {
         normalFOV = fov;
         zoomFOV = normalFOV / 1.5f;
@@ -286,5 +296,5 @@ public abstract class GunScript : MonoBehaviour
     public void SetZoomFov(float division)
     {
         zoomFOV = normalFOV / division;
-    }
+    }*/
 }

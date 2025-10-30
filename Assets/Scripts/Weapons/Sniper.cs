@@ -20,7 +20,6 @@ public class Sniper : GunScript
     {
         
         base.Start();
-        SetZoomFov(4);
         VolumeProfile profile = volume.profile;
 
         //find post processing effects
@@ -32,6 +31,12 @@ public class Sniper : GunScript
         //disable scope image
         SetScopeAlpha(0);
         ShowGun();
+    }
+
+    protected override void SetFov()
+    {
+        normalFOV = _playerSettings.Fov;
+        zoomFOV = _playerSettings.Fov / 4f;
     }
 
     protected override void Aim()
@@ -170,9 +175,9 @@ public class Sniper : GunScript
         vignette.intensity.value = 0;
     }
 
-    public override void SetFov(float fov)
+/*    public override void SetFov(float fov)
     {
         normalFOV = fov;
         zoomFOV = normalFOV / 4f;
-    }
+    }*/
 }

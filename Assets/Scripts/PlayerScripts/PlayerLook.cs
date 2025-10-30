@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
+    [SerializeField] private Settings _playerSettings;
+
     Camera _cam;
     float xRotation = 0f;
     float yRotation = 0f;
@@ -20,7 +22,10 @@ public class PlayerLook : MonoBehaviour
     }
     public void ProcessLook(Vector2 input)
     {
-            float mouseX = input.x * xSensitivity * Time.deltaTime;
+        xSensitivity = _playerSettings.Sensitivity;
+        ySensitivity = _playerSettings.Sensitivity;
+
+        float mouseX = input.x * xSensitivity * Time.deltaTime;
             float mouseY = input.y * xSensitivity * Time.deltaTime;
 
             // Apply vertical rotation (pitch) with recoil
@@ -49,8 +54,8 @@ public class PlayerLook : MonoBehaviour
 
     public void UpdateLookSensitivity(float speed)
     {
-        xSensitivity = speed;
-        ySensitivity = speed;
+       /* xSensitivity = speed;
+        ySensitivity = speed;*/
     }
 
     public void setFov(float fov)

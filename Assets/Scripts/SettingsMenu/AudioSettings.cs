@@ -2,15 +2,6 @@ using UnityEngine;
 
 public class AudioSettings : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Settings PlayerSettings;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

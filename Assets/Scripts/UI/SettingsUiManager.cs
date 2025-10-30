@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SettingsUiManager : MonoBehaviour
 {
-
     [SerializeField] GameObject[] _tabs;
 
     private void Start()
