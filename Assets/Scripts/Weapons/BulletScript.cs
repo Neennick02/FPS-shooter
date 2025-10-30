@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    int damageAmount;
+    float damageAmount;
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetDamage(int amount)
+    public void SetDamage(float amount)
     {
         damageAmount = amount;
     }

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.Processors;
 
 public class Enemy : MonoBehaviour
 {
+    public EnemyObject _enemyObject;
     [SerializeField] NavMeshAgent agent;
     StateMachine stateMachine;
     GameObject player;
@@ -13,19 +14,7 @@ public class Enemy : MonoBehaviour
     public GameObject Player { get => player; }
     public Vector3 LastKnowsPlayerPos { get => lastKnownPlayPos; set => lastKnownPlayPos = value; }
     public EnemyPath path;
-    [Header("Sight Values")]
-    
-    public float spottingDistance;
-    public float hearingDistance;
-    public float rotationSpeed;
-    public float FOV = 85;
-    public float eyeHeight;
 
-    [Header("Weapon Values")]
-    public int damageAmount;
-    [Range(0.1f, 10f)] public float fireRate;
-    public float bulletSpeed = 30;
-    [Range(0.1f, 10f)] public float shootingAccuracy = 3;
     [SerializeField] string currentState;
     public EnemyAnimator animatorScript;
     [SerializeField] public GameObject gunObject;
@@ -53,9 +42,9 @@ public class Enemy : MonoBehaviour
         if(player != null)
         {
             //is player close enough
-            if(Vector3.Distance(transform.position, player.transform.position) < spottingDistance)
+            if(Vector3.Distance(transform.position, player.transform.position) < _enemyObject.SpottingDistance)
             {
-                Vector3 origin = transform.position + Vector3.up * eyeHeight;
+                Vector3 origin = transform.position + Vector3.up * _enemyObject.EyeHeight;
                 Vector3 targetDir = (player.transform.position - origin).normalized;
 
                 float angleToPlayer = Vector3.Angle(targetDir, transform.forward);
@@ -63,19 +52,19 @@ public class Enemy : MonoBehaviour
 
                 //draw line in sceneview
                 Debug.DrawLine(
-                           transform.position + (Vector3.up * eyeHeight),
-                           transform.position + (Vector3.up * eyeHeight) + targetDir * spottingDistance,
+                           transform.position + (Vector3.up * _enemyObject.EyeHeight),
+                           transform.position + (Vector3.up * _enemyObject.EyeHeight) + targetDir * _enemyObject.SpottingDistance,
                            Color.red);
 
                 //checkt if player is in FOV
-                if (angleToPlayer <= FOV)
+                if (angleToPlayer <= _enemyObject.Fov)
                 {
-                    Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDir);
+                    Ray ray = new Ray(transform.position + (Vector3.up * _enemyObject.EyeHeight), targetDir);
                     RaycastHit hitInfo = new RaycastHit();
-                    if(Physics.Raycast(ray, out hitInfo, spottingDistance))
+                    if(Physics.Raycast(ray, out hitInfo, _enemyObject.SpottingDistance))
                     {
                         //checkt if object is player 
-                        if(hitInfo.transform.gameObject == player && hitInfo.distance < spottingDistance)
+                        if(hitInfo.transform.gameObject == player && hitInfo.distance < _enemyObject.SpottingDistance)
                         {
                             return true;
                         }
@@ -90,7 +79,7 @@ public class Enemy : MonoBehaviour
     {
         if(player != null)
         {
-            if(Vector3.Distance(transform.position, player.transform.position) < hearingDistance)
+            if(Vector3.Distance(transform.position, player.transform.position) < _enemyObject.HearingDistance)
             {
                 return true;
             }

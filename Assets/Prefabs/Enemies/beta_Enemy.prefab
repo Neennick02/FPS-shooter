@@ -134,9 +134,6 @@ MonoBehaviour:
   canvas: {fileID: 3004420005457997017}
   health: 0
   maxHealth: 100
-  overlay: {fileID: 0}
-  duration: 0
-  fadeSpeed: 0
 --- !u!195 &4735607694468717093
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -201,17 +198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d909311a05e29144784cc98de32fb63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyObject: {fileID: 11400000, guid: 276ddad13779e5d40adc279add4d4fad, type: 2}
   agent: {fileID: 4735607694468717093}
   path: {fileID: 0}
-  spottingDistance: 35
-  hearingDistance: 10
-  rotationSpeed: 5
-  FOV: 90
-  eyeHeight: 0.6
-  damageAmount: 30
-  fireRate: 0.57
-  bulletSpeed: 80
-  shootingAccuracy: 3
   currentState: 
   animatorScript: {fileID: 6209193259233243021}
   gunObject: {fileID: 5309502208562619358}

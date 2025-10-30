@@ -76,7 +76,7 @@ public class EnemyAnimator : MonoBehaviour
         enemy.gunObject.transform.localPosition = Vector3.Lerp(
                enemy.gunObject.transform.localPosition,
                enemy.idlePos.localPosition,
-               Time.deltaTime * enemy.rotationSpeed);
+               Time.deltaTime * enemy._enemyObject.RotationSpeed);
     }
 
     public void SetIsMoving(bool active)

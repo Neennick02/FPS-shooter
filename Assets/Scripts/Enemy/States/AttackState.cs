@@ -45,7 +45,7 @@ public class AttackState : BaseState
                 }
 
 
-                if (shotTimer > enemy.fireRate)
+                if (shotTimer > enemy._enemyObject.FireRate)
                 {
                     Attack();
                     shotTimer = 0;
@@ -91,7 +91,7 @@ public class AttackState : BaseState
             enemy.transform.rotation = Quaternion.Slerp(
                 enemy.transform.rotation,
                 targetRotation,
-                Time.deltaTime * enemy.rotationSpeed
+                Time.deltaTime * enemy._enemyObject.RotationSpeed
                 );
         }
     }
@@ -100,9 +100,9 @@ public class AttackState : BaseState
     {
         if (enemy.Player != null && enemy.aimTarget != null)
         {
-            Transform playerCamTransform = Camera.main.transform;
+            Transform PlayerTransform = InputManager.Instance.transform;
 
-            enemy.aimTarget.position = playerCamTransform.position ;
+            enemy.aimTarget.position = PlayerTransform.position ;
         }
     }
 
@@ -114,7 +114,7 @@ public class AttackState : BaseState
         enemy.gunObject.transform.localPosition = Vector3.Lerp(
             enemy.gunObject.transform.localPosition,
             enemy.animatorScript.aimingPos.localPosition,
-            Time.deltaTime * enemy.rotationSpeed
+            Time.deltaTime * enemy._enemyObject.RotationSpeed
         );
 
         // 2. Calculate direction from barrel to aimTarget
@@ -151,10 +151,10 @@ void Attack()
 
 
         //add force to bullet
-        bullet.GetComponent<Rigidbody>().linearVelocity = Quaternion.AngleAxis(Random.Range(-enemy.shootingAccuracy, enemy.shootingAccuracy), Vector3.up) * shootDir * enemy.bulletSpeed;
+        bullet.GetComponent<Rigidbody>().linearVelocity = Quaternion.AngleAxis(Random.Range(-enemy._enemyObject.ShootingAccuracy, enemy._enemyObject.ShootingAccuracy), Vector3.up) * shootDir * enemy._enemyObject.BulletSpeed;
 
         //control bulletDamage
-        bullet.GetComponent<BulletScript>().SetDamage(enemy.damageAmount);
+        bullet.GetComponent<BulletScript>().SetDamage(enemy._enemyObject.Damage);
         shotTimer = 0;
 
     }
