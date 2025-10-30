@@ -7,7 +7,6 @@ public class PlayerHealth : MonoBehaviour
 {
     public Image HealthBar;
     public Image ShieldBar;
-    private GameObject _shieldBarParent;
 
     [SerializeField] private Image _overlay;
 
@@ -21,10 +20,10 @@ public class PlayerHealth : MonoBehaviour
     private float _durationTimer;
 
     private Coroutine _regenCoroutine;
-
+    private Coroutine _healCoroutine;
     [SerializeField] HealthObject healthSO;
 
-
+    private float rest = 0;
     private void Awake()
     {
         MaxHealth = healthSO.MaxHealth;
@@ -57,11 +56,16 @@ public class PlayerHealth : MonoBehaviour
         }
 
         UpdateShieldBar();
-        if (_regenCoroutine == null) _regenCoroutine = StartCoroutine(RegenerateHealth(1.5f));
+        if (_regenCoroutine == null && _health < MaxHealth / 2 && !_isDead)
+            _regenCoroutine = StartCoroutine(RegenerateHealthOverTime(1.5f));
+
+
     }
 
     public void TakeDamage(int amount)
     {
+        if (_isDead) return;
+
         if(_regenCoroutine != null)
         {
             //stop regeneration
@@ -79,7 +83,8 @@ public class PlayerHealth : MonoBehaviour
             {
                 //take shield damage and health damage
                 _shieldAmount = 0;
-                _health -= rest;
+                if (_healCoroutine != null) _healCoroutine = null;
+                _healCoroutine = StartCoroutine(SetHealthCoroutine(-rest));
             }
             //only take shield damage
             _shieldAmount = Mathf.Clamp(_shieldAmount, 0, MaxHealth);
@@ -87,7 +92,8 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            _health -= amount;
+            if (_healCoroutine != null) _healCoroutine = null;
+            _healCoroutine = StartCoroutine(SetHealthCoroutine(-amount));
         }
             UpdateHealthBar();
             UpdateShieldBar();
@@ -107,14 +113,20 @@ public class PlayerHealth : MonoBehaviour
 
        // _shieldBarParent.SetActive(true);
         float size = MaxHealth *(percentage / 100f);
-        _shieldAmount =+ size + _shieldAmount;
+        _shieldAmount += size + _shieldAmount;
         UpdateShieldBar();
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
-        _health += amount;
-        UpdateHealthBar();
+        if (_isDead) return;
+        if (_healCoroutine != null)
+        {
+            amount += rest;
+            _healCoroutine = null;
+        }
+
+       _healCoroutine = StartCoroutine(SetHealthCoroutine(amount));
     }
 
     public float GetHealth()
@@ -170,34 +182,55 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Game over");
     }
 
-    IEnumerator RegenerateHealth(float delay)
+    IEnumerator RegenerateHealthOverTime(float delay)
     {
-        // dont heal if health is over 66 %
-        float sixtyProcent = (healthSO.MaxHealth / 3) * 2;
-
-        if (_health > sixtyProcent)
-        {
-            _regenCoroutine = null;
-            yield break;
-        }
-        float regenerationSize = (healthSO.RegenrationStep / MaxHealth) * 100;
-        float targetHealth = math.min(_health + regenerationSize, healthSO.MaxHealth);
+        float half = healthSO.MaxHealth / 2;
+       
+        float targetHealth = math.min(_health + healthSO.RegenrationStep, healthSO.MaxHealth);
 
         yield return new WaitForSeconds(delay); //heal delay
 
 
         while(_health < targetHealth)
         {
-            _health++;
+            //add health
+            _health += 0.5f;
             UpdateHealthBar();
-            if (_health >= sixtyProcent)
+
+            // dont heal if health is over 50 %
+            if (_health >= half)
             {
                 _regenCoroutine = null;
                 yield break;
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.03f);
         }
         _regenCoroutine = null;
+    }
+
+    IEnumerator SetHealthCoroutine(float amount)
+    {
+        if (_isDead)
+        {
+            _healCoroutine = null;
+            yield break;
+        }
+
+        float targetHealth = math.clamp(_health + amount, 0, MaxHealth);
+        bool healthUp = targetHealth > _health ? true : false;
+
+
+        while (Mathf.Abs(_health - targetHealth) > 0.01f)
+        {
+            rest = targetHealth - _health;
+
+            if (healthUp) _health += 0.5f;
+            else _health -= 0.5f;
+
+                UpdateHealthBar();
+            yield return new WaitForSeconds(0.005f);
+        }
+        _healCoroutine = null;
     }
 }
 
