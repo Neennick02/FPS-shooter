@@ -12,7 +12,6 @@ public class GameplaySettings : MonoBehaviour
     private float _value1;
 
     InputManager _input;
-    GunADS _adsScript;
     GunScript _gunScript;
     FirstPersonController _controller;
     PlayerLook _lookScript;
@@ -23,7 +22,6 @@ public class GameplaySettings : MonoBehaviour
 
         _input = InputManager.Instance;
 
-        _adsScript = _input.GetComponent<GunADS>();
         _gunScript = _input.GetComponentInChildren<GunScript>();
         _controller = _input.GetComponent<FirstPersonController>();
         _lookScript = _input.GetComponent<PlayerLook>();
@@ -34,13 +32,8 @@ public class GameplaySettings : MonoBehaviour
 
     private void Update()
     {
-
-
           _value0 = Mathf.Clamp(_sensitivitySlider.value * _sensitivityMultiplier, 0.1f, 100);
           _value1 = Mathf.Clamp(_FovSlider.value * _FovMultiplier, 0.1f, 100);
-
-         
-
 
         _lookScript.UpdateLookSensitivity(_value0);
 
@@ -48,9 +41,7 @@ public class GameplaySettings : MonoBehaviour
         if (_lookScript.ReturnFov() == _value1) return;
 
         
-
-        if (!_input || !_adsScript || !_gunScript || !_controller) Debug.Log("fov not set");
-       // _adsScript.setFov(_value1);
+        //update fov values in scripts
         _gunScript.SetFov(_value1);
         _controller.SetFov(_value1);
         _lookScript.setFov(_value1);
