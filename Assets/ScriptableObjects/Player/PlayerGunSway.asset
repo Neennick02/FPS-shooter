@@ -22,7 +22,7 @@ MonoBehaviour:
   RunBobAmount: 0.7
   WalkBobSpeed: 5
   RunBobSpeed: 6
-  DefaultBobAmount: 0.04
+  DefaultBobAmount: 0.09
   DefaulkBobSpeed: 2
   RecoilKickback: 0.15
   ReturnSpeed: 15
