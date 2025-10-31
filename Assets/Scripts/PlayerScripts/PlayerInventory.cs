@@ -15,7 +15,7 @@ public class PlayerInventory : MonoBehaviour
     bool firstFrame = true;
     private void Start()
     {
-        input = GetComponent<InputManager>();
+        input = InputManager.Instance;
         inventorySlots.AddRange(inventoryCanvas.GetComponentsInChildren<Transform>());
     }
 

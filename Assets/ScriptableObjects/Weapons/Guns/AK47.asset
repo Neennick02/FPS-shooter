@@ -14,12 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 20
   Force: 15
-  Range: 249.75319
+  Range: 210.56088
   RangeOffSet: 5
   FireRate: 0.1
-  RecoilUp: -0.3
-  RecoilSide: 0.2
-  AimSpeed: 8
+  RecoilUp: -0.0000005
+  RecoilSide: 0.03
+  AimSpeed: 7
   MaxMagSize: 30
-  MagAmount: 5
-  ReloadTime: 2.5
+  MagAmount: 3
+  ReloadTime: 2.2
+  HipPos: {x: 0.26, y: -0.16, z: 0.48}
+  HipRot: {x: 11.45, y: 164, z: 0}
+  ADSpos: {x: 0, y: -0.05, z: 0.8}
+  ADSrot: {x: 1, y: 180, z: 0}
+  ReloadPos: {x: 0, y: -0.5, z: 0.5}
+  ReloadRot: {x: -50, y: 180, z: 0}

@@ -21,4 +21,15 @@ public class GunObject : ScriptableObject
     public int MaxMagSize;
     public int MagAmount;
     public float ReloadTime;
+
+    [Header("Positions")]
+    public Vector3 HipPos;
+    public Vector3 HipRot;
+    [Header("")]
+    public Vector3 ADSpos;
+    public Vector3 ADSrot;
+    [Header("")]
+    public Vector3 ReloadPos;
+    public Vector3 ReloadRot;
+
 }

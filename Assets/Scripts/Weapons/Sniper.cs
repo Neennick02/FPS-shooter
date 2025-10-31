@@ -32,10 +32,13 @@ public class Sniper : GunScript
         ShowGun();
     }
 
-    protected override void SetFov()
+    protected override void LateUpdate()
     {
-        normalFOV = _playerSettings.Fov;
+        EnableDisableFullAuto();
+        Reload();
+        ChangeGrip();
         zoomFOV = _playerSettings.Fov / 4f;
+
     }
 
     protected override void Aim()
@@ -44,11 +47,11 @@ public class Sniper : GunScript
         base.Aim();
 
         //find out if gun is almost in ADS
-        bool closeToADSpos = Vector3.Distance(transform.localPosition, ADSPos) < .06f;
+        bool closeToADSpos = Vector3.Distance(transform.localPosition, _gunObject.ADSpos) < .06f;
 
         //Disable/ enable crosshairs
-        crossHair.SetActive(!closeToADSpos);
-        crossHair.GetComponentInParent<Image>().enabled = !closeToADSpos;
+        CrossHairObject.SetActive(!closeToADSpos);
+        CrossHairObject.GetComponentInParent<Image>().enabled = !closeToADSpos;
 
         //enable post processing effects (lensdistorition / vignette)
         if (closeToADSpos && !showEffect)
@@ -74,14 +77,11 @@ public class Sniper : GunScript
                 DisablePostEffects();
 
             //check if coroutine is still running
-            if (currentFadeCoroutine != null)
-                {
-                    StopCoroutine(currentFadeCoroutine);
-                }
+            if (currentFadeCoroutine != null) StopCoroutine(currentFadeCoroutine);
 
             //start new coroutine
             currentFadeCoroutine = StartCoroutine(FadeOutImage());
-                ShowGun();
+            ShowGun();
         }
     }
 
@@ -173,10 +173,4 @@ public class Sniper : GunScript
         distorition.intensity.value = 0;
         vignette.intensity.value = 0;
     }
-
-/*    public override void SetFov(float fov)
-    {
-        normalFOV = fov;
-        zoomFOV = normalFOV / 4f;
-    }*/
 }

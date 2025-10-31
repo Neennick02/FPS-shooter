@@ -3099,6 +3099,10 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 507192888359749251, guid: 7359baf27e84aa44cafac3788c8be0f1, type: 3}
+      propertyPath: _aimSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 507192888359749251, guid: 7359baf27e84aa44cafac3788c8be0f1, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 400221236}
@@ -3122,6 +3126,10 @@ PrefabInstance:
       propertyPath: ammoInChamber
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 507192888359749251, guid: 7359baf27e84aa44cafac3788c8be0f1, type: 3}
+      propertyPath: CrossHairObject
+      value: 
+      objectReference: {fileID: 400221236}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3906,8 +3914,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 50
-          m_FloatArgument: 30
+          m_IntArgument: 0
+          m_FloatArgument: 25
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -4675,6 +4683,10 @@ PrefabInstance:
       value: 164
       objectReference: {fileID: 0}
     - target: {fileID: 932299133534894128, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
+      propertyPath: _aimSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 932299133534894128, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 400221236}
@@ -4690,6 +4702,10 @@ PrefabInstance:
       propertyPath: recoilScript
       value: 
       objectReference: {fileID: 520897306}
+    - target: {fileID: 932299133534894128, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
+      propertyPath: CrossHairObject
+      value: 
+      objectReference: {fileID: 400221236}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6355,19 +6371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f6d3a45b316114c846afadbcd67478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swayAmount: 0.5
-  swaySmooth: 6
-  walkSwayAmount: 0.001
-  runSwayAmount: 0.001
-  walkSwaySpeed: 15
-  runSwaySpeed: 15
+  _gunSwayData: {fileID: 11400000, guid: fe3fa3e25e0117248a8e611b1c434d91, type: 2}
   playerMovement: {fileID: 1539518568126984582}
-  recoilKickBack: 0.1
-  recoilReturnSpeed: 8
   weaponManager: {fileID: 1539518568126984585}
   playerCam: {fileID: 1539518569453362153}
   playerLookScript: {fileID: 1539518568126984584}
-  input: {fileID: 1539518568126984581}
 --- !u!4 &527348965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4887460767432162760, guid: 30c819560420f824da028f3502f83728, type: 3}
@@ -12749,12 +12757,12 @@ MonoBehaviour:
       - m_Target: {fileID: 1539518568126984587}
         m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
         m_MethodName: TakeDamage
-        m_Mode: 3
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 20
-          m_FloatArgument: 0
+          m_FloatArgument: 25
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -14218,6 +14226,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8759583198393814700, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8759583198393814700, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: gunScript
       value: 
       objectReference: {fileID: 759726446}
@@ -14283,7 +14295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: startC.a
-      value: 0.7294118
+      value: 0.36862746
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: startC.b
@@ -14296,6 +14308,10 @@ PrefabInstance:
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: startC.r
       value: 0.6037736
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: _aimSpeed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: crossHair
@@ -14325,6 +14341,10 @@ PrefabInstance:
       propertyPath: ammoInChamber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: CrossHairObject
+      value: 
+      objectReference: {fileID: 400221236}
     - target: {fileID: 9017129585755411369, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: trailEndColor.a
       value: 0.33333334
@@ -24950,6 +24970,10 @@ PrefabInstance:
       value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
+      propertyPath: _aimSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 400221236}
@@ -24973,6 +24997,10 @@ PrefabInstance:
       propertyPath: ammoInChamber
       value: 33
       objectReference: {fileID: 0}
+    - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
+      propertyPath: CrossHairObject
+      value: 
+      objectReference: {fileID: 400221236}
     - target: {fileID: 1968889530359491117, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
       propertyPath: fullAutoEnabled
       value: 1
@@ -25497,6 +25525,10 @@ PrefabInstance:
       value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
+      propertyPath: _aimSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 400221236}
@@ -25520,6 +25552,10 @@ PrefabInstance:
       propertyPath: ammoInChamber
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1694022118877525456, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
+      propertyPath: CrossHairObject
+      value: 
+      objectReference: {fileID: 400221236}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

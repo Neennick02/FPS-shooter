@@ -6,7 +6,7 @@ public class PoolManager : MonoBehaviour
 {
     [SerializeField] GameObject lineRendererPrefab;
     [SerializeField] int poolSize = 8;
-    [SerializeField] float duration = .2f;
+    [SerializeField] float duration = .08f;
     [SerializeField] GunScript gunScript;
     List<LineRenderer> linePool;
     int index = 0;

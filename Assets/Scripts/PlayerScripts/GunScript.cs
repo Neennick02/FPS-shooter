@@ -5,7 +5,7 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected GunObject _gunObject;
     [SerializeField] protected Settings _playerSettings;
 
-    private float _fireRateTimer = 0;
+    private float _fireRateTimer = 10;
 
     [Header("Ammo config")]
     [SerializeField] protected bool fullAutoEnabled = false;
@@ -23,25 +23,13 @@ public abstract class GunScript : MonoBehaviour
     [SerializeField] protected GameObject bloodEffect;
 
     protected  PlayerUI UI;
-    [Header("Aiming config")]
-    [SerializeField] protected float aimSpeed = 8f;
-    [SerializeField] protected GameObject crossHair;
-    [Header("Hip config")]
-    [SerializeField] protected Vector3 hipPos;
-    [SerializeField] protected Vector3 hipRot;
-
-    [Header("ADS config")]
-    [SerializeField] protected Vector3 ADSPos;
-    [SerializeField] protected Vector3 ADSRot;
-
-    [Header("Reload config")]
-    [SerializeField] protected Vector3 aimPos;
-    [SerializeField] protected Vector3 aimRot;
 
     protected float zoomFOV;
     protected float normalFOV;
     Crosshair crossHairScript;
     protected InputManager _inputManager;
+    [SerializeField] protected GameObject CrossHairObject;
+    //[SerializeField] float _aimSpeed;
     protected virtual void Start()
     {
         crossHairScript = FindFirstObjectByType<Crosshair>();
@@ -56,19 +44,13 @@ public abstract class GunScript : MonoBehaviour
 
     protected virtual void LateUpdate()
     {
-        SetFov();
         EnableDisableFullAuto();
         Reload();
         ChangeGrip();
-    }
-
-    protected virtual void SetFov()
-    {
-        normalFOV = _playerSettings.Fov;
         zoomFOV = _playerSettings.Fov / 1.5f;
     }
 
-    void EnableDisableFullAuto()
+    protected void EnableDisableFullAuto()
     {
         if (fullAutoEnabled)
         {
@@ -185,7 +167,7 @@ public abstract class GunScript : MonoBehaviour
         }
     }
 
-    void ChangeGrip()
+    protected void ChangeGrip()
     {
         //can only ADS when not reloading
         if (_inputManager.onFoot.Aim.IsPressed() && !isReloading)
@@ -212,25 +194,25 @@ public abstract class GunScript : MonoBehaviour
     protected virtual void Aim()
     {
         //target pos / rotations
-        Vector3 targetPos = isAiming ? ADSPos : hipPos;
-        Quaternion targetRot = Quaternion.Euler(isAiming ? ADSRot : hipRot);
+        Vector3 targetPos = isAiming ? _gunObject.ADSpos : _gunObject.HipPos;
+        Quaternion targetRot = Quaternion.Euler(isAiming ? _gunObject.ADSrot : _gunObject.HipRot);
 
         //move between points
-        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * aimSpeed);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * aimSpeed);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * _gunObject.AimSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * _gunObject.AimSpeed);
 
         //dis/enable crosshair
-        if (Vector3.Distance(transform.localPosition, ADSPos) < 0.05f)
+        if (Vector3.Distance(transform.localPosition, _gunObject.ADSpos) < 0.05f)
         {
-            crossHair.SetActive(false);
+            CrossHairObject.SetActive(false);
         }
         else
         {
-            crossHair.SetActive(true);
+            CrossHairObject.SetActive(true);
         }
             //change FOV
             float targetFOV = isAiming ? zoomFOV : normalFOV;
-        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, Time.deltaTime * aimSpeed);
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, Time.deltaTime * _gunObject.AimSpeed);
     }
 
 
@@ -252,7 +234,7 @@ public abstract class GunScript : MonoBehaviour
         if (isReloading)
         {
             timer += Time.deltaTime;
-            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * aimSpeed);
+            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * _gunObject.AimSpeed);
 
         }
 
@@ -272,29 +254,18 @@ public abstract class GunScript : MonoBehaviour
     public void MoveToReloadPos()
     {
         //move between points
-        transform.localPosition = Vector3.Lerp(transform.localPosition, aimPos, Time.deltaTime * aimSpeed);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(aimRot), Time.deltaTime * aimSpeed);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, _gunObject.ReloadPos, Time.deltaTime * _gunObject.AimSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(_gunObject.ReloadRot), Time.deltaTime * _gunObject.AimSpeed);
     }
 
     public void ResetGunPos()
     {
-        transform.localPosition = hipPos;
-        transform.localRotation = Quaternion.Euler( hipRot);
+        transform.localPosition = _gunObject.HipPos;
+        transform.localRotation = Quaternion.Euler(_gunObject.HipRot);
     }
 
     public void UpdateAmmo(int amount)
     {
         _gunObject.MagAmount = amount;
     }
-
-/*    public virtual void SetFov(float fov)
-    {
-        normalFOV = fov;
-        zoomFOV = normalFOV / 1.5f;
-    }
-
-    public void SetZoomFov(float division)
-    {
-        zoomFOV = normalFOV / division;
-    }*/
 }
