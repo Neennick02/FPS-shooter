@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: PlayerMovement
   m_EditorClassIdentifier: 
   JumpHeight: 0.8
-  Speed: 5
-  SprintSpeed: 10
   Gravity: -20
+  Speed: 5
+  SprintSpeed: 15
+  CrouchSpeed: 2
   ClimbSpeed: 3
+  SlideSpeed: 30
+  SlideDuration: 1
   CrouchHeight: 1
   DefaultHeight: 3
