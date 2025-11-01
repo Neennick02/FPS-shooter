@@ -32,4 +32,7 @@ public class GunObject : ScriptableObject
     public Vector3 ReloadPos;
     public Vector3 ReloadRot;
 
+    [Header("Sounds")]
+    public AudioClip FireSound;
+    public AudioClip ReloadSound;
 }

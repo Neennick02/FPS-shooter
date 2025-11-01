@@ -51,24 +51,4 @@ public class PlayerLook : MonoBehaviour
         recoilX += up;
         recoilY += side;
     }
-
-    public void UpdateLookSensitivity(float speed)
-    {
-       /* xSensitivity = speed;
-        ySensitivity = speed;*/
-    }
-
-    public void setFov(float fov)
-    {
-        _cam.fieldOfView = fov;
-    }
-
-    public float ReturnSensitivity()
-    {
-        return xSensitivity;
-    }
-    public float ReturnFov()
-    {
-        return _cam.fieldOfView;
-    }
 }

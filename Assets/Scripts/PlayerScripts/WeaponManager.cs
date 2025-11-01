@@ -39,9 +39,7 @@ public class WeaponManager : MonoBehaviour
             weaponIndex++;
 
             if(weaponIndex >= weaponHolder.childCount)
-            {
                 weaponIndex = 0;
-            }
 
             SelectWeapon(weaponIndex);
         }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 400
   Force: 80
-  Range: 378.5951
+  Range: 377.93808
   RangeOffSet: 5
   FireRate: 0.75
   RecoilUp: -0.5
@@ -29,3 +29,5 @@ MonoBehaviour:
   ADSrot: {x: 0, y: 180, z: 0}
   ReloadPos: {x: 0, y: -0.5, z: 0.5}
   ReloadRot: {x: -50, y: 180, z: 0}
+  FireSound: {fileID: 8300000, guid: 1c7c81621ae08ec4db6bcefce31a190d, type: 3}
+  ReloadSound: {fileID: 0}

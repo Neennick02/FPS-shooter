@@ -29,3 +29,5 @@ MonoBehaviour:
   ADSrot: {x: 0, y: 180, z: 0}
   ReloadPos: {x: 0, y: -0.5, z: 0.5}
   ReloadRot: {x: -50, y: 180, z: 0}
+  FireSound: {fileID: 8300000, guid: 4a192d7b73cec3c498c8dfaac0c10a72, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 3f9a2d14994e40b4791f32d7722bff54, type: 3}
