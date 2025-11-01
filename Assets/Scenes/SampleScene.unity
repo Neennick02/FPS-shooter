@@ -27179,14 +27179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a12197afc9f314cb95dcb8f9f7947e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 1
-  speed: 5
-  sprintSpeed: 15
-  gravity: -13
+  _movementObject: {fileID: 11400000, guid: 4f1be8cc17487774e988f0caf84733cc, type: 2}
   currentSpeed: 0
-  climbSpeed: 3
-  crouchHeight: 1
-  input: {fileID: 1539518568126984581}
   controller: {fileID: 1539518568126984583}
   playerLook: {fileID: 1539518568126984584}
 --- !u!143 &1539518568126984583

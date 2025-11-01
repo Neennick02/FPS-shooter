@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SwayAmount: 0.1
   SwaySmooth: 10
-  WalkSwayAmount: 0.0005
+  WalkSwayAmount: 0.0001
   RunSwayAmount: 0.001
   WalkSwaySpeed: 20
   RunSwaySpeed: 30

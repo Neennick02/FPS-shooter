@@ -3,27 +3,21 @@ using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
-    public float jumpHeight = 3;
+    [SerializeField] private MovementObject _movementObject;
     Vector3 playerVelocity;
-    public float speed = 5f;
-    public float sprintSpeed = 10f;
     bool isGrounded;
     bool isSprinting = false;
-    public float gravity = -9.8f;
     public int currentSpeed;
 
 
     // Ladder climbing
     bool isClimbing = false;
     Transform currentLadder;
-    public float climbSpeed = 3f;
 
     // Crouch and slide
     bool isCrouching = false;
     bool isSliding = false;
 
-    public float crouchHeight = 0f;
-    float standingHeight = 2f;
 
     float targetHeight;
 
@@ -38,14 +32,15 @@ public class PlayerMotor : MonoBehaviour
     float slideTimer = 0;
 
     [Header("Scripts")]
-    [SerializeField] InputManager input;
+    InputManager input;
     [SerializeField] CharacterController controller;
     [SerializeField] PlayerLook playerLook;
     void Start()
     {
-        crouchSpeed = speed / 2;
-        standSpeed = speed;
-        slideSpeed = speed * 1.1f;
+        input = GetComponent<InputManager>();
+        crouchSpeed = _movementObject.Speed / 2;
+        standSpeed = _movementObject.Speed;
+        slideSpeed = _movementObject.Speed * 1.1f;
         currentSpeed = 0;
     }
 
@@ -71,7 +66,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (isGrounded)
         {
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
+            playerVelocity.y = Mathf.Sqrt(_movementObject.JumpHeight * -3f * _movementObject.Gravity);
         }
     }
 
@@ -83,13 +78,13 @@ public class PlayerMotor : MonoBehaviour
 
         if (isSprinting)
         {
-            controller.Move(transform.TransformDirection(moveDirection) * sprintSpeed * Time.deltaTime);
+            controller.Move(transform.TransformDirection(moveDirection) * _movementObject.SprintSpeed * Time.deltaTime);
             currentSpeed = 2;
             isCrouching = false;
         }
         else
         {
-            controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+            controller.Move(transform.TransformDirection(moveDirection) * _movementObject.Speed * Time.deltaTime);
             currentSpeed = 1;
         }
       
@@ -111,7 +106,7 @@ public class PlayerMotor : MonoBehaviour
         }
 
         //handles gravity
-        playerVelocity.y += gravity * Time.deltaTime;
+        playerVelocity.y += _movementObject.Gravity * Time.deltaTime;
 
         //apply vertical velocity
         controller.Move(playerVelocity * Time.deltaTime);
@@ -149,7 +144,7 @@ public class PlayerMotor : MonoBehaviour
 
         // Only vertical movement on ladder
         Vector3 climbDirection = new Vector3(0, _input.y, 0);
-        controller.Move(climbDirection * climbSpeed * Time.deltaTime);
+        controller.Move(climbDirection * _movementObject.Speed * Time.deltaTime);
 
         // Reset vertical velocity so gravity doesn't pull down while climbing
         playerVelocity.y = 0;
@@ -216,22 +211,22 @@ public class PlayerMotor : MonoBehaviour
     void Crouch()
     {
         isCrouching = true;
-        speed = crouchSpeed;
-        controller.height = crouchHeight;
+        _movementObject.Speed = crouchSpeed;
+        controller.height = _movementObject.CrouchHeight;
     }
 
     void StandUp()
     {
         // Check if there's room to stand up
         RaycastHit hit;
-        float castDistance = standingHeight - controller.height;
+        float castDistance = _movementObject.DefaultHeight - controller.height;
         Vector3 start = transform.position + Vector3.up * controller.height;
 
         if (!Physics.SphereCast(start, controller.radius, Vector3.up, out hit, castDistance))
         {
             isCrouching = false;
-            speed = standSpeed;
-            controller.height = standingHeight;
+            _movementObject.Speed = standSpeed;
+            controller.height = _movementObject.DefaultHeight;
         }
     }
 
@@ -240,7 +235,7 @@ public class PlayerMotor : MonoBehaviour
         isSprinting = false; //make sure sprint/crouch is disabled
         isCrouching = false;
 
-        speed = slideSpeed;
+        _movementObject.Speed = slideSpeed;
         playerVelocity.y = 0f;
 
         Vector2 lastDirection = Vector2.zero;
@@ -248,7 +243,7 @@ public class PlayerMotor : MonoBehaviour
         while (slideTimer < slideDuration)
         {
             //make player smaller
-            controller.height = crouchHeight;
+            controller.height = _movementObject.CrouchHeight;
 
             //move in slide direction
             if (inputDir == Vector2.zero) inputDir = lastDirection;
@@ -258,7 +253,7 @@ public class PlayerMotor : MonoBehaviour
             controller.Move(transform.TransformDirection(moveDir) * slideSpeed * Time.deltaTime + playerVelocity * Time.deltaTime);
 
             //add gravity
-            playerVelocity.y += gravity * Time.deltaTime;
+            playerVelocity.y += _movementObject.Gravity * Time.deltaTime;
 
             //add to timer
             slideTimer += Time.deltaTime;
@@ -266,8 +261,8 @@ public class PlayerMotor : MonoBehaviour
             lastDirection = inputDir;
             yield return null;
         }
-        controller.height = standingHeight;
-        speed = standSpeed;
+        controller.height = _movementObject.DefaultHeight;
+        _movementObject.Speed = standSpeed;
         isSliding = false;
         slideTimer = 0;
     }
