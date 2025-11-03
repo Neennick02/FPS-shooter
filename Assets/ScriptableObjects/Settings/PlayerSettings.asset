@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   Fov: 59.34854
-  Sensitivity: 2.5
+  Sensitivity: 50
   Paused: 0
   MainVolume: 1
   MusicVolume: 1

@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     public InventoryObject inventory;
+
+    public UserInterface.MouseItem mouseItem = new UserInterface.MouseItem();
+
+
     [SerializeField] GameObject inventoryCanvas;
     [SerializeField] PlayerLook playerLook;
     [SerializeField] PlayerMotor playerMotor;

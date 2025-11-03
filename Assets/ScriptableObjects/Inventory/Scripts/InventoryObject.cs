@@ -4,10 +4,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEditor;
 using System.Runtime.Serialization;
+using System;
+
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    public string savePath;
+    public string savePath = "/inventory.save";
     public ItemDatabaseObject database;
     public Inventory Container;
 
@@ -53,7 +55,7 @@ public class InventoryObject : ScriptableObject
     [ContextMenu("Save")]
     public void Save()
     {
-        /* string saveData = JsonUtility.ToJson(this, true);
+         /*string saveData = JsonUtility.ToJson(this, true);
          BinaryFormatter bf = new BinaryFormatter();
          FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
          bf.Serialize(file, saveData);
@@ -82,7 +84,7 @@ public class InventoryObject : ScriptableObject
     [ContextMenu("Clear")]
     public void Clear()
     {
-        Container = new Inventory();
+        Container.Clear();
     }
 }
 
@@ -90,6 +92,14 @@ public class InventoryObject : ScriptableObject
 public class Inventory 
 {
     public InventorySlot[] Items = new InventorySlot[25];
+
+    public void Clear()
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].UpdateSlot(new Item(), 0, -1);
+        }
+    }
 }
 
 
@@ -97,6 +107,8 @@ public class Inventory
 [System.Serializable]
 public class InventorySlot
 {
+    public ItemType[] AllowedItems = new ItemType[0];
+    [System.NonSerialized]  public UserInterface parent;
     public int ID = -1;
     public Item item;
     public int amount;
@@ -124,5 +136,18 @@ public class InventorySlot
     public void AddAmount(int value)
     {
         amount += value;
+    }
+
+    public bool CanPlaceInSlot(ItemObject _item)
+    {
+        if(AllowedItems.Length <= 0)
+            return true;
+
+        for (int i = 0; i < AllowedItems.Length; i++)
+        {
+            if (_item.type == AllowedItems[i])
+                return true;
+        }
+        return false;
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 4
   UIdisplay: {fileID: 21300000, guid: d625705c2b10393418fa45b27c7370b0, type: 3}
-  type: 1
+  type: 3
   description: A sword for attacking.
   buffs:
   - attribute: 0

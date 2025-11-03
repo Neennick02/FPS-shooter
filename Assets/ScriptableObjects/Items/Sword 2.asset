@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 6
   UIdisplay: {fileID: 21300000, guid: 27bdb876939215f41bd72bd2f5ad21f4, type: 3}
-  type: 1
+  type: 3
   description: A shield for defending.
   buffs:
   - attribute: 3

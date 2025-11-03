@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class DisplayInventory : MonoBehaviour
 {
-    public MouseItem mouseItem = new MouseItem();
+    UserInterface.MouseItem mouseItem = new UserInterface.MouseItem();
     public GameObject inventoryPrefab;
     public InventoryObject inventory;
 
@@ -75,7 +75,7 @@ public class DisplayInventory : MonoBehaviour
     }
     private void OnEnter(GameObject obj)
     {
-        mouseItem.hoverObject = obj;
+       mouseItem.hoverObject = obj;
         if (itemsDisplay.ContainsKey(obj))
         {
             mouseItem.hoverItem = itemsDisplay[obj];
@@ -83,7 +83,7 @@ public class DisplayInventory : MonoBehaviour
     }
     private void OnExit(GameObject obj)
     {
-        mouseItem.hoverObject = null;
+//mouseItem.hoverObject = null;
         mouseItem.hoverItem = null;
     }
     private void OnDragStart(GameObject obj)
@@ -92,7 +92,7 @@ public class DisplayInventory : MonoBehaviour
         var rt = mouseObject.AddComponent<RectTransform>();
         rt.sizeDelta = new Vector2(50, 50);
         mouseObject.transform.SetParent(transform.parent);
-        if(itemsDisplay[obj].ID >= 0)
+        if (itemsDisplay[obj].ID >= 0)
         {
             var img = mouseObject.AddComponent<Image>();
             img.sprite = inventory.database.GetItem[itemsDisplay[obj].ID].UIdisplay;
@@ -113,10 +113,11 @@ public class DisplayInventory : MonoBehaviour
         }
         Destroy(mouseItem.obj);
         mouseItem.item = null;
+  
     }
     private void OnDrag(GameObject obj)
     {
-        if(mouseItem.obj != null)
+       if (mouseItem.obj != null)
         {
             mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
         }
@@ -124,15 +125,7 @@ public class DisplayInventory : MonoBehaviour
 
     public Vector3 GetPosition(int i)
     {
-        return new Vector3(X_Start + ( X_offset * (i % Number_Of_Columns)), Y_Start + (-Y_Offset * (i/Number_Of_Columns)), 0f );
-    }
-
-    public class MouseItem
-    {
-        public GameObject obj;
-        public InventorySlot item;
-        public InventorySlot hoverItem;
-        public GameObject hoverObject;
+        return new Vector3(X_Start + (X_offset * (i % Number_Of_Columns)), Y_Start + (-Y_Offset * (i / Number_Of_Columns)), 0f);
     }
 
 }
