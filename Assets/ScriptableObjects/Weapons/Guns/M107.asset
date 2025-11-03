@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 400
   Force: 80
-  Range: 377.93808
+  Range: 399.8546
   RangeOffSet: 5
   FireRate: 0.75
   RecoilUp: -0.5
@@ -22,12 +22,17 @@ MonoBehaviour:
   AimSpeed: 3
   MaxMagSize: 10
   MagAmount: 0
-  ReloadTime: 4
+  ReloadTime: 3
   HipPos: {x: 0.28, y: -0.22, z: 0.57}
   HipRot: {x: 4.96, y: 172.7, z: 0}
   ADSpos: {x: 0, y: -0.09, z: 0.5}
   ADSrot: {x: 0, y: 180, z: 0}
   ReloadPos: {x: 0, y: -0.5, z: 0.5}
   ReloadRot: {x: -50, y: 180, z: 0}
-  FireSound: {fileID: 8300000, guid: 1c7c81621ae08ec4db6bcefce31a190d, type: 3}
-  ReloadSound: {fileID: 0}
+  FireSound:
+  - {fileID: 8300000, guid: abf1f25d55baacb4e81c35a48f247851, type: 3}
+  - {fileID: 8300000, guid: 2070cb00a2ddff045ad16d285363d499, type: 3}
+  - {fileID: 8300000, guid: e761054a57bd6d944a21ad45c86b1b5f, type: 3}
+  - {fileID: 8300000, guid: 8d8c5ef848188434692fdb5b928975ec, type: 3}
+  ReloadSound:
+  - {fileID: 8300000, guid: e5198250a6a57408bb36e14bc4a322c4, type: 3}

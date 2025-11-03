@@ -13,6 +13,7 @@ public class Shotgun : GunScript
     {
         //change ammo amount
         ammoInChamber--;
+        _audioManager.PlayClip(_gunObject.FireSound, 1f);
 
         if (muzzleFlash != null)
         {

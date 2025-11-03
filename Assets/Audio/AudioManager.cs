@@ -32,12 +32,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayClip(AudioClip clip, float volume = 1f)
+    public void PlayClip(List<AudioClip> clips, float volume = 1f)
     {
         var source = GetAwailableSource();
         if(source == null) return;
 
-        source.clip = clip;
+        int randomIndex = UnityEngine.Random.Range(0, clips.Count);
+        source.clip = clips[randomIndex];
         source.volume = volume;
         source.Play();
         StartCoroutine(ReleaseWhenDone(source));

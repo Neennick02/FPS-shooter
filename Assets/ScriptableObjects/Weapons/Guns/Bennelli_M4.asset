@@ -21,7 +21,7 @@ MonoBehaviour:
   RecoilSide: 0.2
   AimSpeed: 7
   MaxMagSize: 6
-  MagAmount: 2
+  MagAmount: 0
   ReloadTime: 2.5
   HipPos: {x: 0.2, y: -0.12, z: 0.61}
   HipRot: {x: 11.35, y: 164, z: 0}
@@ -29,5 +29,8 @@ MonoBehaviour:
   ADSrot: {x: -0.16, y: 180, z: 0}
   ReloadPos: {x: 0, y: -0.5, z: 0.5}
   ReloadRot: {x: -50, y: 180, z: 0}
-  FireSound: {fileID: 8300000, guid: 1c7c81621ae08ec4db6bcefce31a190d, type: 3}
-  ReloadSound: {fileID: 0}
+  FireSound:
+  - {fileID: 8300000, guid: 0f455a6f031dd8f4da7899276a593ef8, type: 3}
+  - {fileID: 8300000, guid: 13e03606b4c4fae40bc9640b5573e1be, type: 3}
+  ReloadSound:
+  - {fileID: 8300000, guid: c29301a4658b1274ca2674cfa4ecece9, type: 3}

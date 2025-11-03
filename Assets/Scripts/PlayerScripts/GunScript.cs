@@ -29,7 +29,8 @@ public abstract class GunScript : MonoBehaviour
     Crosshair crossHairScript;
     protected InputManager _inputManager;
     [SerializeField] protected GameObject CrossHairObject;
-    AudioManager _audioManager;
+    protected AudioManager _audioManager;
+    private bool _soundPLayed = false;
     protected virtual void Start()
     {
         crossHairScript = FindFirstObjectByType<Crosshair>();
@@ -240,8 +241,12 @@ public abstract class GunScript : MonoBehaviour
         //add time to timer
         if (isReloading)
         {
+            if (!_soundPLayed)
+            {
+                _audioManager.PlayClip(_gunObject.ReloadSound);
+                _soundPLayed = true;
+            }
             timer += Time.deltaTime;
-            _audioManager.PlayClip(_gunObject.ReloadSound, 1f);
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, normalFOV, Time.deltaTime * _gunObject.AimSpeed);
 
         }
@@ -252,6 +257,7 @@ public abstract class GunScript : MonoBehaviour
             _gunObject.MagAmount--;
             ammoInChamber = _gunObject.MaxMagSize;
             isReloading = false;
+            _soundPLayed = false;
             timer = 0;
         }
 

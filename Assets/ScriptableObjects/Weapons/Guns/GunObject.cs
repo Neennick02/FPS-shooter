@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GunObject", menuName = "GunObject")]
@@ -33,6 +34,7 @@ public class GunObject : ScriptableObject
     public Vector3 ReloadRot;
 
     [Header("Sounds")]
-    public AudioClip FireSound;
-    public AudioClip ReloadSound;
+    public List<AudioClip> FireSound = new List<AudioClip>();
+    public List<AudioClip> ReloadSound = new List<AudioClip>();
+
 }
