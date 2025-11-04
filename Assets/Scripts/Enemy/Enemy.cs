@@ -88,8 +88,8 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnDrawGizmosSelected()
-    {
+    {/*
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(Agent.destination, new Vector3(2, 2, 2));
+        Gizmos.DrawCube(Agent.destination, new Vector3(2, 2, 2));*/
     }
 }

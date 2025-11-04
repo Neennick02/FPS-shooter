@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f884ec43b9c5afb4689ea28801a7d8ac, type: 3}
   m_Name: PlayerGunSway
   m_EditorClassIdentifier: 
-  SwayAmount: 0.1
+  SwayAmount: 0.005
   SwaySmooth: 10
   WalkSwayAmount: 0.0001
   RunSwayAmount: 0.001
   WalkSwaySpeed: 20
   RunSwaySpeed: 30
-  WalkBobAmount: 0.2
+  WalkBobAmount: 0.05
   RunBobAmount: 0.7
-  WalkBobSpeed: 5
+  WalkBobSpeed: 2
   RunBobSpeed: 6
-  DefaultBobAmount: 0.09
+  DefaultBobAmount: 0.05
   DefaulkBobSpeed: 1
   RecoilKickback: 0.15
   ReturnSpeed: 15

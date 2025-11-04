@@ -3,22 +3,21 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
-    [Header("Health Bar")]
+    [SerializeField] EnemyObject _enemyObject;
     [SerializeField] public Image healthBar;
     public GameObject canvas;
-    [SerializeField] float health;
-    [SerializeField] public float maxHealth;
+    private float _health;
 
     void Start()
     {
-        health = maxHealth;
+        _health = _enemyObject.MaxHealth;
     }
 
     void Update()
     {
-        health = math.clamp(health, 0, maxHealth);
+        _health = math.clamp(_health, 0, _enemyObject.MaxHealth);
 
-        if(health <= 0)
+        if(_health <= 0)
         {
             Die();
         }
@@ -26,26 +25,26 @@ public class Health : MonoBehaviour
 
    public void TakeDamage(float amount)
     {
-        health -= amount;
+        _health -= amount;
         UpdateHealthBar();
     }
 
     public void Heal(int amount)
     {
-        health += amount;
+        _health += amount;
         UpdateHealthBar();
     }
 
     public float GetHealth()
     {
-        return health;
+        return _health;
     }
 
     void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            float newWidth = (float)health / maxHealth;
+            float newWidth = (float)_health / _enemyObject.MaxHealth;
             healthBar.fillAmount = newWidth;
         }
     }

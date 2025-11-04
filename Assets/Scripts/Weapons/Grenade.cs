@@ -23,7 +23,7 @@ public class Grenade : ThrowAble
 
             if(health != null)
             {
-                health.TakeDamage(health.maxHealth);
+                //health.TakeDamage(health.maxHealth);
             }
 
             //add explosion force to rigidbodies
