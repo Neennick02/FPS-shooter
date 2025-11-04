@@ -51,7 +51,8 @@ public abstract class GunScript : MonoBehaviour
         EnableDisableFullAuto();
         Reload();
         ChangeGrip();
-        zoomFOV = _playerSettings.Fov / 1.5f;
+        normalFOV = _playerSettings.Fov;
+        zoomFOV = normalFOV / 1.5f;
     }
 
     protected void EnableDisableFullAuto()
@@ -85,6 +86,7 @@ public abstract class GunScript : MonoBehaviour
 
     protected virtual void Attack()
     {
+        if (_playerSettings.Paused) return;
         //change ammo amount
         ammoInChamber--;
 
@@ -201,6 +203,7 @@ public abstract class GunScript : MonoBehaviour
 
     protected virtual void Aim()
     {
+        if (_playerSettings.Paused) return;
         //target pos / rotations
         Vector3 targetPos = isAiming ? _gunObject.ADSpos : _gunObject.HipPos;
         Quaternion targetRot = Quaternion.Euler(isAiming ? _gunObject.ADSrot : _gunObject.HipRot);

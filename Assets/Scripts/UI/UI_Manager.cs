@@ -5,22 +5,8 @@ using UnityEngine.InputSystem;
 public class UI_Manager : MonoBehaviour
 {
     [SerializeField] PauseScreenUi _pauseMenu;
-    bool isPaused = false;
+    [SerializeField] Settings _settings;
 
-    /*    [Header("Setting_Menu")]
-        [SerializeField] GameObject settings_menu_GameObject;
-        [SerializeField] Button gameplay_Button;
-        [SerializeField] Button audio_Button;
-        [SerializeField] Button display_Button;
-
-
-        [Header("Gameplay_Settings")]
-        [SerializeField] Slider fov_slider;
-        [SerializeField] Slider sensitivity_slider;
-        [SerializeField] Button controls_button;
-        [SerializeField] GameObject keyboard_Controls;
-        [SerializeField] GameObject gamepad_Controls;
-    */
     private void Start()
     {
         _pauseMenu.gameObject.SetActive(false);
@@ -32,7 +18,7 @@ public class UI_Manager : MonoBehaviour
         if (InputManager.Instance.onFoot.Pause.triggered)
         {
 
-                OpenAndClose_PauseScreen(!isPaused);
+                OpenAndClose_PauseScreen(!_settings.Paused);
         }
     }
     public void OpenAndClose_PauseScreen(bool active)
@@ -40,8 +26,12 @@ public class UI_Manager : MonoBehaviour
         _pauseMenu.gameObject.SetActive(active);
         _pauseMenu.Settings(false);
         ActivateMouse(active);
-        isPaused = active;
+        _settings.Paused = active;
         InputManager.Instance.BlockInput(active);
+
+        if (active) Time.timeScale = 0;
+        else Time.timeScale = 1;
+
     }
     private void ActivateMouse(bool active)
     {

@@ -1,7 +1,9 @@
+using UnityEditor;
 using UnityEngine;
 
 public class GunADS : MonoBehaviour
 {
+    [SerializeField] Settings _playerSettings;
     [SerializeField] Transform ADS_pos;
     [SerializeField] Transform hip_Pos;
     [SerializeField] float aimSpeed = 8f;
@@ -16,11 +18,6 @@ public class GunADS : MonoBehaviour
     {
         normalFOV = playerCam.fieldOfView;
         zoomFOV = normalFOV / 1.5f;
-    }
-
-    public void setFov(float fov)
-    {
-        normalFOV = fov;
     }
 
     void Update()
@@ -49,5 +46,8 @@ public class GunADS : MonoBehaviour
 
             playerCam.fieldOfView = Mathf.Lerp(zoomFOV, normalFOV, Time.deltaTime * aimSpeed);
         }
+
+        //normalFOV = PlayerSettings.fieldOfView;
+        zoomFOV = normalFOV / 1.5f;
     }
 }

@@ -9,34 +9,30 @@ public class GameplaySettings : MonoBehaviour
     [SerializeField] private Slider _sensitivitySlider;
     [SerializeField] private Slider _FovSlider;
 
-    [SerializeField] float _sensitivityMultiplier = 100 ;
-    [SerializeField] float _FovMultiplier = 100;
-
     [SerializeField] GameObject _keyboardControls, _controllerControls;
     private bool _controlScreenOpened = false;
-    private float _value0;
-    private float _value1;
+    private float _sensitivityValue;
+    private float _fovValue;
 
     private void Start()
     {
         CloseControls();
-        _sensitivitySlider.value = _playerSettings.Sensitivity / 100;
-        _FovSlider.value =  _playerSettings.Fov/ _FovMultiplier;
+        _sensitivitySlider.value = _playerSettings.Sensitivity;
+        _FovSlider.value =  _playerSettings.Fov;
     }
 
     private void Update()
     {
-          _value0 = Mathf.Clamp(_sensitivitySlider.value * _sensitivityMultiplier, 0.1f, 100);
-          _value1 = Mathf.Clamp(_FovSlider.value * _FovMultiplier, 0.1f, 100);
+        _sensitivityValue = _sensitivitySlider.value;
+        _fovValue = _FovSlider.value;
 
+        //if slider value == scriptable object value -> stop
+        if (_playerSettings.Fov == _fovValue && _playerSettings.Sensitivity == _sensitivityValue)
+            return;
 
-         //if slider value == fov value stop
-        if (_playerSettings.Fov == _value1) return;
-
-        
         //update fov values in scripts
-        _playerSettings.Sensitivity = _value0;
-        _playerSettings.Fov = _value1;
+        _playerSettings.Sensitivity = _sensitivityValue;
+        _playerSettings.Fov = _fovValue;
     }
 
     public void OpenControls()
@@ -58,7 +54,6 @@ public class GameplaySettings : MonoBehaviour
             _controllerControls.SetActive(true); 
             _controlScreenOpened = true;
         }
-        
     }
 
     public void CloseControls()

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 public class WeaponManager : MonoBehaviour
 {
+    [SerializeField] Settings _settings;
     public Transform weaponHolder;
     public int  weaponIndex = 0;
     InputManager input;
@@ -34,6 +35,8 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
+        if (_settings.Paused) return;
+
         if (input.onFoot.SwitchNextWeapon.triggered)
         {
             weaponIndex++;

@@ -95,14 +95,13 @@ public class PlayerInventory : MonoBehaviour
 
     void EnableCanvas(bool enable)
     {
-        Image img = inventoryCanvas.GetComponent<Image>();
         if (!enable)
         {
-            img.color = new Color(img.color.r, img.color.g, img.color.b, 0); //disable
+            inventoryCanvas.SetActive(false);
         }
         else
         {
-            img.color = new Color(img.color.r, img.color.g, img.color.b, 1); //enable
+            inventoryCanvas.SetActive(true);
         }
 
         for (int i = 0; i < inventorySlots.Count; i++)

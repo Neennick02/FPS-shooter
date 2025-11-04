@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PauseScreenUi : MonoBehaviour
 {
+    [SerializeField] Settings _settings;
     [SerializeField] private GameObject _settingsMenu;
     private void Update()
     {
@@ -14,7 +15,8 @@ public class PauseScreenUi : MonoBehaviour
 
     public void ControlPauseScreen(bool active)
     {
-        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(active);
+        _settings.Paused = active;
     }
 
 

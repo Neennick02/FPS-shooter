@@ -3831,6 +3831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseMenu: {fileID: 531195237}
+  _settings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
 --- !u!4 &313347743
 Transform:
   m_ObjectHideFlags: 0
@@ -6579,6 +6580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunSwayData: {fileID: 11400000, guid: fe3fa3e25e0117248a8e611b1c434d91, type: 2}
+  _settings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
   playerMovement: {fileID: 1539518568126984582}
   weaponManager: {fileID: 1539518568126984585}
   playerCam: {fileID: 1539518569453362153}
@@ -6817,6 +6819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f2d9af6f461ee4097c97909d725dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
   _settingsMenu: {fileID: 646511028}
 --- !u!1 &531603989
 GameObject:
@@ -11771,12 +11774,12 @@ RectTransform:
   - {fileID: 1829161470}
   - {fileID: 1670323239}
   - {fileID: 1282229891}
-  m_Father: {fileID: 1332051170}
+  m_Father: {fileID: 1876402095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -359, y: 25}
-  m_SizeDelta: {x: -1518, y: -450}
+  m_AnchoredPosition: {x: -550, y: 0}
+  m_SizeDelta: {x: -300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &920828550
 MonoBehaviour:
@@ -11791,7 +11794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_Color: {r: 0.82641506, g: 0.6253943, b: 0.347718, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15855,8 +15858,6 @@ MonoBehaviour:
   _playerSettings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
   _sensitivitySlider: {fileID: 1653044541}
   _FovSlider: {fileID: 1290831914}
-  _sensitivityMultiplier: 50
-  _FovMultiplier: 100
   _keyboardControls: {fileID: 1220740615}
   _controllerControls: {fileID: 1031282814}
 --- !u!1 &1180992638
@@ -16917,10 +16918,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1611089343}
   m_HandleRect: {fileID: 772124728}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 30
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 30
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -17274,7 +17275,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 920828549}
   - {fileID: 1876402095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20665,10 +20665,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 702274649}
   m_HandleRect: {fileID: 369102526}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 30
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -23477,7 +23477,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 920828549}
   m_Father: {fileID: 1332051170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -23498,7 +23499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.735849, g: 0.6330944, b: 0.4151299, a: 0}
+  m_Color: {r: 0.735849, g: 0.6330944, b: 0.4151299, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26870,6 +26871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9d87488e2294c478d18925aa6ca28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: 141afe8f4fe81b34793d2486dfb0c582, type: 2}
   weaponHolder: {fileID: 520897304}
   weaponIndex: 0
   recoilScript: {fileID: 520897306}

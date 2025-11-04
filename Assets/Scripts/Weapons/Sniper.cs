@@ -34,15 +34,19 @@ public class Sniper : GunScript
 
     protected override void LateUpdate()
     {
+        if (_playerSettings.Paused) return;
         EnableDisableFullAuto();
         Reload();
         ChangeGrip();
-        zoomFOV = _playerSettings.Fov / 4f;
+        normalFOV = _playerSettings.Fov;
+        zoomFOV = normalFOV / 4f;
 
     }
 
     protected override void Aim()
     {
+        if (_playerSettings.Paused) return;
+
         //standard aim code
         base.Aim();
 

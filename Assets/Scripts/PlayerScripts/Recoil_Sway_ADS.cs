@@ -3,7 +3,7 @@ using UnityEngine;
 public class Recoil_Sway_ADS : MonoBehaviour
 {
     [SerializeField] private GunSwayObject _gunSwayData;
-
+    [SerializeField] private Settings _settings;
     // Internal sway offsets
     private Vector3 swayOffset;
     private Quaternion swayRotation;
@@ -47,11 +47,14 @@ public class Recoil_Sway_ADS : MonoBehaviour
 
     private void Update()
     {
+        if (_settings.Paused) return;
+
         HandleRecoil();
     }
 
     private void LateUpdate()
     {
+        if(_settings.Paused) return;
         HandleSway();
         HandleCameraSway();
         HandleMovementSway();
