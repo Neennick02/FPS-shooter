@@ -28,6 +28,7 @@ public class PauseScreenUi : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("Quit app");
+        _settings.Paused = false;
         Application.Quit();
     }
 }

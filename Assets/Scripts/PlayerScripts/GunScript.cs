@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 public abstract class GunScript : MonoBehaviour
 {
     [SerializeField] protected GunObject _gunObject;

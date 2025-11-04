@@ -1,15 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class GameplaySettings : MonoBehaviour
 {
     [SerializeField] private Settings _playerSettings;
+    [Header(" ")]
 
     [SerializeField] private Slider _sensitivitySlider;
     [SerializeField] private Slider _FovSlider;
 
+    [Header(" ")]
     [SerializeField] GameObject _keyboardControls, _controllerControls;
+
+    [Header(" ")]
+    [SerializeField] TextMeshProUGUI fovCounter, sensiCounter;
     private bool _controlScreenOpened = false;
     private float _sensitivityValue;
     private float _fovValue;
@@ -32,7 +38,10 @@ public class GameplaySettings : MonoBehaviour
 
         //update fov values in scripts
         _playerSettings.Sensitivity = _sensitivityValue;
+        sensiCounter.text = Mathf.Floor(_sensitivityValue).ToString();
+
         _playerSettings.Fov = _fovValue;
+        fovCounter.text = Mathf.Floor(_fovValue).ToString();
     }
 
     public void OpenControls()

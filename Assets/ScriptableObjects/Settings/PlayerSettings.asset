@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b22864ffc5a9f34aaf2d8cc70adce0f, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  Fov: 65.11902
-  Sensitivity: 16.02409
+  Fov: 59.70372
+  Sensitivity: 1
   Paused: 1
   MainVolume: 1
   MusicVolume: 1
   SfxVolume: 1
-  FrameRate: 60
-  QualityState: 1
+  FrameRate: 34
+  QualityState: 2
   FullScreen: 1
-  Brightness: 100
+  Vsync: 0
+  Brightness: 1.1107147

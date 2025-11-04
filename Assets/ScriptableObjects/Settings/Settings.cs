@@ -22,6 +22,6 @@ public class Settings : ScriptableObject
     }
     public Quality QualityState;
     public bool FullScreen;
+    public bool Vsync;
     public float Brightness;
-
 }
