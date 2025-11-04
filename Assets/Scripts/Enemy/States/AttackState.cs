@@ -28,20 +28,20 @@ public class AttackState : BaseState
             AimGunAtTarget();
 
 
-            float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+            float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.position);
 
             if (enemy.Agent.isActiveAndEnabled)
             {
                 if (distanceToPlayer > enemy.Agent.stoppingDistance)
                 {
                     enemy.Agent.isStopped = false;
-                    enemy.animatorScript.SetIsMoving(false);
-                    enemy.Agent.SetDestination(enemy.aimTarget.position);
+                    enemy.AnimatorScript.SetIsMoving(false);
+                    enemy.Agent.SetDestination(enemy.Player.position);
                 }
                 else
                 {
                     enemy.Agent.isStopped = true;
-                    enemy.animatorScript.SetIsMoving(false);
+                    enemy.AnimatorScript.SetIsMoving(false);
                 }
 
 
@@ -56,7 +56,7 @@ public class AttackState : BaseState
 
 
             //store player position
-            enemy.LastKnowsPlayerPos = enemy.aimTarget.position;
+           // enemy.LastKnowsPlayerPos = enemy.aimTarget.position;
         }
         else
         {
@@ -81,7 +81,7 @@ public class AttackState : BaseState
 
     void RotateToTarget()
     {
-        Vector3 directionToTarget = enemy.aimTarget.transform.position - enemy.transform.position;
+        /*Vector3 directionToTarget = enemy.aimTarget.transform.position - enemy.transform.position;
         directionToTarget.y = 0; // keep flat rotation
 
         // Rotate enemy body smoothly toward player
@@ -93,27 +93,27 @@ public class AttackState : BaseState
                 targetRotation,
                 Time.deltaTime * enemy._enemyObject.RotationSpeed
                 );
-        }
+        }*/
     }
 
     void UpdateAimTargetPosition()
     {
-        if (enemy.Player != null && enemy.aimTarget != null)
+        /*if (enemy != null && enemy.aimTarget != null)
         {
             Transform PlayerTransform = InputManager.Instance.transform;
 
             enemy.aimTarget.position = PlayerTransform.position ;
-        }
+        }*/
     }
 
     void AimGunAtTarget()
     {
-        if (enemy.aimTarget == null || enemy.barrel == null) return;
+        /*if (enemy.aimTarget == null || enemy.barrel == null) return;
 
         // 1. Keep gun at hand/animation position
         enemy.gunObject.transform.localPosition = Vector3.Lerp(
             enemy.gunObject.transform.localPosition,
-            enemy.animatorScript.aimingPos.localPosition,
+              enemy.animatorScript.aimingPos.localPosition,
             Time.deltaTime * enemy._enemyObject.RotationSpeed
         );
 
@@ -135,7 +135,7 @@ public class AttackState : BaseState
                 targetRot * rotationOffset,
                 Time.deltaTime * 3f
             );
-        }
+        }*/
     }
 
 

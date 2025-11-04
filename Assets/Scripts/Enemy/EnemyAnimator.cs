@@ -1,20 +1,21 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] public Animator animator;
     StateMachine stateMachine;
     Enemy enemyScript;
-    [SerializeField] public Transform aimingPos;
-    [SerializeField] Transform idlePos;
-    [SerializeField] Transform gunPos;
-    [SerializeField] GameObject gun;
-    [SerializeField] public Transform target;
+    [SerializeField] private Rig _weaponAimRig;
+
     Camera player;
     Enemy enemy;
     Rigidbody[] bodies;
-  //  float aimSpeed = 5;
-    bool isAttacking;
+
+
+    private bool _isAiming;
+    private Coroutine _moveGunCoroutine = null;
     private void Start()
     {
         stateMachine = GetComponent<StateMachine>();
@@ -28,20 +29,36 @@ public class EnemyAnimator : MonoBehaviour
     {
         if (stateMachine.activeState is PatrolState)
         {
+            if (_moveGunCoroutine != null)
+            {
+                _moveGunCoroutine = null;
+                _moveGunCoroutine = StartCoroutine(MoveGun());
+            }
             animator.SetBool("IsMoving", true);
-            MoveGunToIdlePos();
+            _isAiming = false;
         }
         else if(stateMachine.activeState is AttackState)
         {
 
             animator.SetBool("enemyFound", true);
-            isAttacking = true;
+            if (_moveGunCoroutine != null)
+            {
+                _moveGunCoroutine = null;
+                _moveGunCoroutine = StartCoroutine(MoveGun());
+            }
+            _isAiming = true;
         }
 
-        if(stateMachine.activeState is SearchState)
+        if (stateMachine.activeState is SearchState)
         {
-            MoveGunToIdlePos();
+            if (_moveGunCoroutine != null)
+            {
+                _moveGunCoroutine = null;
+                _moveGunCoroutine = StartCoroutine(MoveGun());
+            }
             animator.SetBool("enemyFound", false);
+            _isAiming = false;
+
         }
 
     }
@@ -56,8 +73,8 @@ public class EnemyAnimator : MonoBehaviour
             body.isKinematic = false;
         }
 
-        gun.AddComponent<Rigidbody>();
-        gun.AddComponent<BoxCollider>();
+       /* gun.AddComponent<Rigidbody>();
+        gun.AddComponent<BoxCollider>();*/
     }
 
     public void DeactivateRagdoll()
@@ -71,17 +88,28 @@ public class EnemyAnimator : MonoBehaviour
         }
     }
 
-    void MoveGunToIdlePos()
+    IEnumerator MoveGun()
     {
-        enemy.gunObject.transform.localPosition = Vector3.Lerp(
-               enemy.gunObject.transform.localPosition,
-               enemy.idlePos.localPosition,
-               Time.deltaTime * enemy._enemyObject.RotationSpeed);
+        if (_isAiming)
+        {
+            while(_weaponAimRig.weight < 1)
+            {
+                _weaponAimRig.weight++;
+                yield return null;
+            }
+        }
+        else
+        {
+            while(_weaponAimRig.weight > 0)
+            {
+                _weaponAimRig.weight--;
+                yield return null;
+            }
+        }
     }
 
     public void SetIsMoving(bool active)
     {
         animator.SetBool("IsMoving", active);
     }
-
 }

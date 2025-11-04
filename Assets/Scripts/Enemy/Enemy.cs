@@ -6,46 +6,44 @@ using UnityEngine.InputSystem.Processors;
 public class Enemy : MonoBehaviour
 {
     public EnemyObject _enemyObject;
-    [SerializeField] NavMeshAgent agent;
-    StateMachine stateMachine;
-    GameObject player;
+
+    public NavMeshAgent Agent;
+    private StateMachine _stateMachine;
+    private Transform _player;
     Vector3 lastKnownPlayPos;
-    public NavMeshAgent Agent { get => agent; }  
-    public GameObject Player { get => player; }
-    public Vector3 LastKnowsPlayerPos { get => lastKnownPlayPos; set => lastKnownPlayPos = value; }
-    public EnemyPath path;
+   // public NavMeshAgent Agent { get => _agent; }  
+    public Transform Player { get => _player; }
+    //public Vector3 LastKnowsPlayerPos { get => lastKnownPlayPos; set => lastKnownPlayPos = value; }
+    [SerializeField] private EnemyPath path;
 
     [SerializeField] string currentState;
-    public EnemyAnimator animatorScript;
-    [SerializeField] public GameObject gunObject;
-    [SerializeField] public Transform idlePos;
+
+    public EnemyAnimator AnimatorScript;
+
+    [SerializeField] private GameObject gunObject;
     public Transform barrel;
-
-    public Transform aimTarget;
-
     private void Start()
     {
-        stateMachine = GetComponent<StateMachine>();
-        agent = GetComponent<NavMeshAgent>();
-        stateMachine.Initialise();
-        player = GameObject.FindGameObjectWithTag("Player");
+        _stateMachine = GetComponent<StateMachine>();
+        _stateMachine.Initialise();
+        _player = InputManager.Instance.transform;
     }
 
     private void Update()
     {
         CanSeePlayer();
-        currentState = stateMachine.activeState.ToString();
+        currentState = _stateMachine.activeState.ToString();
     }
 
     public bool CanSeePlayer()
     {
-        if(player != null)
+        if(_player != null)
         {
             //is player close enough
-            if(Vector3.Distance(transform.position, player.transform.position) < _enemyObject.SpottingDistance)
+            if(Vector3.Distance(transform.position, _player.position) < _enemyObject.SpottingDistance)
             {
                 Vector3 origin = transform.position + Vector3.up * _enemyObject.EyeHeight;
-                Vector3 targetDir = (player.transform.position - origin).normalized;
+                Vector3 targetDir = (_player.position - origin).normalized;
 
                 float angleToPlayer = Vector3.Angle(targetDir, transform.forward);
                 targetDir.Normalize();
@@ -64,7 +62,7 @@ public class Enemy : MonoBehaviour
                     if(Physics.Raycast(ray, out hitInfo, _enemyObject.SpottingDistance))
                     {
                         //checkt if object is player 
-                        if(hitInfo.transform.gameObject == player && hitInfo.distance < _enemyObject.SpottingDistance)
+                        if(hitInfo.transform.gameObject == _player && hitInfo.distance < _enemyObject.SpottingDistance)
                         {
                             return true;
                         }
@@ -77,9 +75,9 @@ public class Enemy : MonoBehaviour
 
     public bool CanHearPlayer()
     {
-        if(player != null)
+        if(_player != null)
         {
-            if(Vector3.Distance(transform.position, player.transform.position) < _enemyObject.HearingDistance)
+            if(Vector3.Distance(transform.position, _player.position) < _enemyObject.HearingDistance)
             {
                 return true;
             }
