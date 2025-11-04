@@ -4,6 +4,7 @@ public class PauseScreenUi : MonoBehaviour
 {
     [SerializeField] Settings _settings;
     [SerializeField] private GameObject _settingsMenu;
+
     private void Update()
     {
         if (InputManager.Instance.onFoot.Pause.triggered)

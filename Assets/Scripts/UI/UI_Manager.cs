@@ -9,6 +9,7 @@ public class UI_Manager : MonoBehaviour
 
     private void Start()
     {
+        OpenAndClose_PauseScreen(false);
         _pauseMenu.gameObject.SetActive(false);
     }
 

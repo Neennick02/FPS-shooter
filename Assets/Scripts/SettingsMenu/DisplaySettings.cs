@@ -46,7 +46,13 @@ public class DisplaySettings : MonoBehaviour
         _brightness = _playerSettings.Brightness;
         _brightnesSlider.value = _brightness;
 
-        
+        //set fullscreen
+        isFullScreen = _playerSettings.FullScreen;
+        fullScreen.SetIsOnWithoutNotify(isFullScreen);
+        if (isFullScreen) Screen.fullScreen = true;
+        else Screen.fullScreen = false;
+
+        //vsync
         vSyncEnabled = _playerSettings.Vsync;
 
         if (vSyncEnabled)
@@ -95,14 +101,16 @@ public class DisplaySettings : MonoBehaviour
                                 FullScreenMode.Windowed              // normal windowed mode*/
     public void ToogleFullScreen()
     {
-        Debug.Log("fullscreen = " + isFullScreen.ToString());
         isFullScreen = !isFullScreen;
-        int width = Screen.currentResolution.width;
+        _playerSettings.FullScreen = isFullScreen;
+        Screen.fullScreen = isFullScreen;
+        Debug.Log("fullscreen = " + isFullScreen.ToString());
+        /*int width = Screen.currentResolution.width;
         int height = Screen.currentResolution.height;
         RefreshRate refresh = Screen.currentResolution.refreshRateRatio;
 
         Screen.SetResolution(width, height,
-            fullScreen ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed, refresh);
+            fullScreen ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed, refresh);*/
     }
 
     public void Vsync()

@@ -20,6 +20,6 @@ MonoBehaviour:
   SfxVolume: 1
   FrameRate: 34
   QualityState: 2
-  FullScreen: 1
+  FullScreen: 0
   Vsync: 0
   Brightness: 1.1107147
