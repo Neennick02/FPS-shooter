@@ -10,11 +10,12 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent Agent;
     private StateMachine _stateMachine;
     private Transform _player;
-    Vector3 lastKnownPlayPos;
-   // public NavMeshAgent Agent { get => _agent; }  
+
+    public Vector3 lastKnownPlayPos;
+    public Transform TargetPos;
     public Transform Player { get => _player; }
-    //public Vector3 LastKnowsPlayerPos { get => lastKnownPlayPos; set => lastKnownPlayPos = value; }
-    [SerializeField] private EnemyPath path;
+
+    public EnemyPath Path;
 
     [SerializeField] string currentState;
 

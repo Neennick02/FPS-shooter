@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 100
   HealthRegenSpeed: 0
-  SpottingDistance: 35
-  HearingDistance: 10
+  SpottingDistance: 30
+  HearingDistance: 20
   RotationSpeed: 5
-  Fov: 90
+  Fov: 70
   EyeHeight: 0.6
-  Damage: 15
-  FireRate: 0.6
+  Damage: 10
+  FireRate: 0.8
   BulletSpeed: 50
   ShootingAccuracy: 3

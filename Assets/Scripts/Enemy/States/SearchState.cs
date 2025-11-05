@@ -6,14 +6,12 @@ public class SearchState : BaseState
     float moveTimer;
     public override void Enter()
     {
-        enemy.Agent.SetDestination(enemy.LastKnowsPlayerPos);
+        enemy.AnimatorScript.SetIsMoving(true);
+        enemy.Agent.SetDestination(enemy.lastKnownPlayPos);
     }
 
     public override void Perform()
     {
-       
-
-
         //checks if player can be seen
         if (enemy.CanSeePlayer())
         {

@@ -12,6 +12,7 @@ public class EnemyAnimator : MonoBehaviour
     Camera player;
     Enemy enemy;
     Rigidbody[] bodies;
+    private bool _lastAimingState;
 
 
     private bool _isAiming;
@@ -27,39 +28,42 @@ public class EnemyAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (stateMachine.activeState is PatrolState)
+        /*if (stateMachine.activeState is PatrolState)
         {
-            if (_moveGunCoroutine != null)
-            {
-                _moveGunCoroutine = null;
-                _moveGunCoroutine = StartCoroutine(MoveGun());
-            }
-            animator.SetBool("IsMoving", true);
             _isAiming = false;
+            
+            animator.SetBool("IsMoving", true);
         }
         else if(stateMachine.activeState is AttackState)
         {
 
             animator.SetBool("enemyFound", true);
-            if (_moveGunCoroutine != null)
-            {
-                _moveGunCoroutine = null;
-                _moveGunCoroutine = StartCoroutine(MoveGun());
-            }
             _isAiming = true;
+            
         }
 
         if (stateMachine.activeState is SearchState)
         {
-            if (_moveGunCoroutine != null)
-            {
-                _moveGunCoroutine = null;
-                _moveGunCoroutine = StartCoroutine(MoveGun());
-            }
-            animator.SetBool("enemyFound", false);
             _isAiming = false;
+            
+            animator.SetBool("enemyFound", false);
+        }*/
+        bool newAimingState = stateMachine.activeState is AttackState;
 
+        if (newAimingState != _lastAimingState)
+        {
+            _isAiming = newAimingState;
+            if (_moveGunCoroutine != null) 
+                _moveGunCoroutine = null;
+
+            _moveGunCoroutine = StartCoroutine(MoveGun());
+            _lastAimingState = newAimingState;  
         }
+
+        animator.SetBool("enemyFound", stateMachine.activeState is AttackState);
+        animator.SetBool("IsMoving", stateMachine.activeState is PatrolState);
+
+
 
     }
 

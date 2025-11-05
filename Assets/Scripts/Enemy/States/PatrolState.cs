@@ -7,6 +7,7 @@ public class PatrolState : BaseState
 
     public override void Enter()
     {
+        enemy.AnimatorScript.SetIsMoving(true);
         enemy.Agent.speed = 2f;
     }
 
@@ -29,11 +30,11 @@ public class PatrolState : BaseState
 
     public void PatrolCyle()
     {
-        if (enemy.Agent.enabled && enemy.path != null && enemy.path.waypoints.Count > 0)
+        if (enemy.Agent.enabled && enemy.Path != null && enemy.Path.waypoints.Count > 0)
         {
             if (!enemy.Agent.pathPending && enemy.Agent.remainingDistance <= 0.2f)
             {
-                    if (waypointIndex < enemy.path.waypoints.Count - 1)
+                    if (waypointIndex < enemy.Path.waypoints.Count - 1)
                     {
                         waypointIndex++;
                     }
@@ -43,7 +44,7 @@ public class PatrolState : BaseState
                     }
                 enemy.Agent.isStopped = false; // Unpause agent
 
-                enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
+                enemy.Agent.SetDestination(enemy.Path.waypoints[waypointIndex].position);
             }
         }
     }
