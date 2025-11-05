@@ -86,9 +86,9 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
-    private void OnDrawGizmosSelected()
-    {/*
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(Agent.destination, new Vector3(2, 2, 2));*/
+    public void DropGun()
+    {
+        gunObject.AddComponent<Rigidbody>();
+        gunObject.AddComponent<BoxCollider>();
     }
 }

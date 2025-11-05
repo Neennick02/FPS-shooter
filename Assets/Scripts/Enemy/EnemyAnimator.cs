@@ -77,8 +77,7 @@ public class EnemyAnimator : MonoBehaviour
             body.isKinematic = false;
         }
 
-       /* gun.AddComponent<Rigidbody>();
-        gun.AddComponent<BoxCollider>();*/
+        enemy.DropGun();
     }
 
     public void DeactivateRagdoll()
